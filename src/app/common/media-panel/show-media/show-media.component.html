@@ -1,0 +1,20 @@
+<mat-card>
+    <mat-card-content>
+        <mat-card-title>Media</mat-card-title>
+        <mat-card-subtitle>{{mediaName}}
+            <code><a href="{{mediaUrl}}" target="_blank">Media Link</a></code>
+        </mat-card-subtitle>
+
+            <div class="image" *ngIf="!isVideo">
+                <a href="{{mediaUrl}}" target="_blank">
+                    <img [src]="mediaUrl">
+                </a>
+            </div>
+
+            <div class="video" *ngIf="isVideo">
+                <video width="100%" height="100%" controls autoplay [src]="mediaUrl"  type="video/mp4">
+                </video>
+            </div>
+            
+    </mat-card-content>        
+</mat-card>

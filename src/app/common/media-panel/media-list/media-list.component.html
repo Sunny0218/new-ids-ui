@@ -1,0 +1,64 @@
+<mat-card>
+    <mat-card-content>
+           <mat-card-title>Media list</mat-card-title>
+           <mat-card-subtitle>Path Name:<code>{{pathName}}</code>
+        </mat-card-subtitle>
+            <!-- 表单Mission ID数据过滤器 -->
+           <div class="data-filter">
+            <form>
+              <mat-form-field>
+                <input
+                  matInput
+                  type="text"
+                  id="mediaFilter"
+                  #mediaFilter
+                  placeholder="Mission ID"
+                />
+              </mat-form-field>
+              <button
+                class="button-form"
+                mat-raised-button
+                color="primary"
+                (click)="onFilterClick(mediaFilter)"
+              >
+                Submit
+              </button>
+            </form>
+          </div> 
+          
+           <!-- MediaList数据表格 -->
+          <table mat-table [dataSource]="dataSource">
+               <!-- Id Name Column-->
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef>Name</th>
+              <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+            </ng-container>
+
+            <!-- Create Time Column -->
+            <ng-container matColumnDef="createAt">
+              <th mat-header-cell *matHeaderCellDef>Create Time</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.createAt | localDate:'createAt'}}
+              </td>
+            </ng-container>
+
+            <!-- Url Column -->
+            <ng-container matColumnDef="url">
+              <th mat-header-cell *matHeaderCellDef>Url</th>
+              <td mat-cell *matCellDef="let element">
+                <button
+                mat-raised-button
+                color="primary"
+                (click)="mediaSelected(element)"
+              >
+                Select
+              </button>
+              </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+          </table>
+          <!-- 分页器 -->
+              <mat-paginator [pageSizeOptions]="[3]"></mat-paginator>
+    </mat-card-content>        
+</mat-card>

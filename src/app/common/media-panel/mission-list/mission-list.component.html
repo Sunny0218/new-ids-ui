@@ -1,0 +1,119 @@
+<mat-card>
+        <mat-card-content>
+            <mat-card-title>Mission List</mat-card-title>
+
+                <div class="data-filter">
+
+                    <!-- 表单日期数据过滤器 -->
+                  <div class="dateFilter">
+                  <mat-form-field>
+                      <input
+                        matInput
+                        type="text"
+                        id="missionFilter"
+                        #missionFilter
+                        (keyup)="doFilter(missionFilter.value)"
+                        placeholder="Filter"
+                      />
+                    </mat-form-field>
+                    <mat-form-field>
+                      <input
+                        matInput
+                        placeholder="Date From"
+                        [matDatepicker]="picker1"
+                        [formControl]="fromDate"
+                        required
+                      />
+                      <mat-datepicker-toggle
+                        matSuffix
+                        [for]="picker1"
+                      ></mat-datepicker-toggle>
+                      <mat-datepicker #picker1></mat-datepicker>
+                    </mat-form-field>
+                    <mat-form-field>
+                      <input
+                        matInput
+                        placeholder="To Date"
+                        [matDatepicker]="picker2"
+                        [formControl]="toDate"
+                        required
+                      />
+                      <mat-datepicker-toggle
+                        matSuffix
+                        [for]="picker2"
+                      ></mat-datepicker-toggle>
+                      <mat-datepicker #picker2></mat-datepicker>
+                    </mat-form-field> 
+                    <button
+                      class="button-form"
+                      mat-raised-button
+                      color="primary"
+                      (click)="filterMission()"
+                    >
+                      Submit
+                    </button>
+
+                    <!-- 是否有媒体数据过滤开关 -->
+    
+                      <mat-slide-toggle
+                      style="margin-left: 10px;" 
+                      [(ngModel)]="isChecked"
+                      (change)="sliderChanged()"
+                      >
+                      <h4>Media Only</h4>
+                    </mat-slide-toggle>
+                  </div>
+                </div>
+
+                <!-- MissionList数据表格 -->
+                <table mat-table [dataSource]="dataSource" matSort class="table-hover">
+                  <!-- Id Column -->
+                  <ng-container matColumnDef="path_name">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Path Name</th>
+                    <td mat-cell *matCellDef="let row">{{ row.path_name | localDate:'pathName' }}</td>
+                  </ng-container>
+            
+                  <!-- Create Time Column -->
+                  <ng-container matColumnDef="create_at">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Create Time</th>
+                    <td mat-cell *matCellDef="let row">
+                      {{ row.create_at | localDate:'createAt' }}
+                    </td>
+                  </ng-container>
+            
+                  <!-- Complete Time Column -->
+                  <ng-container matColumnDef="complete_at">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Complete Time</th>
+                    <td mat-cell *matCellDef="let row">
+                      {{ row.complete_at | localDate:'completeAt' }}
+                    </td>
+                  </ng-container>
+            
+                  <!-- State Column -->
+                  <ng-container matColumnDef="state">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>State</th>
+                    <td mat-cell *matCellDef="let row">{{ row.state }}</td>
+                  </ng-container>
+            
+                  <!-- Get Details -->
+                  <ng-container matColumnDef="getdetails">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+                    <td mat-cell *matCellDef="let row">
+                      <button
+                        mat-raised-button
+                        color="primary"
+                        (click)="missionSelected(row)"
+                      >
+                        Select
+                      </button>
+                    </td>
+                  </ng-container>
+            
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+                </table>
+
+                <!-- 分页器 -->
+                  <mat-paginator [pageSizeOptions]="[3]" showFirstLastButtons></mat-paginator>
+        </mat-card-content>        
+</mat-card>

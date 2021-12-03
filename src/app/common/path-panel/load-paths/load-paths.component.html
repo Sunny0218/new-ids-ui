@@ -1,0 +1,42 @@
+<mat-card>
+    <mat-card-content>
+        <mat-card-title>Mission Path 
+            <button mat-icon-button (click)="reloadPaths()">
+                <mat-icon>loop</mat-icon>
+            </button>
+        </mat-card-title>
+        <mat-divider></mat-divider>
+        <mat-list>
+            <mat-accordion class="example-headers-align" multi 
+            *ngFor="let path of missionPaths;let i = index"
+            >
+                <mat-expansion-panel 
+                (opened)="panelOpenState = true"
+                (closed)="panelOpenState = false">
+                  <mat-expansion-panel-header>
+
+                    <mat-panel-title>
+                        <strong>{{i+1}}.{{ path["name"] }}</strong>
+                    </mat-panel-title>
+
+                    <mat-panel-description>
+                        <button mat-icon-button  (click)="removeMissionPath(path,$event)">
+                          <mat-icon>cancel</mat-icon>
+                        </button>
+                        <button mat-icon-button (click)="doPlanningMissions(path,$event)">
+                          <mat-icon>play_circle_filled</mat-icon>
+                        </button>
+                    </mat-panel-description>
+
+                  </mat-expansion-panel-header>
+                  
+                  <ol>
+                    <li *ngFor="let type of path['actions']">{{type}}</li>
+                  </ol>
+                  </mat-expansion-panel>
+                  <div style="padding: 5px 0;"></div>
+            </mat-accordion>
+           
+        </mat-list>
+    </mat-card-content>  
+</mat-card>

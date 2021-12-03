@@ -1,0 +1,26 @@
+
+<div fxLayout="row">
+        <div fxFlex.gt-sm="100%" >
+                <app-mission-list  (onMissionSelectedEmitter)="onMissionSelected($event)"></app-mission-list>
+        </div>
+</div>
+
+<div fxLayout="row wrap">
+        <div fxFlex.gt-lg="66" fxFlex.gt-md="66" fxFlex.gt-xs="100" fxFlex="100" >
+                <app-media-list #mediaList (onMediaSelectedEmitter)="onMediaSelected($event)"></app-media-list>
+        </div>
+
+        <div fxFlex.gt-lg="33" fxFlex.gt-md="33" fxFlex.gt-xs="100" fxFlex="100">
+                <app-show-media #showMedia></app-show-media>
+        </div>
+</div>
+
+<!-- <div fxLayout="row wrap">
+        <div fxFlex.gt-lg="66" fxFlex.gt-md="66" fxFlex.gt-xs="100" fxFlex="100" >
+                <app-media-list></app-media-list>
+        </div>
+
+        <div fxFlex.gt-lg="33" fxFlex.gt-md="33" fxFlex.gt-xs="100" fxFlex="100">
+                <app-show-media></app-show-media>
+        </div>
+</div> -->
