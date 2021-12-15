@@ -13,6 +13,7 @@ import { AppHeaderComponent } from './layouts/full/header/header.component';
 import { AppSidebarComponent } from './layouts/full/sidebar/sidebar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DemoMaterialModule } from './demo-material-module';
+import { NgEventBus } from 'ng-event-bus';
 
 import { SharedModule } from './shared/shared.module';
 import { SpinnerComponent } from './shared/spinner.component';
@@ -67,7 +68,8 @@ const AppRoutes: Routes = [
     {
       provide: LocationStrategy,
       useClass: PathLocationStrategy
-    }
+    },
+    NgEventBus
   ],
   bootstrap: [AppComponent]
 })

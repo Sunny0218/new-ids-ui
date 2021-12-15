@@ -56,3 +56,12 @@ mat-toolbar{
   flex: 1 0 auto;
 }
 
+.landing-btn, .hovering-btn {
+  border-radius: 20px !important;
+  margin-right: 20px !important;
+}
+
+.hovering-btn {
+  background-color: #ffde73 !important;
+  border-color: #ffde73 !important;
+}
