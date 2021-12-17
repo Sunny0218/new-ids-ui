@@ -1,0 +1,31 @@
+.cctvScream {
+    position: relative;
+}
+
+.status-table {
+    padding: 0 10px;
+    position: absolute;
+    bottom: 10%;
+    left: 0;
+    right: 0;
+}
+
+.status-table table {
+    width: 100%;
+    border-radius: 1em;
+    background-color: rgba(0, 0, 0, .3);
+}
+
+table td {
+    padding: 5px;
+    font-weight: 500;
+    color: white;
+}
+
+.mat-stroked-button.mat-accent[disabled] {
+    background-color: rgba(255, 255, 255, .3);
+}
+
+.mat-stroked-button.mat-accent {
+    background-color: rgba(255, 255, 255, .5);
+}

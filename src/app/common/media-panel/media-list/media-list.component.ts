@@ -30,7 +30,7 @@ export class MediaListComponent implements OnInit,AfterViewInit {
 
 
   constructor( 
-    private commonPanel:CommonPanelService //依赖注入'异步获得Media数据'服务
+    private commonSvc:CommonPanelService //依赖注入'异步获得Media数据'服务
     ) { }
 
   ngOnInit(): void {
@@ -54,7 +54,7 @@ export class MediaListComponent implements OnInit,AfterViewInit {
       return
     } 
   //引用MediaData服务的方法,通过Promise获得数据
-    this.commonPanel.filterMedia(filter.value).then( data => this.dataSource.data = data );
+    this.commonSvc.filterMedia(filter.value).then( data => this.dataSource.data = data );
   }
 
 
@@ -64,7 +64,7 @@ export class MediaListComponent implements OnInit,AfterViewInit {
     const el = document.getElementById("mediaFilter");
     el.setAttribute("value", mission.id);
     //引用MediaData服务的方法,通过Promise获得数据
-    this.commonPanel.filterMedia(mission.id).then( data => this.dataSource.data = data ); 
+    this.commonSvc.filterMedia(mission.id).then( data => this.dataSource.data = data ); 
   }
 
 }

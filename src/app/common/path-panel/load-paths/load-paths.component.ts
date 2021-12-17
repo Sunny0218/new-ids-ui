@@ -13,17 +13,17 @@ export class LoadPathsComponent implements OnInit {
 
   missionPaths= [];
   constructor(
-    private commonPanel:CommonPanelService
+    private commonSvc:CommonPanelService
   ) { }
 
   async ngOnInit() {
-    await this.commonPanel.loadPaths().then( data => { this.missionPaths = data} );
+    await this.commonSvc.loadPaths().then( data => { this.missionPaths = data} );
     
   }
 
   //重新加载所有任务路径
   async reloadPaths() {
-    await this.commonPanel.loadPaths().then( data => { this.missionPaths = data} );
+    await this.commonSvc.loadPaths().then( data => { this.missionPaths = data} );
     
   }
 
@@ -36,12 +36,12 @@ export class LoadPathsComponent implements OnInit {
 
     var pathId = path.id.replace(/-/g,"");
 
-    this.commonPanel.postRequest(`${environment.apiHost}/missions/paths/${pathId}/cancel`, postData).subscribe((resp) => {
+    this.commonSvc.postRequest(`${environment.apiHost}/missions/paths/${pathId}/cancel`, postData).subscribe((resp) => {
       if (resp["code"] != 100) {
         console.error(`unable to remove mission path ${path["name"]}, cause: ` + resp["message"]);
       }
 
-      this.commonPanel.loadPaths().then( data => { this.missionPaths = data} );
+      this.commonSvc.loadPaths().then( data => { this.missionPaths = data} );
     });
 
   }
@@ -51,7 +51,7 @@ export class LoadPathsComponent implements OnInit {
     $event.stopPropagation()
     var postData:any = {};
     postData["path_id"] = path.id;
-    this.commonPanel.postRequest(`${environment.apiHost}/missions`, postData).subscribe( (resp) => {
+    this.commonSvc.postRequest(`${environment.apiHost}/missions`, postData).subscribe( (resp) => {
       if (resp["code"] != 101) {
         console.error(`unable to execute mission ${path["name"]}, cause: ` + resp["message"])
       }

@@ -1,1 +1,143 @@
-<p>airport-panel works!</p>
+<!-- CCTV Streaming -->
+<div fxLayout="row">
+    <div fxFlex.gt-sm="100%">
+        <mat-card>
+            <mat-card-content>
+                <mat-card-title>CCTV</mat-card-title>
+                <div class="cctvScream" style="border: 1px solid #ccc;">
+                    <video id="cctv" width="100%" poster="../../../assets/images/background/ids_place_holder.jpg" autoplay controls muted></video>
+                    <!-- 无人机 机场 状态栏 -->
+                    <div class="status-table">
+                        <table>
+                            <tr>
+                                <th colspan=6 align="center">
+                                    <mat-card-title style="color: white;">Airport Status</mat-card-title>
+                                </th>
+                                <th colspan=6 align="center">
+                                    <mat-card-title style="color: white;">Drone Status</mat-card-title>
+                                </th>
+                            </tr>
+                            <tr>
+                                <!-- **Airport Status** -->
+                                <!-- *************************** -->
+                                <!-- Holder State -->
+                                <td align="center" style="color: rgb(30, 136, 229);">
+                                    Holder
+                                </td>
+                                <td align="center">
+                                    {{ holderState }}
+                                </td>
+                                <td align="left">
+                                    <button mat-stroked-button color="accent" [disabled]="holderBtnBusy" (click)="holderBtn($event)">
+                                    {{ holderBtnLabel }}
+                                    </button>
+                                </td>
+                                <!-- RC Switch State -->
+                                <td align="center" style="color: rgb(30, 136, 229);">
+                                    RC
+                                </td>
+                                <td align="center">
+                                    {{ rcSwitchState }}
+                                </td>
+                                <td align="center">
+                                    <button mat-stroked-button color="accent" [disabled]="rcSwitchBtnBusy" (click)="rcSwitchBtn($event)">
+                                    {{ rcSwitchBtnLabel }}
+                                    </button>
+                                </td>
+                                <td align="center" style="width: 30px;">
+                                </td>
+
+                                <!-- **Drone Status** -->
+                                <!-- *************************** -->
+                                <!-- Battery -->
+                                <td align="center" style="color: rgb(30, 136, 229);">
+                                    Battery
+                                </td>
+                                <td align="center">
+                                    {{ droneBatteryLevel }}
+                                </td>
+                                <!-- DroneSwitchState -->
+                                <td align="center" style="color: rgb(30, 136, 229);">
+                                    ON/OFF
+                                </td>
+                                <td align="center">
+                                    {{ droneSwitchState }}
+                                </td>
+                                <td align="center">
+                                    <button mat-stroked-button color="accent" [disabled]="droneSwitchBtnBusy" (click)="droneSwitchBtn($event)">
+                                    {{ droneSwitchBtnLabel }}
+                                    </button>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <!-- **Airport Status** -->
+                                <!-- *************************** -->
+                                <!-- Charger State -->
+                                <td align="center" style="color: rgb(30, 136, 229);">
+                                    Charger
+                                </td>
+                                <td align="center">
+                                    {{ chargerState }}
+                                </td>
+                                <td align="left">
+                                    <button mat-stroked-button color="accent" [disabled]="chargerBtnBusy" (click)="chargerBtn($event)">
+                                    {{ chargerBtnLabel }}   
+                                    </button>
+                                </td>
+                                <td colspan=4>
+                                </td>
+
+                                <!-- Drone Status -->
+                                <!-- *************************** -->
+                                <!-- Drone Downloading State -->
+                                <td align="center" style="color: rgb(30, 136, 229);">
+                                    Downloading
+                                </td>
+                                <td align="center">
+                                    {{ droneDownloadingState }}
+                                </td>
+                                <!-- Drone Flying State -->
+                                <td align="center" style="color: rgb(30, 136, 229);">
+                                    Flying
+                                </td>
+                                <td align="center">
+                                    {{ droneFlyingState }}
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>
+
+
+
+<!-- 强制开关按钮 -->
+<div fxLayout="row">
+    <div fxFlex.gt-sm="100%">
+        <mat-card>
+            <mat-card-content>
+                <mat-card-title>FOR EXPERTEES</mat-card-title>
+                <table>
+                    <tr>
+                        <td><button mat-raised-button color="accent" (click)="airport_action('holder','RELEASE')">Force Release Holder</button></td>
+                        <td><button mat-raised-button color="accent" (click)="airport_action('holder','LOCK')">Force Lock Holder</button></td>
+                        <td><button mat-raised-button color="accent" (click)="airport_action('charger','ON')">Force Charger ON</button></td>
+                        <td><button mat-raised-button color="accent" (click)="airport_action('charger','OFF')">Force Charger OFF</button></td>
+                        <td><button mat-raised-button color="accent" (click)="airport_action('rc','ON')">Force RC ON</button></td>
+                        <td><button mat-raised-button color="accent" (click)="airport_action('rc','OFF')">Force RC OFF</button></td>
+                    </tr>
+                    <tr>
+                        <td><button mat-raised-button color="accent" (click)="airport_action('drone','ON')">Force Drone ON</button></td>
+                        <td><button mat-raised-button color="accent" (click)="airport_action('drone','OFF')">Force Drone OFF</button></td>
+                        <td><button mat-raised-button color="accent" (click)="force_stop_current_mission(false)">Force Stop Current Mission </button></td>
+                        <td><button mat-raised-button color="accent" (click)="force_stop_current_mission(true)">Force Stop Go Home</button></td>
+                    </tr>
+                </table>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

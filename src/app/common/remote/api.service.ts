@@ -16,6 +16,7 @@ export class ApiService {
     return this.loadMissionsInDateRange(from, new Date());
   }
 
+  /* 获得对应时间范围历史任务列表 */
   loadMissionsInDateRange(from: Date, to: Date): Observable<any> {
     const fromTxt = from.toISOString();
     const toTxt = to.toISOString();
@@ -26,6 +27,7 @@ export class ApiService {
     });
   }
 
+  /* 获取对应时间范围历史任务列表 */
   readMissionStatus(missionIdOrRef: string): Observable<any> {
     return this.get<any>(`/missions/${missionIdOrRef}/status`);
   }
@@ -34,10 +36,12 @@ export class ApiService {
     return this.get<any>(`/missions/${robotRef}/steps`);
   }
 
+  /* 获取所有可执行路径 */
   readMissionPaths(): Observable<any> {
     return this.get<any>('/missions/paths');
   }
 
+  /* 马上执行指定路径 */
   createNewMissionByPath(pathId: string): Observable<any> {
     return this.post<any>('/missions', {
       path_id: pathId
@@ -52,23 +56,27 @@ export class ApiService {
     });
   }
 
-  /** Robot */
+  /* 加载无人机和机场 */
   loadRobots(): Observable<any> {
     return this.get<any>('/robots');
   }
 
+  /* 对应编码无人机的状态 */
   readRobotStatus(robotRef: string): Observable<any> {
     return this.get<any>(`/robots/${robotRef}/status`);
   }
 
+  /* 对应编码机场的状态 */
   readAirportStatus(airportRef: string): Observable<any> {
     return this.get<any>(`/airport/${airportRef}/status`);
   }
 
+  /* 对应无人机ID 紧急悬停 */
   emergencyHovering(robotId: string = 'all'): Observable<any> {
     return this.post<any>(`/robots/${robotId}/commands/emergency-hovering`, {});
   }
 
+  /* 对应无人机ID 紧急降落 */
   emergencyLanding(robotId: string = 'all'): Observable<any> {
     return this.post<any>(`/robots/${robotId}/commands/emergency_landing`, {});
   }
@@ -100,10 +108,12 @@ export class ApiService {
     });
   }
 
+  /* 获取URL */
   private getUrl(uri: string): string {
     return this._host + uri;
   }
 
+  /* 封装GET 异步请求 */
   private get<T>(uri: string, params: any = {}): Observable<T> {
 
     // TODO: append the query part to url
@@ -114,6 +124,7 @@ export class ApiService {
     return this.http.get<T>(this.getUrl(uri), options);
   }
 
+  /* 封装POST 异步请求 */
   private post<T>(uri: string, body: any): Observable<T> {
     let options = { 
       

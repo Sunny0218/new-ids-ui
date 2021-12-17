@@ -1,12 +1,14 @@
 export const environment = {
   production: true,
-  apiHost: 'http://192.168.32.90:4389',
-  fpvHost: 'http://192.168.32.90:8080',
-  mediaHost: 'http://192.168.32.90:6400',
+  // apiHost: 'http://192.168.32.90:4389',
+  // fpvHost: 'http://192.168.32.90:8080',
+  // mediaHost: 'http://192.168.32.90:6400',
+  // janusServer:'http://192.168.32.90:8088',
 
-  // apiHost: window.origin+':8888',
-  // fpvHost: window.origin+':8080',
-  // mediaHost: window.origin+':6400',
+  apiHost: window.origin+':8888',
+  fpvHost: window.origin+':8080',
+  mediaHost: window.origin+':6400',
+  janusServer:window.origin+':8089',
 
   pollingInterval: 750,
 

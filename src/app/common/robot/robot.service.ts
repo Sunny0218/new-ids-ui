@@ -44,7 +44,7 @@ export class RobotService {
 
   constructor(private api: ApiService, private eventBusSvc: EventBusService) { }
 
-  //开始轮询
+  //开始轮询机器状态
   startPolling(): void {
     if (this._pollingSubscription != null) {
       this.stopPolling();
@@ -62,7 +62,7 @@ export class RobotService {
       .subscribe();
   }
 
-  //停止轮询
+  //停止轮询机器状态
   stopPolling(): void {
     if (this._pollingSubscription) {
       this._pollingSubscription.unsubscribe();

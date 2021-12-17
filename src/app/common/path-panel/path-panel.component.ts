@@ -3,14 +3,12 @@ import { Subscription, throwError } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { LoadPathsComponent } from './load-paths/load-paths.component';
-import { CommonPanelService } from '../common-panel.service';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-path-panel',
   templateUrl: './path-panel.component.html',
   styleUrls: ['./path-panel.component.css'],
-  providers:[CommonPanelService]
 })
 export class PathPanelComponent implements OnInit {
 

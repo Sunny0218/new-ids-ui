@@ -14,9 +14,19 @@ import { AppSidebarComponent } from './layouts/full/sidebar/sidebar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DemoMaterialModule } from './demo-material-module';
 import { NgEventBus } from 'ng-event-bus';
+import { MqttModule, IMqttServiceOptions, MqttService } from "ngx-mqtt";
 
 import { SharedModule } from './shared/shared.module';
 import { SpinnerComponent } from './shared/spinner.component';
+
+export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
+  hostname: 'ids.hdcircles.tech',
+  port: 443,
+  path: '/mqtt',
+  protocol: 'wss',
+  username:'ids',
+  password:'ids6688'
+}
 
 const AppRoutes: Routes = [
   {
@@ -63,13 +73,15 @@ const AppRoutes: Routes = [
     HttpClientModule,
     SharedModule,
     RouterModule.forRoot(AppRoutes),
+    MqttModule.forRoot(MQTT_SERVICE_OPTIONS),
   ],
   providers: [
     {
       provide: LocationStrategy,
       useClass: PathLocationStrategy
     },
-    NgEventBus
+    NgEventBus,
+    MqttService
   ],
   bootstrap: [AppComponent]
 })

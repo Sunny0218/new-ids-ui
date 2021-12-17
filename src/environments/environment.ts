@@ -8,6 +8,7 @@ export const environment = {
   apiHost: 'http://192.168.32.90:4389',
   fpvHost: 'http://192.168.32.90:8080',
   mediaHost: 'http://192.168.32.90:6400',
+  janusServer:'http://192.168.32.90:8088',
 
   // apiHost: window.origin+':8888',
   // fpvHost: window.origin+':8080',
