@@ -1,1 +1,49 @@
-<p>fpv-panel works!</p>
+<!-- Janus Drone Screaming -->
+<div fxLayout="row wrap">
+    <div fxFlex.gt-lg="65" fxFlex.gt-md="65" fxFlex.gt-xs="100" fxFlex="100">
+        <mat-card>
+            <mat-card-content>
+                <mat-card-title>DRONE</mat-card-title>
+                <div class="droneScream" style="border: 1px solid #ccc;">
+                    <video id="drone" width="100%" poster="../../../assets/images/background/ids_place_holder.jpg" autoplay controls muted></video>
+                    <!-- 工具栏 -->
+                    <div class="toolbar" *ngIf="showToolbar">
+                        <!-- 调整gimbal左右角度 -->
+                        <div class="gimbal">
+                            <button (click)="yaw_rotate_left()">
+                              <mat-icon style="color: white;">rotate_left</mat-icon>
+                            </button>
+                            <button (click)="yaw_rotate_right()">
+                              <mat-icon style="color: white;">rotate_right</mat-icon>
+                            </button>
+                        </div>
+                        <div class="bottom">
+                            <!-- 转换镜头模式 -->
+                            <div class="model">
+                                <button *ngFor="let item of modeList;let i = index" color="primary" mat-mini-fab (click)="modeSwitch(item.mode)">{{item.mName}}</button>
+                            </div>
+                            <!-- 调整gimbal上下角度 -->
+                            <div class="switch">
+                                <mat-slider class="example-margin" color="primary" max='20' min='-90' step='1' vertical='true' thumbLabel='true' [(ngModel)]="pitchValue" (change)="pitchSlider($event)">
+                                </mat-slider>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+
+    <!-- iframe cctv -->
+    <div fxFlex.gt-lg="35" fxFlex.gt-md="35" fxFlex.gt-xs="100" fxFlex="100">
+        <mat-card>
+            <mat-card-content>
+                <mat-card-title>CCTV</mat-card-title>
+                <div class="cctvScream" style="border: 1px solid #ccc;">
+                    <!-- <iframe style="width:100%;height:360px;" class="iframe" [src]="safeCctvUrl"></iframe> -->
+                    <video id="cctv" width="100%" poster="../../../assets/images/background/ids_place_holder.jpg" autoplay controls muted></video>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

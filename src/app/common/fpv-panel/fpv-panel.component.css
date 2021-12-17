@@ -1,0 +1,78 @@
+.iframe {
+    border: 0;
+}
+
+.droneScream {
+    position: relative;
+}
+
+.toolbar {
+    position: absolute;
+    top: 20%;
+    right: 5%;
+    opacity: 0.5;
+}
+
+.toolbar:hover {
+    opacity: 0.8;
+}
+
+.toolbar .gimbal {
+    margin-bottom: 20px;
+}
+
+.toolbar .gimbal button:first-child {
+    margin-right: 10px;
+}
+
+.toolbar .gimbal button:last-child {
+    margin-left: 10px;
+}
+
+.toolbar .gimbal button:first-child,
+.toolbar .gimbal button:last-child {
+    display: inline-block;
+    padding: 5px 10px;
+    cursor: pointer;
+    text-decoration: none;
+    outline: none;
+    background-color: rgb(75, 160, 234);
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 5px #999;
+}
+
+.toolbar .gimbal button:first-child:hover,
+.toolbar .gimbal button:last-child:hover {
+    background-color: rgb(75, 160, 234);
+}
+
+.toolbar .gimbal button:first-child:active,
+.toolbar .gimbal button:last-child:active {
+    background-color: rgb(75, 160, 234);
+    box-shadow: 0 3px #666;
+    transform: translateY(4px);
+}
+
+.toolbar .bottom {
+    display: flex;
+    justify-content: space-between;
+}
+
+.toolbar .bottom .model {
+    display: flex;
+    flex-direction: column;
+}
+
+.toolbar .model button {
+    margin-bottom: 8px !important;
+}
+
+.toolbar .switch {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.toolbar .switch .mat-slider-vertical {
+    width: 42px;
+}
