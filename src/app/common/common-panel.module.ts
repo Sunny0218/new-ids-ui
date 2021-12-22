@@ -11,6 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { MediaPanelModule } from './media-panel/media-panel.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { LoadPathsComponent } from './path-panel/load-paths/load-paths.component';
+import { VrViewComponent } from './vr-view/vr-view.component';
 
 const CommonPanelroutes:Routes = [
   {
@@ -29,6 +30,10 @@ const CommonPanelroutes:Routes = [
     path:'airport',
     component:AirportPanelComponent
   },
+  {
+    path:'360view',
+    component:VrViewComponent
+  }
 ] 
 
 @NgModule({
@@ -38,6 +43,7 @@ const CommonPanelroutes:Routes = [
     FpvPanelComponent,
     PathPanelComponent,
     LoadPathsComponent,
+    VrViewComponent,
   ],
   imports: [
     CommonModule,

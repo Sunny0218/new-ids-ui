@@ -35,7 +35,7 @@ const AppRoutes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: '/dashboard',
+        redirectTo: '/media',
         pathMatch: 'full'
       },
       {
@@ -43,15 +43,19 @@ const AppRoutes: Routes = [
         loadChildren:
           () => import('./common/common-panel.module').then(m => m.CommonPanelModule)
       },
-      {
-        path: '',
-        loadChildren:
-          () => import('./material-component/material.module').then(m => m.MaterialComponentsModule)
+      { 
+        path: '**', 
+        redirectTo: '/media'
       },
-      {
-        path: 'dashboard',
-        loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
-      }
+      // {
+      //   path: '',
+      //   loadChildren:
+      //     () => import('./material-component/material.module').then(m => m.MaterialComponentsModule)
+      // },
+      // {
+      //   path: 'dashboard',
+      //   loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
+      // }
     ]
   }
 ];
