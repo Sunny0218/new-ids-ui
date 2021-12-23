@@ -1,0 +1,35 @@
+.content-wrapper {
+    width: 100%;
+    height: 100%;
+    margin-top: 50px;
+    background-color: #ecf0f4;
+}
+
+.content {
+    width: 500px;
+    margin: 0 auto;
+}
+
+.brand-logo {
+    display: flex;
+    justify-content: center;
+}
+
+.brand-logo img {
+    width: 150px;
+    vertical-align: middle;
+}
+
+.form-group {
+    margin: 0 0 24px;
+}
+
+.form-group label {
+    color: #343a40;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.form-group input {
+    border: 1px solid #e8e5e5 !important;
+}

@@ -1,0 +1,25 @@
+<div class="content-wrapper">
+    <div class="content">
+        <mat-card>
+            <mat-card-content>
+                <div class="login-content">
+                    <div class="brand-logo">
+                        <img src="../../assets/images/ids.png">
+                    </div>
+                    <h5>Sign in to continue</h5>
+                    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input type="text" formControlName="username" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" formControlName="password" autocomplete="on" class="form-control" />
+                        </div>
+                        <button [disabled]="loading" mat-raised-button color="primary">Login</button>
+                    </form>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

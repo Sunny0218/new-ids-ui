@@ -2,7 +2,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { AppComponent } from './app.component';
@@ -18,6 +18,7 @@ import { MqttModule, IMqttServiceOptions, MqttService } from "ngx-mqtt";
 
 import { SharedModule } from './shared/shared.module';
 import { SpinnerComponent } from './shared/spinner.component';
+import { LoginPageComponent } from './login-page/login-page.component';
 
 export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
   hostname: 'ids.hdcircles.tech',
@@ -29,6 +30,10 @@ export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
 }
 
 const AppRoutes: Routes = [
+  {
+    path:'login',
+    component:LoginPageComponent
+  },
   {
     path: '',
     component: FullComponent,
@@ -58,6 +63,7 @@ const AppRoutes: Routes = [
       // }
     ]
   }
+
 ];
 
 @NgModule({
@@ -67,12 +73,14 @@ const AppRoutes: Routes = [
     AppHeaderComponent,
     SpinnerComponent,
     AppSidebarComponent,
+    LoginPageComponent,
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     DemoMaterialModule,
     FormsModule,
+    ReactiveFormsModule,
     FlexLayoutModule,
     HttpClientModule,
     SharedModule,
