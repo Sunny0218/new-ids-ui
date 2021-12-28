@@ -2,6 +2,7 @@
 // The build system defaults to the dev environment which uses `environment.ts`, but if you do
 // `ng build --env=prod` then `environment.prod.ts` will be used instead.
 // The list of which env maps to which file can be found in `.angular-cli.json`.
+import keycloakConfig from "./keycloak.config";
 
 export const environment = {
   production: false,
@@ -9,7 +10,6 @@ export const environment = {
   fpvHost: 'http://192.168.32.90:8080',
   mediaHost: 'http://192.168.32.90:6400',
   janusServer:'http://192.168.32.90:8088',
-
   // apiHost: window.origin+':8888',
   // fpvHost: window.origin+':8080',
   // mediaHost: window.origin+':6400',

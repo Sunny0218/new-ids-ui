@@ -19,6 +19,8 @@ import { MqttModule, IMqttServiceOptions, MqttService } from "ngx-mqtt";
 import { SharedModule } from './shared/shared.module';
 import { SpinnerComponent } from './shared/spinner.component';
 import { LoginPageComponent } from './login-page/login-page.component';
+import { AuthModule } from './auth/auth.module';
+import { AuthGuard } from './auth/auth.guard';
 
 export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
   hostname: 'ids.hdcircles.tech',
@@ -32,7 +34,8 @@ export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
 const AppRoutes: Routes = [
   {
     path:'login',
-    component:LoginPageComponent
+    component:LoginPageComponent,
+    // canActivate:[AuthGuard]
   },
   {
     path: '',
@@ -41,12 +44,15 @@ const AppRoutes: Routes = [
       {
         path: '',
         redirectTo: '/media',
-        pathMatch: 'full'
+        pathMatch: 'full',
       },
       {
         path: '',
-        loadChildren:
-          () => import('./common/common-panel.module').then(m => m.CommonPanelModule)
+        loadChildren: () => import('./common/common-panel.module').then(m => m.CommonPanelModule),
+
+        //** keycloak authGuard**
+        // canActivate:[AuthGuard]  
+
       },
       { 
         path: '**', 
@@ -86,6 +92,7 @@ const AppRoutes: Routes = [
     SharedModule,
     RouterModule.forRoot(AppRoutes),
     MqttModule.forRoot(MQTT_SERVICE_OPTIONS),
+    // AuthModule
   ],
   providers: [
     {
