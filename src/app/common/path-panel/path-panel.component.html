@@ -291,16 +291,9 @@
                     <mat-card-title>Paths</mat-card-title>
                     <mat-divider></mat-divider>
 
-                    <mat-list>
+                    <mat-list class="header">
                         <!-- 计划路径名称 -->
                         <mat-list-item>
-                            <button
-                            mat-raised-button
-                            color="primary"
-                            (click)="savePlanningMissions()"
-                            >
-                            Save
-                            </button>
                             <mat-form-field class="pathName"> 
                                 <input
                                   matInput
@@ -309,6 +302,20 @@
                                   [(ngModel)]="newPathName"
                                 />
                             </mat-form-field>
+                            <button
+                            mat-raised-button
+                            color="primary"
+                            (click)="savePlanningMissions()"
+                            >
+                            Save
+                            </button>
+                            <button
+                            mat-raised-button
+                            color="warn"
+                            (click)="clearPlanningMission()"
+                            >
+                            Clear
+                            </button>
                         </mat-list-item>
 
                         <!-- 计划路径类别 -->

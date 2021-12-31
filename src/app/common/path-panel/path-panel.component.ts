@@ -53,7 +53,7 @@ export class PathPanelComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  //拖拽计划任务路径顺序
+  //拖拽更改计划任务路径顺序
   dropMissionList(event: CdkDragDrop<object[]>) {
     moveItemInArray(this.planningMissions, event.previousIndex, event.currentIndex);
   }
@@ -138,6 +138,12 @@ export class PathPanelComponent implements OnInit {
     this.planningMissions.push(mission);
     this.nextId++;
     // console.log(this.planningMissions);
+  }
+
+  //清空计划任务路径
+  clearPlanningMission() {
+    this.nextId = 1;
+    this.planningMissions = [];
   }
 
   //删除计划任务路径

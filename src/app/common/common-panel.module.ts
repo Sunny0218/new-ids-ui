@@ -12,6 +12,7 @@ import { MediaPanelModule } from './media-panel/media-panel.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { LoadPathsComponent } from './path-panel/load-paths/load-paths.component';
 import { VrViewComponent } from './vr-view/vr-view.component';
+import { ReconfirmDialogComponent } from './path-panel/reconfirm-dialog/reconfirm-dialog.component';
 
 const CommonPanelroutes:Routes = [
   {
@@ -44,6 +45,7 @@ const CommonPanelroutes:Routes = [
     PathPanelComponent,
     LoadPathsComponent,
     VrViewComponent,
+    ReconfirmDialogComponent,
   ],
   imports: [
     CommonModule,

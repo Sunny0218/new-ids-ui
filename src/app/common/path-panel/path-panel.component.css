@@ -23,6 +23,10 @@ mat-list-item {
    margin-top: 15px;
    margin-left: 10px;
 }
+
+.header mat-list-item button {
+   margin-left: 10px;
+}
  
 mat-checkbox {
    margin-left: 10px;

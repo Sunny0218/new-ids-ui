@@ -153,9 +153,9 @@ export class AirportPanelComponent implements OnInit,OnDestroy {
     this.commonSvc.getRequest(environment.apiHost + "/airport/" + this.airport_ref_num + "/status" ).subscribe( (data:JSON) => {
       try {
         const resData = data['data'];
-        // if( data['code'] !== 100 ) {
-        //   throw new SyntaxError("Please activate the Airport");
-        // }
+        if( data['code'] !== 100 ) {
+          throw new SyntaxError("Please activate the Airport");
+        }
         this.chargerState = resData['charger_status'] == "UNCHARGED" ? "UNCHARGED" : "CHARGING",
         this.holderState = resData['drone_holder_status'] == "FIXED" ? "LOCKED" : "RELEASE",
         
@@ -163,9 +163,9 @@ export class AirportPanelComponent implements OnInit,OnDestroy {
         this.holderBtnLabel = this.holderState == "LOCKED" ? "RELEASE" : "LOCK";
         
         this.chargerBtnBusy = this.holderState == "RELEASE";
-        this.holderBtnBusy = data['code'] != 100 ; //false
+        this.holderBtnBusy = false ;
         
-        this.droneSwitchBtnBusy = this.holderState == "RELEASE";
+        this.droneSwitchBtnBusy = !( this.holderState == "LOCKED" && this.rcSwitchState == "ON");
 
       } catch (error) {
         console.error(error);
