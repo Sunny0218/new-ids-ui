@@ -23,7 +23,8 @@ export class FpvPanelComponent implements OnInit {
   isFlying: boolean = false;
   showToolbar:boolean = false;
 
-  cctvStream = window.origin+"/janus/cctv.html";
+  // cctvStream = window.origin+"/janus/cctv.html";
+  cctvStream = "http://192.168.32.90/janus/cctv.html";
   safeCctvUrl:any
 
   //订阅获取无人机、遥控状态主题

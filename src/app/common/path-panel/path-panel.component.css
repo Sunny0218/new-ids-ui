@@ -1,72 +1,72 @@
 mat-list-item {
     margin-top: 10px;
 }
- 
-.drone-steps mat-list-item  button,
-.airport-steps mat-list-item  button
- {
-   margin-left: 10px;
+
+.drone-steps mat-list-item button,
+.airport-steps mat-list-item button {
+    margin-left: 10px;
+    overflow: hidden;
 }
 
 .airport-button button {
-   width: 200px;
+    width: 200px;
 }
 
 .drone-steps mat-form-field {
-   width: 20%;
-   margin-top: 15px;
-   margin-left: 10px;
+    width: 20%;
+    margin-top: 15px;
+    margin-left: 10px;
 }
 
 .pathName {
-   width: 50%;
-   margin-top: 15px;
-   margin-left: 10px;
+    width: 50%;
+    margin-top: 15px;
+    margin-left: 10px;
 }
 
 .header mat-list-item button {
-   margin-left: 10px;
+    margin-left: 10px;
 }
- 
+
 mat-checkbox {
-   margin-left: 10px;
- }
+    margin-left: 10px;
+}
 
-.mat-radio-button ~ .mat-radio-button,
-mat-radio-group  {
-   margin-left: 16px;
- }
+.mat-radio-button~.mat-radio-button,
+mat-radio-group {
+    margin-left: 16px;
+}
 
- .path-table {
+.path-table {
     width: 100%;
- }
- .path-table th,td {
-   text-align: center;
+}
+
+.path-table th,
+td {
+    text-align: center;
 }
 
 .cdk-drag-preview {
-   display: flex;
-   justify-content: space-around;
-   align-items: center;
-   box-sizing: border-box;
-   border-radius: 4px;
-   box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
-               0 8px 10px 1px rgba(0, 0, 0, 0.14),
-               0 3px 14px 2px rgba(0, 0, 0, 0.12);
- }
- 
- .cdk-drag-placeholder {
-   opacity: 0;
- }
- 
- .cdk-drag-animating {
-   transition: transform 150ms cubic-bezier(0, 0, 0.2, 1);
- }
- 
- .example-box:last-child {
-   border: none;
- }
- 
- .example-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
-   transition: transform 150ms cubic-bezier(0, 0, 0.2, 1);
- }
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    box-sizing: border-box;
+    border-radius: 4px;
+    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+.cdk-drag-placeholder {
+    opacity: 0;
+}
+
+.cdk-drag-animating {
+    transition: transform 150ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.example-box:last-child {
+    border: none;
+}
+
+.example-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
+    transition: transform 150ms cubic-bezier(0, 0, 0.2, 1);
+}

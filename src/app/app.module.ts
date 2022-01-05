@@ -35,7 +35,7 @@ const AppRoutes: Routes = [
   {
     path:'login',
     component:LoginPageComponent,
-    // canActivate:[AuthGuard]
+    canActivate:[AuthGuard]
   },
   {
     path: '',
@@ -51,7 +51,7 @@ const AppRoutes: Routes = [
         loadChildren: () => import('./common/common-panel.module').then(m => m.CommonPanelModule),
 
         //** keycloak authGuard**
-        // canActivate:[AuthGuard]  
+        canActivate:[AuthGuard]  
 
       },
       { 
@@ -92,7 +92,7 @@ const AppRoutes: Routes = [
     SharedModule,
     RouterModule.forRoot(AppRoutes),
     MqttModule.forRoot(MQTT_SERVICE_OPTIONS),
-    // AuthModule
+    AuthModule
   ],
   providers: [
     {
