@@ -6,12 +6,13 @@ import { Subscription } from 'rxjs';
 import Janus from '../../../assets/janus/janus.js';
 import adapter from 'webrtc-adapter'; 
 import { DomSanitizer } from '@angular/platform-browser';
+import { JanusStreamingService } from 'src/app/common/remote/janus-streaming.service'
 
 @Component({
   selector: 'app-fpv-panel',
   templateUrl: './fpv-panel.component.html',
   styleUrls: ['./fpv-panel.component.css'],
-  providers:[CommonPanelService]
+  providers:[CommonPanelService,JanusStreamingService]
 })
 export class FpvPanelComponent implements OnInit {
 
@@ -25,7 +26,10 @@ export class FpvPanelComponent implements OnInit {
 
   // cctvStream = window.origin+"/janus/cctv.html";
   cctvStream = "http://192.168.32.90/janus/cctv.html";
-  safeCctvUrl:any
+  safeCctvUrl:any;
+
+  droneVideoSrc:any = null;
+  cctvVideoSrc:any = null; 
 
   //订阅获取无人机、遥控状态主题
   subTopic:string;
@@ -75,17 +79,26 @@ export class FpvPanelComponent implements OnInit {
     private commonSvc: CommonPanelService,
     private mqttSvc: MqttService,
     private sanitizer: DomSanitizer,
+    private streamingDrone: JanusStreamingService,
+    private streamingCctv: JanusStreamingService,
     ) { }
 
-  ngOnInit(): void {
+  async ngOnInit(){
     this.fetchRefNum();
-    this.droneScreaming();
-    this.safeCctvUrl=this.sanitizer.bypassSecurityTrustResourceUrl(this.cctvStream)
+    // this.droneScreaming();
+    this.safeCctvUrl=this.sanitizer.bypassSecurityTrustResourceUrl(this.cctvStream);
+    this.streamingDrone.janusInit(1);
+    this.streamingCctv.janusInit(2);
+    this.getVideoElement();
+    
+
   }
 
   ngOnDestroy(): void {
     this.droneSubscription.unsubscribe();
-    this.commandSubscription.unsubscribe();  
+    this.commandSubscription.unsubscribe();
+    this.streamingDrone.stopStream();
+    this.streamingCctv.stopStream();
   }
 
   //通过commonSvc异步获取机器编号
@@ -178,8 +191,10 @@ export class FpvPanelComponent implements OnInit {
     var that = this;
     const setupDeps = () => Janus.useDefaultDependencies({ adapter });
     
-    Janus.init({debug: "all",dependencies: setupDeps(), callback: function() {
-      // Use a button to start the demo
+    Janus.init({
+      debug: "all",
+      dependencies: setupDeps(), 
+      callback: function() {
         // Make sure the browser supports WebRTC
       if(!Janus.isWebrtcSupported()) {
         alert("No WebRTC support... ");
@@ -251,7 +266,7 @@ export class FpvPanelComponent implements OnInit {
                     }
                   } else if(msg["error"]) {
                     console.error(msg["error"]);
-                    stopStream();
+                    // stopStream();
                     return;
                   }
                   if(jsep) {
@@ -300,6 +315,7 @@ export class FpvPanelComponent implements OnInit {
                 ondata: function(data:any) {
                   // Janus.debug("We got data from the DataChannel!", data);
                 },
+
                 //销毁时的回调函数
                 oncleanup: function() {
                   console.log(" ::: Got a cleanup notification :::");
@@ -343,6 +359,7 @@ export class FpvPanelComponent implements OnInit {
   // 捕捉视频流到video元素上
   function attachMediaStream(element:any, stream:any) {
     try {
+      console.log(":::STREAM::::",stream);
       element.srcObject = stream;
       that.showToolbar = true;
     } catch (e) {
@@ -354,5 +371,41 @@ export class FpvPanelComponent implements OnInit {
     }
   };
   }
+
+  // 接收直播流资源
+ getVideoElement() {
+  setTimeout( () => {
+    this.streamingDrone.getStream().then( stream => {
+      if(stream.active) {
+        this.droneVideoSrc = stream;
+        this.showToolbar = true;
+      } else {
+        this.droneVideoSrc = null;
+      }    
+    });
+    this.streamingCctv.getStream().then( stream => {
+      if(stream.active) {
+        this.cctvVideoSrc = stream;
+      } else {
+        this.cctvVideoSrc = null;
+      }  
+    })
+  },1000)  
+ }
+
+ // 接收直播流资源 ----- 旧方法
+ attachMediaStream(element:any, stream:any) {
+  if(stream) {
+    try {
+      element.srcObject = stream;
+    } catch (e) {
+      try {
+        element.src = URL.createObjectURL(stream);
+      } catch (e) {
+        console.error("Error attaching stream to element");
+      }
+    }
+  }
+};
 
 }

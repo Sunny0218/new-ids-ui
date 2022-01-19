@@ -4,13 +4,14 @@ import { CommonPanelService } from '../common-panel.service';
 import { IMqttMessage, MqttService } from 'ngx-mqtt';
 import { Subscription } from 'rxjs';
 import Janus from '../../../assets/janus/janus.js';
-import adapter from 'webrtc-adapter'; 
+import adapter from 'webrtc-adapter';
+import { JanusStreamingService } from 'src/app/common/remote/janus-streaming.service'
 
 @Component({
   selector: 'app-airport-panel',
   templateUrl: './airport-panel.component.html',
   styleUrls: ['./airport-panel.component.css'],
-  providers:[CommonPanelService]
+  providers:[CommonPanelService,JanusStreamingService]
 })
 export class AirportPanelComponent implements OnInit,OnDestroy {
 
@@ -50,32 +51,35 @@ export class AirportPanelComponent implements OnInit,OnDestroy {
 
   //订阅主题
   subTopic:string;
-  pollInterval: any;
-  heartBeatInterval:any;
+  pollInterval: any = null;
+  heartBeatInterval:any = null;
+
+  cctvVideoSrc:any = null;
 
   appHeartBeat = 0;
   setHeartBeat = 0;
+
 
   private mqttSubscription = new Subscription();
 
   constructor( 
     private commonSvc:CommonPanelService,
     private mqttSvc:MqttService,
+    private streaming: JanusStreamingService,
     ) { }
 
   ngOnInit(): void {
     this.fetchRefNum();
-    this.cctvScreaming();
+    // this.cctvScreaming();
+    this.streaming.janusInit(1);
+    this.getVideoElement();
   }
 
   ngOnDestroy(): void {
     this.mqttSubscription.unsubscribe();
-    if(this.pollInterval) {
-      clearInterval(this.pollInterval);
-    }
-    if(this.heartBeatInterval) {
-      clearInterval(this.heartBeatInterval)
-    }
+    if(this.pollInterval) clearInterval(this.pollInterval);
+    if(this.heartBeatInterval) clearInterval(this.heartBeatInterval);
+    this.streaming.stopStream();
   }
 
   //通过commonSvc异步获取机器编号
@@ -456,4 +460,33 @@ export class AirportPanelComponent implements OnInit,OnDestroy {
     }
   };
   }
+
+ // 接收直播流资源
+ getVideoElement() {
+   setTimeout( () => {
+     this.streaming.getStream().then( stream => {
+        if(stream.active) {
+          this.cctvVideoSrc = stream;
+        } else {
+          this.cctvVideoSrc = null;
+        }   
+     })
+   },1000)  
+ }
+
+ // 接收直播流资源 ----- 旧方法
+ attachMediaStream(element:any, stream:any) {
+   console.log(":::STREAM:::",stream);
+   if(stream) {
+     try {
+       element.srcObject = stream;
+     } catch (e) {
+       try {
+         element.src = URL.createObjectURL(stream);
+       } catch (e) {
+         console.error("Error attaching stream to element");
+       }
+     }
+   }
+};
 }
