@@ -5,14 +5,15 @@ import { IMqttMessage, MqttService } from 'ngx-mqtt';
 import { Subscription } from 'rxjs';
 import Janus from '../../../assets/janus/janus.js';
 import adapter from 'webrtc-adapter';
-import { JanusStreamingService } from 'src/app/common/remote/janus-streaming.service'
+import { CctvStreamingService } from 'src/app/common/remote/cctv-streaming.service'
 
 @Component({
   selector: 'app-airport-panel',
   templateUrl: './airport-panel.component.html',
   styleUrls: ['./airport-panel.component.css'],
-  providers:[CommonPanelService,JanusStreamingService]
+  providers:[CommonPanelService,CctvStreamingService]
 })
+
 export class AirportPanelComponent implements OnInit,OnDestroy {
 
   // 机器编号
@@ -65,21 +66,21 @@ export class AirportPanelComponent implements OnInit,OnDestroy {
   constructor( 
     private commonSvc:CommonPanelService,
     private mqttSvc:MqttService,
-    private streaming: JanusStreamingService,
+    private cctvStreamingSrv: CctvStreamingService,
     ) { }
 
   ngOnInit(): void {
     this.fetchRefNum();
     // this.cctvScreaming();
-    this.streaming.janusInit(1);
-    this.getVideoElement();
+    this.attachMediaStream()
+    // this.getVideoElement()
   }
 
   ngOnDestroy(): void {
     this.mqttSubscription.unsubscribe();
     if(this.pollInterval) clearInterval(this.pollInterval);
     if(this.heartBeatInterval) clearInterval(this.heartBeatInterval);
-    this.streaming.stopStream();
+    this.cctvStreamingSrv.stopStream();
   }
 
   //通过commonSvc异步获取机器编号
@@ -271,12 +272,10 @@ export class AirportPanelComponent implements OnInit,OnDestroy {
 
   // Janus CCTV 直播串流
   cctvScreaming() {
-    var server = environment.janusServer +'/janus';
-    // var server = 'wss://janus.conf.meetecho.com/ws';
+    // var server = environment.janusServer +'/janus';
+    var server = 'wss://janus.conf.meetecho.com/ws';
     var streaming:any = null;
     var opaqueId = "streamingtest-"+Janus.randomString(12);
-    var bitrateTimer:any = null;
-    var spinner:any = null;
     var simulcastStarted:boolean = false;
     var svcStarted = false;
     var janus:any = null;
@@ -392,8 +391,15 @@ export class AirportPanelComponent implements OnInit,OnDestroy {
                   // let video = '<video autoplay muted controls id="remotevideo" width="100%" poster="../../../assets/ids_place_holder.jpg">'+'</video>'
                   // let scream:any = document.getElementById('scream');
                   // scream.innerHTML = video
-                  let videoElement = document.getElementById('cctv')
-                  attachMediaStream(videoElement, stream);
+                  // let videoElement = document.getElementById('cctv')
+                  // attachMediaStream(videoElement, stream);
+
+                  if(stream) {
+                    that.cctvVideoSrc = stream;
+                  } else {
+                    that.cctvVideoSrc = null;
+                  }   
+                       
                   var videoTracks = stream.getVideoTracks();
                   if(!videoTracks || videoTracks.length === 0)
                   return;
@@ -461,32 +467,23 @@ export class AirportPanelComponent implements OnInit,OnDestroy {
   };
   }
 
- // 接收直播流资源
+ // 接收直播流资源 To Do:异步处理 ----- 旧方法
  getVideoElement() {
    setTimeout( () => {
-     this.streaming.getStream().then( stream => {
-        if(stream.active) {
+     this.cctvStreamingSrv.getStream().then( stream => {
+        if(stream) {
           this.cctvVideoSrc = stream;
         } else {
           this.cctvVideoSrc = null;
         }   
      })
-   },1000)  
+   },3000)  
  }
 
- // 接收直播流资源 ----- 旧方法
- attachMediaStream(element:any, stream:any) {
-   console.log(":::STREAM:::",stream);
-   if(stream) {
-     try {
-       element.srcObject = stream;
-     } catch (e) {
-       try {
-         element.src = URL.createObjectURL(stream);
-       } catch (e) {
-         console.error("Error attaching stream to element");
-       }
-     }
-   }
+// 初始化Janus服务,并传VidelElement和StreamingId
+ attachMediaStream() {
+  let cctvVideoElement = document.getElementById('cctv');
+  this.cctvStreamingSrv.janusInit(cctvVideoElement,123);
 };
+
 }

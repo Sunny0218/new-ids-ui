@@ -91,3 +91,56 @@
     font-size: 20px;
     padding: 10px 0;
 }
+
+.small-video {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    box-sizing: border-box;
+}
+
+.small-video .cctvScream video:active {
+    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+    0 8px 10px 1px rgba(0, 0, 0, 0.14),
+    0 3px 14px 2px rgba(0, 0, 0, 0.12);
+    }
+
+.small-video .cctvScream video {
+    cursor: move;
+    box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2),
+    0 2px 2px 0 rgba(0, 0, 0, 0.14),
+    0 1px 5px 0 rgba(0, 0, 0, 0.12);
+}
+
+@media screen and (min-width:0px) {
+    .small-video .cctvScream video,
+    .status-table{
+        width: 100px;
+    }
+}
+
+@media screen and (min-width:480px) {
+    .small-video .cctvScream video,
+    .status-table{
+        width: 160px;
+    }
+}
+
+@media screen and (min-width:780px) {
+    .small-video .cctvScream video,
+    .status-table{
+        width: 240px;
+    }
+}
+@media screen and (min-width:1200px){
+    .small-video .cctvScream video,
+    .status-table{
+        width: 360px;
+    }
+}
+@media screen and (min-width:1400px){
+    .small-video .cctvScream video,
+    .status-table{
+        width: 480px;
+    }
+}

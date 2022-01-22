@@ -6,13 +6,14 @@ import { Subscription } from 'rxjs';
 import Janus from '../../../assets/janus/janus.js';
 import adapter from 'webrtc-adapter'; 
 import { DomSanitizer } from '@angular/platform-browser';
-import { JanusStreamingService } from 'src/app/common/remote/janus-streaming.service'
+import { JanusStreamingService } from 'src/app/common/remote/janus-streaming.service';
+import { CctvStreamingService } from 'src/app/common/remote/cctv-streaming.service'
 
 @Component({
   selector: 'app-fpv-panel',
   templateUrl: './fpv-panel.component.html',
   styleUrls: ['./fpv-panel.component.css'],
-  providers:[CommonPanelService,JanusStreamingService]
+  providers:[CommonPanelService,JanusStreamingService,CctvStreamingService]
 })
 export class FpvPanelComponent implements OnInit {
 
@@ -28,8 +29,13 @@ export class FpvPanelComponent implements OnInit {
   cctvStream = "http://192.168.32.90/janus/cctv.html";
   safeCctvUrl:any;
 
+  videoTitle:String = "Drone"
   droneVideoSrc:any = null;
-  cctvVideoSrc:any = null; 
+  cctvVideoSrc:any = null;
+  switchSrcFlat:boolean = true;
+
+  droneVideoElement:any = null;
+  cctvVideoElement:any = null;
 
   //订阅获取无人机、遥控状态主题
   subTopic:string;
@@ -79,17 +85,18 @@ export class FpvPanelComponent implements OnInit {
     private commonSvc: CommonPanelService,
     private mqttSvc: MqttService,
     private sanitizer: DomSanitizer,
-    private streamingDrone: JanusStreamingService,
-    private streamingCctv: JanusStreamingService,
+    private droneStreamingSrv: JanusStreamingService,
+    private cctvStreamingSrv: CctvStreamingService,
     ) { }
 
-  async ngOnInit(){
+  ngOnInit(){
+    this.droneVideoElement = document.getElementById('drone');
+    this.cctvVideoElement = document.getElementById('cctv-small');
     this.fetchRefNum();
     // this.droneScreaming();
     this.safeCctvUrl=this.sanitizer.bypassSecurityTrustResourceUrl(this.cctvStream);
-    this.streamingDrone.janusInit(1);
-    this.streamingCctv.janusInit(2);
-    this.getVideoElement();
+    // this.getVideoElement();
+    this.attachMediaStream();
     
 
   }
@@ -97,8 +104,8 @@ export class FpvPanelComponent implements OnInit {
   ngOnDestroy(): void {
     this.droneSubscription.unsubscribe();
     this.commandSubscription.unsubscribe();
-    this.streamingDrone.stopStream();
-    this.streamingCctv.stopStream();
+    this.droneStreamingSrv.stopStream();
+    this.cctvStreamingSrv.stopStream();
   }
 
   //通过commonSvc异步获取机器编号
@@ -176,7 +183,7 @@ export class FpvPanelComponent implements OnInit {
   }
 
   // Janus Drone 直播串流
-  droneScreaming() {
+  droneStreaming() {
     var server = environment.janusServer +'/janus';
     // var server = 'https://ids.hdcircles.tech' + ':8089'+ '/janus'
     // var server = 'wss://janus.conf.meetecho.com/ws';
@@ -372,40 +379,51 @@ export class FpvPanelComponent implements OnInit {
   };
   }
 
-  // 接收直播流资源
+
+  // 接收直播流资源 To Do:异步处理  ----- 旧方法
  getVideoElement() {
   setTimeout( () => {
-    this.streamingDrone.getStream().then( stream => {
-      if(stream.active) {
-        this.droneVideoSrc = stream;
-        this.showToolbar = true;
-      } else {
-        this.droneVideoSrc = null;
-      }    
-    });
-    this.streamingCctv.getStream().then( stream => {
-      if(stream.active) {
+    // this.droneStreamingSrv.getStream().then( stream => {
+    //   if(stream) {
+    //     this.droneVideoSrc = stream;
+    //     this.showToolbar = true;
+    //   } else {
+    //     this.droneVideoSrc = null;
+    //   }    
+    // });
+    this.cctvStreamingSrv.getStream().then( stream => {
+      if(stream) {
         this.cctvVideoSrc = stream;
       } else {
         this.cctvVideoSrc = null;
       }  
     })
-  },1000)  
+  },3000)  
  }
 
- // 接收直播流资源 ----- 旧方法
- attachMediaStream(element:any, stream:any) {
-  if(stream) {
-    try {
-      element.srcObject = stream;
-    } catch (e) {
-      try {
-        element.src = URL.createObjectURL(stream);
-      } catch (e) {
-        console.error("Error attaching stream to element");
-      }
-    }
-  }
+ // 初始化Janus服务,并传VidelElement和StreamingId
+ attachMediaStream() {
+  this.droneStreamingSrv.janusInit(this.droneVideoElement,1);
+  this.cctvStreamingSrv.janusInit(this.cctvVideoElement,123);
+  this.showToolbar = true;
 };
+
+//转换Video Scream 资源 
+switchVideoSrc() {
+
+  if (!this.switchSrcFlat) {
+    this.videoTitle = "DRONE";
+    this.droneStreamingSrv.SwitchSrc(this.droneVideoElement);
+    this.cctvStreamingSrv.SwitchSrc(this.cctvVideoElement);
+    this.switchSrcFlat = !this.switchSrcFlat;
+   } else {
+    this.videoTitle = "CCTV";
+    this.droneStreamingSrv.SwitchSrc(this.cctvVideoElement);
+    this.cctvStreamingSrv.SwitchSrc(this.droneVideoElement);
+    this.switchSrcFlat = !this.switchSrcFlat;
+   }
+}
+
+
 
 }

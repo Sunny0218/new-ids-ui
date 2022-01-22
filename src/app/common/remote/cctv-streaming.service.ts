@@ -4,7 +4,7 @@ import Janus from '../../../assets/janus/janus.js';
 import adapter from 'webrtc-adapter'; 
 
 @Injectable()
-export class JanusStreamingService {
+export class CctvStreamingService {
 
   streamingPlugin:any = null; //定义streaming插件
   // server = environment.janusServer +'/janus'; //Janus服务器
@@ -14,6 +14,7 @@ export class JanusStreamingService {
   stream:any = null; //定义接收的直播流资源
   status:any = null; //定义直播流状态信息
   error:any = null; //定义直播流错误信息
+  element:any = null;
 
 
   constructor() { }
@@ -175,6 +176,7 @@ export class JanusStreamingService {
     this.stream = null
     this.status = null
     this.error = null
+    this.element = null
   };
 
   //错误消息提示
@@ -182,19 +184,19 @@ export class JanusStreamingService {
     this.error = message + error;
   };
   
-  //video element 更换stream
-  SwitchSrc(element:any,stream = this.stream) {
-    try {
-      element.srcObject = stream;
-    } catch (e) {
+    //video element 更换stream
+    SwitchSrc(element:any,stream = this.stream) {
       try {
-        element.src = URL.createObjectURL(stream);
+        element.srcObject = stream;
       } catch (e) {
-        console.error("Error attaching stream to element");
+        try {
+          element.src = URL.createObjectURL(stream);
+        } catch (e) {
+          console.error("Error attaching stream to element");
+        }
       }
-    }
-  } 
-
+    } 
+  
 
   //异步获取直播流资源
   async getStream () {
