@@ -404,7 +404,7 @@ export class FpvPanelComponent implements OnInit {
  // 初始化Janus服务,并传VidelElement和StreamingId
  attachMediaStream() {
   this.droneStreamingSrv.janusInit(this.droneVideoElement,1);
-  this.cctvStreamingSrv.janusInit(this.cctvVideoElement,123);
+  this.cctvStreamingSrv.janusInit(this.cctvVideoElement,2);
   this.showToolbar = true;
 };
 

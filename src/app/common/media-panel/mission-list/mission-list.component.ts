@@ -77,7 +77,6 @@ export class MissionListComponent implements OnInit {
       let respData: any[] = resp["data"];
       this.dataSource.data = respData.slice();
       });
-
   }
 
   ngAfterViewInit(): void {

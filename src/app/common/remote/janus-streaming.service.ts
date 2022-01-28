@@ -7,8 +7,8 @@ import adapter from 'webrtc-adapter';
 export class JanusStreamingService {
 
   streamingPlugin:any = null; //定义streaming插件
-  // server = environment.janusServer +'/janus'; //Janus服务器
-  server = 'wss://janus.conf.meetecho.com/ws';
+  server = environment.janusServer +'/janus'; //Janus服务器
+  // server = 'wss://janus.conf.meetecho.com/ws';
   // opaqueId = "streamingtest-"+Janus.randomString(12);  //随机生成插件唯一id
   janus:any = null; //定义janus变量
   stream:any = null; //定义接收的直播流资源

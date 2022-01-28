@@ -13,6 +13,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { LoadPathsComponent } from './path-panel/load-paths/load-paths.component';
 import { VrViewComponent } from './vr-view/vr-view.component';
 import { ReconfirmDialogComponent } from './path-panel/reconfirm-dialog/reconfirm-dialog.component';
+import { MapPanelComponent } from './map-panel/map-panel.component';
 
 const CommonPanelroutes:Routes = [
   {
@@ -34,6 +35,10 @@ const CommonPanelroutes:Routes = [
   {
     path:'360view',
     component:VrViewComponent
+  },
+  {
+    path:'map',
+    component:MapPanelComponent
   }
 ] 
 
@@ -46,6 +51,7 @@ const CommonPanelroutes:Routes = [
     LoadPathsComponent,
     VrViewComponent,
     ReconfirmDialogComponent,
+    MapPanelComponent,
   ],
   imports: [
     CommonModule,

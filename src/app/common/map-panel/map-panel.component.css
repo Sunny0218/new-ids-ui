@@ -1,0 +1,35 @@
+
+.draw-func {
+    position: absolute;
+    right: 150px;
+    bottom: 30px;
+}
+
+.show-area {
+    height: 460px;
+    width: 8rem;
+    position: absolute;
+    right: 30px;
+    top: 50%;
+    transform: translateY(-50%); 
+}
+
+.show-area div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 auto;
+}
+
+.input-item{
+    height: 2.2rem;
+  }
+.btn{
+  width: 6rem;
+  margin: 0 1rem 0 2rem;
+}
+.input-text{
+  width: 4rem;
+  margin-right:1rem;
+}

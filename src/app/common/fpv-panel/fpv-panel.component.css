@@ -122,25 +122,25 @@
 @media screen and (min-width:480px) {
     .small-video .cctvScream video,
     .status-table{
-        width: 160px;
+        width: 100px;
     }
 }
 
 @media screen and (min-width:780px) {
     .small-video .cctvScream video,
     .status-table{
-        width: 240px;
+        width: 150px;
     }
 }
 @media screen and (min-width:1200px){
     .small-video .cctvScream video,
     .status-table{
-        width: 360px;
+        width: 210px;
     }
 }
 @media screen and (min-width:1400px){
     .small-video .cctvScream video,
     .status-table{
-        width: 480px;
+        width: 270px;
     }
 }

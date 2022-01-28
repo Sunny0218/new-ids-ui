@@ -229,7 +229,8 @@ export class VrViewComponent implements OnInit {
   ngAfterViewInit(): void {
     this.player = videojs('vrScream',this.config, () => {
       console.log('Using video.js ' + videojs.VERSION);
-      this.player.src("https://cdn-au.metacdn.com/jumipqxo/1u2Jh28/20160823050905_file_id14719289501962016_08_08_08_22_16_er_MP4-HIGH-WEBM_VP9.webm")
+      // this.player.src("https://cdn-au.metacdn.com/jumipqxo/1u2Jh28/20160823050905_file_id14719289501962016_08_08_08_22_16_er_MP4-HIGH-WEBM_VP9.webm")
+       this.player.src("src/assets/images/360view.jpg")
       this.player.vr({projection: '360'})
     })
   }

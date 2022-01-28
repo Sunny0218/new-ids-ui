@@ -63,6 +63,7 @@ const MENUITEMS = [
   { state: 'fpv', type: 'link', name: 'Drones', icon: 'airplanemode_active' },
   { state: 'airport', type: 'link', name: 'Airport', icon: 'border_outer' }, 
   { state: '360view', type: 'link', name: '360 View', icon: 'panorama' }, 
+  { state: 'map', type: 'link', name: 'Map', icon: 'map' }, 
 ];
 
 @Injectable()

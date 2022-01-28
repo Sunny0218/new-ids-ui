@@ -1,0 +1,71 @@
+<div fxLayout="row">
+    <div fxFlex.gt-sm="100%">
+        <mat-card>
+            <mat-card-content>
+                <mat-card-title>{{title}}</mat-card-title>
+                <div id='container' style='width:100%; height:720px;'></div>
+                <div class="input-card draw-func" style='width: 24rem;'>
+                    <div class="input-item">
+                        <input type="radio" name='func' value='marker' (change)="draw('location')"><span class="input-text">地面站</span>
+                        <input type="radio" name='func' value='polyline' (change)="draw('flyArea')"><span class="input-text">放飛範圍</span>
+                        <input type="radio" name='func' value='polygon'(change)="draw('showArea')" ><span class="input-text" style='width:5rem;'>表演區域</span>
+                    </div>
+                    <div class="input-item">
+                        <input type="radio" name='func' value='polygon' (change)="draw('eleFence')"><span class="input-text">電子圍欄</span>
+                        <input type="radio" name='func' value='polygon' (change)="draw('viewer')"><span class="input-text">觀衆區域</span>
+                        <input type="radio" name='func' value='polygon' (change)="draw('landing')"><span class="input-text">起降區域</span>
+                    </div>
+                    <div class="input-item">
+                        <input type="radio" name='func' value='polygon' (change)="draw('reserve')"><span class="input-text">備降區域</span>
+                    </div>
+                    <div class="input-item" >
+                        <input id="clear" type="button" class="btn" value="清除"  (click)="clear()"/>
+                        <input id="close" type="button" class="btn" value="關閉繪製" (click)="closeDraw()" />
+                    </div>
+                    <!-- <div class="input-item">
+                        <input id="clear" type="button" class="btn" value="新建"  (click)="createPolygon()"/>
+                        <input id="clear" type="button" class="btn" value="开始编辑"  (click)="startEditor()"/>
+                        <input id="close" type="button" class="btn" value="关闭编辑" (click)="closeEditor()" />
+                    </div> -->
+                </div>
+                <div class="input-card show-area">
+                    <div class="location">
+                        <span>地面站</span>
+                        <img src="https://webapi.amap.com/theme/v1.3/markers/n/mark_bs.png" style="width: 16px;">
+                        <hr>
+                    </div>
+                    <div class="flyArea">
+                        <span>放飛範圍</span>
+                        <img src="../../../assets/images//amap-icon/flyArea.png" style="width: 30px;">
+                        <hr>
+                    </div>
+                    <div class="showArea">
+                        <span>表演區域</span>
+                        <img src="../../../assets/images//amap-icon/show.png" style="width: 30px;">
+                        <hr>
+                    </div>
+                    <div class="eleFence">
+                        <span>電子圍欄</span>
+                        <img src="../../../assets/images//amap-icon/eleFence.png" style="width: 30px;">
+                        <hr>
+                    </div>
+                    <div class="viewer">
+                        <span>觀衆區域</span>
+                        <img src="../../../assets/images//amap-icon/viewer.png" style="width: 30px;">
+                        <hr>
+                    </div>
+                    <div class="landing">
+                        <span>起降區域</span>
+                        <img src="../../../assets/images//amap-icon/landing.png" style="width: 30px;">
+                        <hr>
+                    </div>
+                    <div class="landing">
+                        <span>備降區域</span>
+                        <img src="../../../assets/images//amap-icon/reserve.png" style="width: 30px;">
+                        <hr>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

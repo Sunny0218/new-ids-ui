@@ -170,7 +170,7 @@ export class AirportPanelComponent implements OnInit,OnDestroy {
         this.chargerBtnBusy = this.holderState == "RELEASE";
         this.holderBtnBusy = false ;
         
-        this.droneSwitchBtnBusy = !( this.holderState == "LOCKED" && this.rcSwitchState == "ON");
+        this.droneSwitchBtnBusy = !( this.holderState === "LOCKED" && this.rcSwitchState === "ON");
 
       } catch (error) {
         console.error(error);
@@ -483,7 +483,7 @@ export class AirportPanelComponent implements OnInit,OnDestroy {
 // 初始化Janus服务,并传VidelElement和StreamingId
  attachMediaStream() {
   let cctvVideoElement = document.getElementById('cctv');
-  this.cctvStreamingSrv.janusInit(cctvVideoElement,123);
+  this.cctvStreamingSrv.janusInit(cctvVideoElement,2);
 };
 
 }
