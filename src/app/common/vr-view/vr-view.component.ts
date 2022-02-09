@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import Janus from '../../../assets/janus/janus.js'
+import Janus from '../../../assets/janus/janus.js';
 import adapter from 'webrtc-adapter'; 
 import videojs from 'video.js';
 import 'videojs-vr/dist/videojs-vr.js';
+declare var pannellum: any;
+
 
 @Component({
   selector: 'app-vr-view',
@@ -25,6 +27,7 @@ export class VrViewComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.loadPannellum();
 
   }
 
@@ -227,18 +230,27 @@ export class VrViewComponent implements OnInit {
   }
 
   ngAfterViewInit(): void {
-    this.player = videojs('vrScream',this.config, () => {
-      console.log('Using video.js ' + videojs.VERSION);
-      // this.player.src("https://cdn-au.metacdn.com/jumipqxo/1u2Jh28/20160823050905_file_id14719289501962016_08_08_08_22_16_er_MP4-HIGH-WEBM_VP9.webm")
-       this.player.src("src/assets/images/360view.jpg")
-      this.player.vr({projection: '360'})
-    })
+    // this.player = videojs('vrScream',this.config, () => {
+    //   console.log('Using video.js ' + videojs.VERSION);
+    //   // this.player.src("https://cdn-au.metacdn.com/jumipqxo/1u2Jh28/20160823050905_file_id14719289501962016_08_08_08_22_16_er_MP4-HIGH-WEBM_VP9.webm")
+    //    this.player.src("src/assets/images/360view.jpg")
+    //   this.player.vr({projection: '360'})
+    // })
   }
 
   ngOnDestroy(): void {
     if (this.player) {
       this.player.dispose();
     }
+  }
+
+  loadPannellum() {
+    pannellum.viewer('pano-image', {
+      "type": "equirectangular",
+      "panorama": "../../../assets/images/360images/360view.jpg",
+      "autoLoad": true,
+      "autoRotate": -2
+  });
   }
 
 }

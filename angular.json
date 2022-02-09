@@ -31,9 +31,12 @@
                         "styles": [
                             "node_modules/chartist/dist/chartist.css",
                             "src/styles.css",
-                            "src/assets/styles/style.scss"
+                            "src/assets/styles/style.scss",
+                            "node_modules/pannellum/build/pannellum.css"
                         ],
-                        "scripts": [],
+                        "scripts": [
+                            "node_modules/pannellum/build/pannellum.js"
+                        ],
                         "vendorChunk": true,
                         "extractLicenses": false,
                         "buildOptimizer": false,

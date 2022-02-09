@@ -12,8 +12,9 @@ export class MapPanelComponent implements OnInit,AfterViewInit,OnDestroy {
   title = 'Map';
   overlays:Array<any>;
   mouseTool:any;
-  polyEditor:any;
+  polygonEditor:any;
   initOverlays:Array<any>;
+  lastStepDisanled:boolean = true;
 
   constructor() { }
 
@@ -21,7 +22,6 @@ export class MapPanelComponent implements OnInit,AfterViewInit,OnDestroy {
     // this.getMap();
     this.getlocaltion();
     this.loadMouseTool();
-    this.getAllArea();
   }
 
   ngAfterViewInit(): void {
@@ -33,37 +33,68 @@ export class MapPanelComponent implements OnInit,AfterViewInit,OnDestroy {
 
   }
 
-  //创建并编辑多边形 To Do
-  createPolygon() {
-    this.map.plugin(['AMap.PolyEditor'], () => {
-      this.polyEditor = new AMap.PolyEditor(this.map)
-      this.polyEditor.close();
-      // this.polyEditor.setTarget();
-      this.polyEditor.open();
-    });
-
-  }
-
-
   //加载地图时绘制固定位置覆盖物
-  getAllArea() {
-    var flyingPath = [[113.576638, 22.147969], 
-                      [113.574235, 22.146995], 
-                      [113.573967, 22.146697], 
-                      [113.574214, 22.145465], 
-                      [113.574375, 22.144332], 
-                      [113.574192, 22.142156],
-                      [113.574428, 22.141867], 
-                      [113.575855, 22.141907], 
-                      [113.577261, 22.142056],
-                      [113.579718, 22.142593], 
-                      [113.579921, 22.14304], 
-                      [113.57666, 22.147979]]
+  InitArea() {
+    var flyingPath = [[113.574401, 22.143284],
+                      [113.574347, 22.143234],
+                      [113.574347, 22.142981],
+                      [113.574278, 22.142881],
+                      [113.574251, 22.142687],
+                      [113.574229, 22.142384],
+                      [113.574278, 22.142181],
+                      [113.574428, 22.142022],
+                      [113.57461,  22.141937],
+                      [113.575554, 22.141967],
+                      [113.575839, 22.141987],
+                      [113.576413, 22.142032],
+                      [113.576439, 22.143328],
+                      [113.576311, 22.143254],
+                      [113.576075, 22.143229],
+                      [113.575978, 22.143229],
+                      [113.575817, 22.14307 ],
+                      [113.575581, 22.14302 ],
+                      [113.575334, 22.143055],
+                      [113.575077, 22.143169],
+                      [113.574841, 22.143299],
+                      [113.574406, 22.143299]]
 
-    var showPath = [[113.574325, 22.145924], 
-                    [113.574486, 22.143539], 
-                    [113.576331, 22.143569], 
-                    [113.576235, 22.145954]]
+    var showPath = [[113.574438, 22.143164],
+                    [113.574476, 22.143254],
+                    [113.574535, 22.143264],
+                    [113.574835, 22.143269],
+                    [113.575222, 22.14305 ],
+                    [113.575447, 22.142986],
+                    [113.57571 , 22.143001],
+                    [113.575849, 22.143045],
+                    [113.575978, 22.143209],
+                    [113.576166, 22.143199],
+                    [113.576418, 22.14324 ],
+                    [113.576386, 22.142081],
+                    [113.574701, 22.14202 ],
+                    [113.574514, 22.14205 ],
+                    [113.574374, 22.14223 ],
+                    [113.574331, 22.142379],
+                    [113.574326, 22.142568],
+                    [113.574363, 22.142871],
+                    [113.574422, 22.142911]]
+    
+    var showPath1 = [[113.574894, 22.147179],
+                     [113.574921, 22.146459],
+                     [113.575173, 22.146434],
+                     [113.575248, 22.146305],
+                     [113.575082, 22.14623 ],
+                     [113.574953, 22.14619 ],
+                     [113.574283, 22.14624 ],
+                     [113.574208, 22.146275],
+                     [113.574154, 22.146429],
+                     [113.574111, 22.146439],
+                     [113.574074, 22.146583],
+                     [113.57409,  22.146712],
+                     [113.574181, 22.146782],
+                     [113.574272, 22.146906],
+                     [113.574337, 22.146961],
+                     [113.57453,  22.14704 ],
+                     [113.574589, 22.14704 ]]            
 
     var eleFencePath = [[113.572063, 22.144769], 
                         [113.574101, 22.144739], 
@@ -72,23 +103,80 @@ export class MapPanelComponent implements OnInit,AfterViewInit,OnDestroy {
                         [113.572415, 22.147246], 
                         [113.570977, 22.147107],
                         [113.569239, 22.147554], 
-                        [113.5691, 22.14657], 
+                        [113.5691, 22.14657   ], 
                         [113.569003, 22.145298],
-                        [113.569261, 22.14503]]
+                        [113.569261, 22.14503 ]]
 
-    var viewerPath = [[113.577801, 22.145865], 
-                      [113.577694, 22.143788], 
-                      [113.578702, 22.144493]]
+    var viewerPath = [[113.57432, 22.145902],
+                      [113.574406,22.145947],
+                      [113.574803,22.145917],
+                      [113.574991,22.145912],
+                      [113.575581,22.145226],
+                      [113.575501,22.144069],
+                      [113.57505, 22.143741],
+                      [113.574937,22.143592],
+                      [113.574814,22.143542],
+                      [113.574514,22.143597],
+                      [113.574556,22.144233],
+                      [113.574508,22.144894]]
 
-    var landingPath = [[113.576353, 22.145924], 
-                       [113.576857, 22.145924], 
-                       [113.576889, 22.143599],
-                       [113.576428, 22.143589]]
+    var viewerPath1 = [[113.574514, 22.143517],
+                       [113.574814, 22.143497],
+                       [113.575023, 22.143423],
+                       [113.575248, 22.143269],
+                       [113.575399, 22.143229],
+                       [113.57557,  22.143259],
+                       [113.575731, 22.143408],
+                       [113.57586,  22.143562],
+                       [113.575892, 22.143617],
+                       [113.576037, 22.143726],
+                       [113.5763,   22.143756],
+                       [113.576375, 22.143701],
+                       [113.576364, 22.143482],
+                       [113.576359, 22.143373],
+                       [113.576278, 22.143284],
+                       [113.576112, 22.143259],
+                       [113.575983, 22.143269],
+                       [113.575908, 22.143244],
+                       [113.575801, 22.14311 ],
+                       [113.57549,  22.14307 ],
+                       [113.575318, 22.14312 ],
+                       [113.575034, 22.143254],
+                       [113.574835, 22.143348],
+                       [113.574487, 22.143328]]
 
-    var reservePath = [[113.574561, 22.14339], 
-                       [113.576868, 22.14345], 
-                       [113.576814, 22.142874],
-                       [113.574529, 22.142864]]
+    var viewerPath2 = [[113.574269, 22.146171],
+                       [113.574919, 22.146136],
+                       [113.575203, 22.146225],
+                       [113.575434, 22.146315],
+                       [113.575546, 22.146315],
+                       [113.57553,  22.146146],
+                       [113.575348, 22.146121],
+                       [113.575267, 22.146012],
+                       [113.575063, 22.145967],
+                       [113.57464,  22.145962],
+                       [113.574312, 22.145952]]
+
+    var landingPath = [[113.575914, 22.142504],
+                       [113.57637,  22.142509],
+                       [113.576364, 22.142091],
+                       [113.575919, 22.142076]]
+    
+    var landingPath1 = [[113.574632, 22.146429],
+                        [113.574862, 22.146419],
+                        [113.574851, 22.14623 ],
+                        [113.574605, 22.146235]]
+
+    var reservePath = [[113.575908,22.142911], 
+                       [113.576375,22.142911], 
+                       [113.576359,22.142528],
+                       [113.575914,22.142533]]
+
+    var reservePath1 = [[113.574924,22.146429], 
+                        [113.57516, 22.146419], 
+                        [113.575165,22.14627 ],
+                        [113.574908,22.1462  ]]
+
 
     var flying = new AMap.Polyline({
       path: flyingPath,
@@ -98,7 +186,7 @@ export class MapPanelComponent implements OnInit,AfterViewInit,OnDestroy {
     })
 
     var show = new AMap.Polygon({
-      path: showPath,
+      path: [showPath,showPath1],
       fillColor:'#1791fc',
       strokeColor:'black',
       strokeStyle: "dashed",
@@ -116,7 +204,7 @@ export class MapPanelComponent implements OnInit,AfterViewInit,OnDestroy {
     })
 
     var viwer= new AMap.Polygon({
-      path: viewerPath,
+      path: [viewerPath,viewerPath1,viewerPath2],
       fillColor:'#58bf58',
       strokeColor:'black',
       strokeStyle: "dashed",
@@ -125,7 +213,7 @@ export class MapPanelComponent implements OnInit,AfterViewInit,OnDestroy {
     })  
 
     var landing= new AMap.Polygon({
-      path: landingPath,
+      path: [landingPath,landingPath1],
       fillColor:'#ff0000',
       strokeColor:'black',
       strokeStyle: "dashed",
@@ -134,7 +222,7 @@ export class MapPanelComponent implements OnInit,AfterViewInit,OnDestroy {
     })
 
     var reserve= new AMap.Polygon({
-      path: reservePath,
+      path: [reservePath,reservePath1],
       fillColor:'#f0e336',
       strokeColor:'black',
       strokeStyle: "dashed",
@@ -142,7 +230,7 @@ export class MapPanelComponent implements OnInit,AfterViewInit,OnDestroy {
       fillOpacity: 0.4
     }) 
 
-    this.initOverlays = [flying,show,eleFence,viwer,landing,reserve];
+    this.initOverlays = [flying,show,viwer,landing,reserve];
     this.map.add(this.initOverlays)
 
   }
@@ -173,30 +261,42 @@ export class MapPanelComponent implements OnInit,AfterViewInit,OnDestroy {
     // //  设置我们需要的目标城市
     // this.map.setCity("成都"); // 或者输入精度
     //  自定义一个标识(marker)
-    let customMarker = new AMap.Marker({
-        // 这个是在高德API里面的参考手册的基础类里面
-        // 自定义偏移量
-        offset: new AMap.Pixel(0, 0), // 使用的是Pixel类
-        // 这个是在高德API里面的参考手册的覆盖物里面
-        //  自定义图标
-        icon: new AMap.Icon({ // 复杂图标类
-            // 设定图标的大小
-            size: new AMap.Size(27, 36),
-            // 图片地址
-            imgae: '//vdata.amap.com/icons/b18/1/2.png',
-            imageOffset: new AMap.Pixel(-28, 0)// 相对于大图的取图位置
-        })
-    });
+    // let customMarker = new AMap.Marker({
+    //     // 这个是在高德API里面的参考手册的基础类里面
+    //     // 自定义偏移量
+    //     offset: new AMap.Pixel(0, 0), // 使用的是Pixel类
+    //     // 这个是在高德API里面的参考手册的覆盖物里面
+    //     //  自定义图标
+    //     icon: new AMap.Icon({ // 复杂图标类
+    //         // 设定图标的大小
+    //         size: new AMap.Size(27, 36),
+    //         // 图片地址
+    //         imgae: '//vdata.amap.com/icons/b18/1/2.png',
+    //         imageOffset: new AMap.Pixel(-28, 0)// 相对于大图的取图位置
+    //     })
+    // });
+
+
+    this.InitArea();
 
     //  添加地图插件：地图工具条
     this.map.plugin(['AMap.ToolBar'], () => {
         // 设置地位标记为自定义标
         let toolBar = new AMap.ToolBar({
-            locationMarker: customMarker
+            // locationMarker: customMarker
+            position:'LT'
         });
         //  添加插件
         this.map.addControl(toolBar);
     });
+
+    // 添加工具条方向盘
+  //   this.map.plugin(["AMap.ControlBar"], () => {
+  //     var controlBar = new AMap.ControlBar({
+
+  //     })
+  //     this.map.addControl(controlBar)
+  // });
 
     //  添加比例尺插件
     this.map.plugin(['AMap.Scale'], () => {
@@ -212,18 +312,22 @@ export class MapPanelComponent implements OnInit,AfterViewInit,OnDestroy {
         this.map.addControl(type);
     });
 
-    // //  加载鹰眼
+    // //  加载鹰眼 1.x版本：OverView  2.0版本：HawkEye
     this.map.plugin(["AMap.OverView"], () => {
         let view = new AMap.OverView({
             // 鹰眼是否展示
             visible: true,
             // 鹰眼是否展开
-            isOpen: true
+            isOpen: true,
+            // width:'120px',
+            // height:'120px'
+
         });
         this.map.addControl(view);
         // 调用方法 显示鹰眼窗口
         view.show();
     });
+
 
     // 添加定位
     this.map.plugin('AMap.Geolocation', () => {
@@ -246,11 +350,11 @@ export class MapPanelComponent implements OnInit,AfterViewInit,OnDestroy {
         // 调用方法 获取用户当前的精确位置信息
         geolocation.getCurrentPosition();
         //  定时刷新位置
-        geolocation.watchPosition(
-            2
-        );
+        // geolocation.watchPosition(
+        //     2
+        // );
 
-        AMap.event.addListener(geolocation, 'complete', (data: any) => {
+        geolocation.on('complete', (data: any) => {
             // var marker = new AMap.Marker({
             //     icon: '//vdata.amap.com/icons/b18/1/2.png',
             //     position: data.position,   // 经纬度对象，也可以是经纬度构成的一维数组[116.39, 39.9]
@@ -262,7 +366,7 @@ export class MapPanelComponent implements OnInit,AfterViewInit,OnDestroy {
 
             console.log("定位成功",data);
         }); //  返回定位信息
-        AMap.event.addListener(geolocation, 'error', (error: any) => {
+        geolocation.on('error', (error: any) => {
             console.log("定位失败",error);
         });      // 返回定位出错信息
     });
@@ -297,7 +401,24 @@ export class MapPanelComponent implements OnInit,AfterViewInit,OnDestroy {
 
     // });
 
+    //多边形编辑器吸附功能
+    // this.map.plugin(['AMap.PolygonEditor'], () => {
+    //   this.polygonEditor = new AMap.PolygonEditor(this.map)
+    // });
 
+    // this.polygonEditor.on('add', (data: { target: any; obj:any }) => {
+    //   this.overlays.push(data.obj);
+    //   if ( this.overlays.length > 0) {
+    //     this.lastStepDisanled = false;
+    //   }
+    //   var polygon = data.target;
+    //   this.polygonEditor.addAdsorbPolygons(polygon);
+
+    //   polygon.on('dblclick', () => {
+    //     this.polygonEditor.setTarget(polygon);
+    //     this.polygonEditor.open();
+    //   })
+    // })
   }
 
   //加载鼠标绘制工具
@@ -309,6 +430,9 @@ export class MapPanelComponent implements OnInit,AfterViewInit,OnDestroy {
 
     this.mouseTool.on('draw', (e: { obj: any; }) => {
       this.overlays.push(e.obj);
+      if ( this.overlays.length > 0) {
+        this.lastStepDisanled = false;
+      }
       var overlay = e.obj;
       if (overlay.CLASS_NAME === 'AMap.Marker') {
         console.log(overlay.getPosition()); //获取点标注位置
@@ -326,7 +450,7 @@ export class MapPanelComponent implements OnInit,AfterViewInit,OnDestroy {
       case 'location':{
           this.mouseTool.marker({
             draggable: true,
-            raiseOnDrag: true
+            // raiseOnDrag: true
           });
           break;
       }
@@ -390,6 +514,8 @@ export class MapPanelComponent implements OnInit,AfterViewInit,OnDestroy {
   clear() {
     var all = this.initOverlays.concat(this.overlays)
     this.map.remove(all)
+    this.overlays = [];
+    this.lastStepDisanled = true;
   }
 
   //关闭绘制覆盖物功能
@@ -401,16 +527,36 @@ export class MapPanelComponent implements OnInit,AfterViewInit,OnDestroy {
     }
   }
 
-  startEditor() {
-    this.map.plugin(['AMap.PolyEditor'], () => {
-      this.polyEditor = new AMap.PolyEditor(this.map)
-      this.polyEditor.open()
-    });
-
+  //创建并编辑多边形 To Do
+  createPolygon() {
+    this.polygonEditor.close();
+    this.polygonEditor.setTarget();
+    this.polygonEditor.open();
   }
 
+  //开始编辑 To Do
+  startEditor() {
+    this.polygonEditor.open();
+  }
+
+  //结束编辑 To Do
   closeEditor() {
-    this.polyEditor.close()
+    this.polygonEditor.close()
+  }
+
+
+  //撤回最新绘制的覆盖物
+  lastStep() {
+    // this.polygonEditor.close();
+    let len = this.overlays.length;
+    if ( len > 0) {
+      this.lastStepDisanled = false;
+      this.map.remove(this.overlays[len - 1])
+      this.overlays.pop();
+        if( this.overlays.length === 0) {
+          this.lastStepDisanled = true;
+        } 
+    }   
   }
 
 
