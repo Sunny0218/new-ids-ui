@@ -14,6 +14,7 @@ import { LoadPathsComponent } from './path-panel/load-paths/load-paths.component
 import { VrViewComponent } from './vr-view/vr-view.component';
 import { ReconfirmDialogComponent } from './path-panel/reconfirm-dialog/reconfirm-dialog.component';
 import { MapPanelComponent } from './map-panel/map-panel.component';
+import { VrImageComponent } from './vr-image/vr-image.component';
 
 const CommonPanelroutes:Routes = [
   {
@@ -37,6 +38,10 @@ const CommonPanelroutes:Routes = [
     component:VrViewComponent
   },
   {
+    path:'360image',
+    component:VrImageComponent
+  },
+  {
     path:'map',
     component:MapPanelComponent
   }
@@ -52,6 +57,7 @@ const CommonPanelroutes:Routes = [
     VrViewComponent,
     ReconfirmDialogComponent,
     MapPanelComponent,
+    VrImageComponent,
   ],
   imports: [
     CommonModule,

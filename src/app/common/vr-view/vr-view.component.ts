@@ -18,17 +18,19 @@ export class VrViewComponent implements OnInit {
 
   constructor() { 
     this.config = {
-      controls: true,
-      autoplay: false,
-      fluid: true,
-      loop: false,
-      techOrder: ['html5']
+      // controls: true,
+      // autoplay: false,
+      // fluid: true,
+      // loop: false,
+      // techOrder: ['html5'],
+      // plugins: {
+      //     pannellumView: {}
+      // }
     };
   }
 
   ngOnInit(): void {
-    this.loadPannellum();
-
+    this.loadVrVideo();
   }
 
   vrScreaming() {
@@ -154,7 +156,7 @@ export class VrViewComponent implements OnInit {
                   // let scream:any = document.getElementById('scream');
                   // scream.innerHTML = video
                   
-                  let videoElement = document.getElementById('remotevideo')
+                  let videoElement = document.getElementById('vrScream')
                   attachMediaStream(videoElement, stream)
                   
                   // that.player = videojs('vrScream', that.config, () => {
@@ -230,12 +232,7 @@ export class VrViewComponent implements OnInit {
   }
 
   ngAfterViewInit(): void {
-    // this.player = videojs('vrScream',this.config, () => {
-    //   console.log('Using video.js ' + videojs.VERSION);
-    //   // this.player.src("https://cdn-au.metacdn.com/jumipqxo/1u2Jh28/20160823050905_file_id14719289501962016_08_08_08_22_16_er_MP4-HIGH-WEBM_VP9.webm")
-    //    this.player.src("src/assets/images/360view.jpg")
-    //   this.player.vr({projection: '360'})
-    // })
+  
   }
 
   ngOnDestroy(): void {
@@ -244,13 +241,63 @@ export class VrViewComponent implements OnInit {
     }
   }
 
-  loadPannellum() {
-    pannellum.viewer('pano-image', {
-      "type": "equirectangular",
-      "panorama": "../../../assets/images/360images/360view.jpg",
-      "autoLoad": true,
-      "autoRotate": -2
-  });
+  loadVrVideo() {
+    let that = document;
+    this.pannellumPlugin(videojs,pannellum,that);
+    this.player = videojs('vrScream',this.config, () => {
+      console.log('Using video.js ' + videojs.VERSION);
+      this.player.src("https://pannellum.org/images/video/jfk.webm")
+      // this.player.src("https://cdn-au.metacdn.com/jumipqxo/1u2Jh28/20160823050905_file_id14719289501962016_08_08_08_22_16_er_MP4-HIGH-WEBM_VP9.webm")
+      // this.player.vr({projection: '360'})
+      this.player.pannellumView()
+    })
+  }
+  
+  pannellumPlugin(videojs:any, pannellum:any, document?:any) {
+    var registerPlugin = videojs.registerPlugin || videojs.plugin;
+    registerPlugin('pannellumView', function(config:any) {
+      // Create Pannellum instance
+      var player:any = this;
+      var container = player.el();
+      var vid = container.getElementsByTagName('video')[0],
+          pnlmContainer = document.createElement('div');
+      pnlmContainer.style.zIndex = '0';
+      config = config || {};
+      config.type = 'equirectangular';
+      config.dynamic = true;
+      config.showZoomCtrl = false;
+      config.showFullscreenCtrl = false;
+      config.autoLoad = true;
+      config.panorama = vid;
+      pnlmContainer.style.visibility = 'hidden';
+      player.pnlmViewer = pannellum.viewer(pnlmContainer, config);
+      container.insertBefore(pnlmContainer, container.firstChild);
+      vid.style.display = 'none';
+  
+      // Handle update settings
+      player.on('play', function() {
+          if (vid.readyState > 1)
+              player.pnlmViewer.setUpdate(true);
+      });
+      player.on('canplay', function() {
+          if (!player.paused())
+              player.pnlmViewer.setUpdate(true);
+      });
+      player.on('pause', function() {
+          player.pnlmViewer.setUpdate(false);
+      });
+      player.on('loadeddata', function() {
+          pnlmContainer.style.visibility = 'visible';
+      });
+      player.on('seeking', function() {
+          if (player.paused())
+              player.pnlmViewer.setUpdate(true);
+      });
+      player.on('seeked', function() {
+          if (player.paused())
+              player.pnlmViewer.setUpdate(false);
+      });
+  }); 
   }
 
 }
