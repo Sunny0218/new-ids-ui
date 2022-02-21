@@ -37,8 +37,6 @@ export class AppHeaderComponent implements OnInit{
   
   ngOnInit() {
     //页面刷新完成后，加载无人机和机场数据
-    this.translate.resetLang('zh')
-    
     this._subscription.add(this.robotSvc.loadRobots().subscribe());
     this.checkSvcConnected();
   }
