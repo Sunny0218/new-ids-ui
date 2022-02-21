@@ -1,8 +1,8 @@
 <mat-card>
     <mat-card-content>
-        <mat-card-title>Media</mat-card-title>
-        <mat-card-subtitle>{{mediaName}}
-            <code><a href="{{mediaUrl}}" target="_blank">Media Link</a></code>
+        <mat-card-title>{{ 'Mission.Media' | translate }}</mat-card-title>
+        <mat-card-subtitle>{{ mediaName }}
+            <code><a href="{{mediaUrl}}" target="_blank">{{ 'Mission.MediaUrl' | translate }}</a></code>
         </mat-card-subtitle>
 
             <div class="image" *ngIf="!isVideo">

@@ -64,7 +64,8 @@ const MENUITEMS = [
   { state: 'airport', type: 'link', name: 'Airport', icon: 'border_outer' }, 
   { state: '360view', type: 'link', name: '360 View', icon: 'control_camera' },
   { state: '360image', type: 'link', name: '360 Image', icon: 'panorama' }, 
-  { state: 'map', type: 'link', name: 'Map', icon: 'map' }, 
+  { state: 'map', type: 'link', name: 'Map', icon: 'map' },
+  // { state: 'gmap', type: 'link', name: 'Google Map', icon: 'map' },  
 ];
 
 @Injectable()

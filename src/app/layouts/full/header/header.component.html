@@ -9,10 +9,10 @@
     <mat-icon>leak_remove</mat-icon>
 </button>
 
-<button class="landing-btn" mat-raised-button color="warn" (click)="onEmergencyLandingClick()">E.LANDING</button>
-<button class="hovering-btn" mat-raised-button color="accent" (click)="onEmergencyHoveringClick()">E.HOVERING</button>
+<button class="landing-btn" mat-raised-button color="warn" (click)="onEmergencyLandingClick()">{{ 'Header.Landing' | translate}}</button>
+<button class="hovering-btn" mat-raised-button color="accent" (click)="onEmergencyHoveringClick()">{{ 'Header.Hovering' | translate}}</button>
 
-<button [matMenuTriggerFor]="profile" mat-icon-button class="m-r-5"> <img src="assets/images/ids-avatar.jpg" alt="user" class="profile-pic"> </button>
+<!-- <button [matMenuTriggerFor]="profile" mat-icon-button class="m-r-5"> <img src="assets/images/ids-avatar.jpg" alt="user" class="profile-pic"> </button>
 <mat-menu #profile="matMenu" class="mymegamenu">
     <button mat-menu-item>
         <mat-icon>settings</mat-icon> Settings </button>
@@ -22,4 +22,10 @@
         <mat-icon>notifications_off</mat-icon> Disable notifications </button>
     <button mat-menu-item>
         <mat-icon>exit_to_app</mat-icon> Sign Out </button>
+</mat-menu> -->
+<button [matMenuTriggerFor]="profile" mat-button><mat-icon>language</mat-icon>{{ 'Lang' | translate}}</button>
+<mat-menu #profile="matMenu" class="mymegamenu">
+    <button mat-menu-item *ngFor="let lang of translate.getLangs()" (click)="switchLanguage(lang)" >
+        {{ 'Language.' + lang | translate }}
+    </button>
 </mat-menu>

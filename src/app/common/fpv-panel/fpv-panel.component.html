@@ -6,7 +6,7 @@
         <!-- 显示大Video ,默认Drone Screaming -->
           <div class="big-video" >
             <mat-card-content >
-                <mat-card-title>{{ videoTitle }}</mat-card-title>
+                <mat-card-title>{{ 'Drones.Drone' | translate }}</mat-card-title>
                 <div class="droneScream">
                     <video id="drone" width="100%" poster="../../../assets/images/background/ids_place_holder.jpg" autoplay muted></video>
                     <!-- 工具栏 -->
@@ -27,7 +27,7 @@
                             </div>
                             <!-- 调整gimbal上下角度 -->
                             <div class="switch">
-                                <mat-slider class="example-margin" color="primary" max='20' min='-90' step='1' vertical='true' thumbLabel='true' [(ngModel)]="pitchValue" (change)="pitchSlider($event)">
+                                <mat-slider class="example-margin" color="primary" max='20' min='-90' step='1' vertical='true' thumbLabel='true' [(ngModel)]="pitchValue" (change)="pitchSlider()">
                                 </mat-slider>
                             </div>
                         </div>

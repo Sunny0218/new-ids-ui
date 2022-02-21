@@ -559,6 +559,4 @@ export class MapPanelComponent implements OnInit,AfterViewInit,OnDestroy {
     }   
   }
 
-
-
 }

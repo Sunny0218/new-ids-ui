@@ -181,7 +181,6 @@ export class PathPanelComponent implements OnInit {
         alert(`mission has been added, code: ${code}`);
         this.loadPaths.reloadPaths()
       });
-    
-    
   }
+  
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,HostListener } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { CommonPanelService } from '../common-panel.service';
 import { IMqttMessage, MqttService } from 'ngx-mqtt';
@@ -16,6 +16,35 @@ import { CctvStreamingService } from 'src/app/common/remote/cctv-streaming.servi
   providers:[CommonPanelService,JanusStreamingService,CctvStreamingService]
 })
 export class FpvPanelComponent implements OnInit {
+
+
+  @HostListener('window:keydown',['$event']) spaceEvent(event:any) {
+    // up,gimbal参数增加,即镜头向上
+    if(event.keyCode === 38) {
+      if(event.preventDefault) {
+        event.preventDefault();
+      }
+      if (this.pitchValue < 20) {
+        this.pitchValue++;
+      }
+      this.pitchSlider();
+    // down,gimbal参数减少,即镜头向下
+    } else if (event.keyCode === 40) {
+      if(event.preventDefault) {
+        event.preventDefault();
+      }
+      if (this.pitchValue > -90) {
+        this.pitchValue--;
+      }
+      this.pitchSlider();
+    // left,gimbal逆时针旋转10°
+    } else if (event.keyCode === 37) {
+      this.yaw_rotate_left();
+    // right,gimbal顺时针旋转10°
+    } else if (event.keyCode === 39) {
+      this.yaw_rotate_right();
+    }
+  }
 
   //机器编号
   drone_ref_num: string;
@@ -80,6 +109,8 @@ export class FpvPanelComponent implements OnInit {
 
   private droneSubscription = new Subscription();
   private commandSubscription = new Subscription();
+
+  
 
   constructor( 
     private commonSvc: CommonPanelService,
@@ -150,7 +181,7 @@ export class FpvPanelComponent implements OnInit {
   }
 
   //gimbal上下范围
-  pitchSlider($event) {
+  pitchSlider() {
     this.gimbalCommand['id'] = "ids-" + new Date().getTime();
     this.gimbalCommand['params']['Pitch'] = this.pitchValue;
     var message = JSON.stringify(this.gimbalCommand)

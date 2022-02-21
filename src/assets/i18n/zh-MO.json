@@ -1,0 +1,113 @@
+{
+    "Lang": "中文繁體",
+    "Language": {
+        "en":"English",
+        "zh-CN":"中文简体",
+        "zh-MO":"中文繁體"
+    },
+    "Menu": {
+        "Mission": "歷史任務查詢",
+        "Fligth Path": "飛行路徑和任務",
+        "Drones": "無人機實時影像",
+        "Airport": "機場影像",
+        "360 View": "全景實時影像",
+        "360 Image": "360相片",
+        "Map": "繪製圖形地圖"
+    },
+    "Header": {
+        "Landing": "緊急降落",
+        "Hovering": "緊急懸停"
+    },
+    "Mission": {
+        "MissionList": "歷史任務查詢列表",
+        "Filter": "搜索",
+        "DateFrom": "起始日期",
+        "DateTo": "結束日期",
+        "Submit": "提交",
+        "MediaOnly": "僅有媒體",
+        "PathName": "路徑名稱",
+        "CreateAt": "創建時間",
+        "CompleteAt": "完成時間",
+        "State": "任務狀態",
+        "MediaList": "媒體列表",
+        "MissionId": "任務ID",
+        "MediaName": "媒體名稱",
+        "URL": "鏈結",
+        "Select": "選擇",
+        "Media": "媒體顯示",
+        "MediaUrl": "媒體鏈結"
+    },
+    "FligthPath": {
+        "PathPlanning": "任務路徑規劃",
+        "Paths": "保存並創建任務",
+        "MissionPath": "所有任務路徑",
+        "DroneSteps": {
+            "Step": "無人機步驟",
+            "TakeOff": "起飛",
+            "Landing": "降落",
+            "PreciseLanding": "精準降落",
+            "Altitude": "起飛高度",
+            "HorizontalAlign": "水平標簽",
+            "VerticalAlign": "垂直標簽",
+            "Tag": "標簽",
+            "Direction": "方向",
+            "Gimbal": "雲台",
+            "StartRecording": "開始錄製",
+            "StopRecording": "停止錄製",
+            "RobotShootPhoto": "影相",
+            "Panorama": "全景",
+            "DownloadMedia": "下載媒體",
+            "Offset": "偏移量"
+        },
+        "AirportSteps": {
+            "Step": "機場步驟",
+            "AirportReleaseHolder": "機場固定裝置（打開）",
+            "AirportLockHolder": "機場固定裝置（合上）",
+            "AirportTurnRCOn": "機場打開遙控",
+            "AirportTurnRCOff": "機場關閉遙控",
+            "AirportTurnChargerOn": "操作經常充電（打開）",
+            "AirportTurnChargerOff": "操作經常充電（關閉）",
+            "AirportTurnDroneOn": "打開無人機",
+            "AirportTurnDroneOff": "關閉無人機"
+        },
+        "PathName": "路徑名稱",
+        "PathType": "路徑類型",
+        "Save": "保存",
+        "Clear": "清空",
+        "Drone": "無人機",
+        "Airport": "機場",
+        "ID": "ID",
+        "Type": "步驟類型",
+        "Args": "參數"
+    },
+    "Drones":{
+        "Drone": "無人機實時影像"
+    },
+    "Airport":{
+        "CCTV": "機場實時影像",
+        "AirportStatus": "機場狀態",
+        "DroneStatus": "無人機狀態",
+        "Holder": "固定裝置",
+        "RC": "遙控器",
+        "Charger": "充電裝置",
+        "Battery": "飛機電腦",
+        "DroneSwitch": "飛機開關",
+        "Downloading": "下載狀態",
+        "Flying": "是否飛行"
+    },
+    "360View": "全景實時影像",
+    "360Image": "360相片",
+    "AMap": {
+        "Map": "繪製圖形地圖",
+        "GroundStation": "地面站",
+        "FlyingRange": "放飛範圍",
+        "PerformanceArea": "表演區域",
+        "ElectronicFence": "電子圍欄",
+        "ViewingArea": "觀衆區域",
+        "TakeoffAndLandingArea": "起降區域",
+        "AlternateArea": "備降區域",
+        "ClearAll": "清除所有",
+        "CloseDraw": "關閉繪製",
+        "ToWithdraw": "撤回"
+    }
+}

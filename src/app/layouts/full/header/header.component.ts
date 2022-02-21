@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { RobotService } from 'src/app/common/robot/robot.service';
 import { IMqttMessage, MqttService } from 'ngx-mqtt';
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Component({
@@ -20,17 +21,24 @@ export class AppHeaderComponent implements OnInit{
   appHeartBeat = 0;
   setHeartBeat = 0;
 
-
   constructor(
     private robotSvc: RobotService,
-    private mqttSvc: MqttService
-  ) { }
+    private mqttSvc: MqttService,
+    public translate: TranslateService
+  ) { 
+    translate.addLangs(['zh-CN','zh-MO', 'en']);
+    translate.setDefaultLang('zh-CN');
+    
+    // const browserLang = translate.getBrowserLang();
+    // translate.use(browserLang.match(/en|zh/) ? browserLang : 'zh');
+  }
 
   
   
   ngOnInit() {
-    
     //页面刷新完成后，加载无人机和机场数据
+    this.translate.resetLang('zh')
+    
     this._subscription.add(this.robotSvc.loadRobots().subscribe());
     this.checkSvcConnected();
   }
@@ -40,6 +48,10 @@ export class AppHeaderComponent implements OnInit{
     this._subscription.unsubscribe();
     this.mqttSubscription.unsubscribe();
 
+  }
+
+  switchLanguage(lang:string){
+    this.translate.use(lang)
   }
 
   //无人机紧急悬停

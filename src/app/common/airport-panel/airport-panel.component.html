@@ -3,7 +3,7 @@
     <div fxFlex.gt-sm="70%">
         <mat-card>
             <mat-card-content>
-                <mat-card-title>CCTV</mat-card-title>
+                <mat-card-title>{{ 'Airport.CCTV' | translate }}</mat-card-title>
                 <div class="cctvScream">
                     <video id="cctv" width="100%" [srcObject]="cctvVideoSrc" poster="../../../assets/images/background/ids_place_holder.jpg" autoplay muted></video>
                     <!-- 无人机 机场 状态栏 -->
@@ -11,10 +11,10 @@
                         <table>
                             <tr>
                                 <th colspan=6 align="center">
-                                    <mat-card-title style="color: white;">Airport Status</mat-card-title>
+                                    <mat-card-title style="color: white;">{{ 'Airport.AirportStatus' | translate }}</mat-card-title>
                                 </th>
                                 <th colspan=6 align="center">
-                                    <mat-card-title style="color: white;">Drone Status</mat-card-title>
+                                    <mat-card-title style="color: white;">{{ 'Airport.DroneStatus' | translate }}</mat-card-title>
                                 </th>
                             </tr>
                             <tr>
@@ -22,7 +22,7 @@
                                 <!-- *************************** -->
                                 <!-- Holder State -->
                                 <td align="center" style="color: rgb(30, 136, 229);">
-                                    Holder
+                                    {{ 'Airport.Holder' | translate }}
                                 </td>
                                 <td align="center">
                                     {{ holderState }}
@@ -34,7 +34,7 @@
                                 </td>
                                 <!-- RC Switch State -->
                                 <td align="center" style="color: rgb(30, 136, 229);">
-                                    RC
+                                    {{ 'Airport.RC' | translate }}
                                 </td>
                                 <td align="center">
                                     {{ rcSwitchState }}
@@ -51,14 +51,14 @@
                                 <!-- *************************** -->
                                 <!-- Battery -->
                                 <td align="center" style="color: rgb(30, 136, 229);">
-                                    Battery
+                                    {{ 'Airport.Battery' | translate }}
                                 </td>
                                 <td align="center">
                                     {{ droneBatteryLevel }}
                                 </td>
                                 <!-- DroneSwitchState -->
                                 <td align="center" style="color: rgb(30, 136, 229);">
-                                    ON/OFF
+                                    {{ 'Airport.DroneSwitch' | translate }}
                                 </td>
                                 <td align="center">
                                     {{ droneSwitchState }}
@@ -75,7 +75,7 @@
                                 <!-- *************************** -->
                                 <!-- Charger State -->
                                 <td align="center" style="color: rgb(30, 136, 229);">
-                                    Charger
+                                    {{ 'Airport.Charger' | translate }}
                                 </td>
                                 <td align="center">
                                     {{ chargerState }}
@@ -92,14 +92,14 @@
                                 <!-- *************************** -->
                                 <!-- Drone Downloading State -->
                                 <td align="center" style="color: rgb(30, 136, 229);">
-                                    Downloading
+                                    {{ 'Airport.Downloading' | translate }}
                                 </td>
                                 <td align="center">
                                     {{ droneDownloadingState }}
                                 </td>
                                 <!-- Drone Flying State -->
                                 <td align="center" style="color: rgb(30, 136, 229);">
-                                    Flying
+                                    {{ 'Airport.Flying' | translate }}
                                 </td>
                                 <td align="center">
                                     {{ droneFlyingState }}
@@ -116,7 +116,7 @@
 
 
 <!-- 强制开关按钮 -->
-<div fxLayout="row">
+<!-- <div fxLayout="row">
     <div fxFlex.gt-sm="100%">
         <mat-card>
             <mat-card-content>
@@ -140,4 +140,4 @@
             </mat-card-content>
         </mat-card>
     </div>
-</div>
+</div> -->

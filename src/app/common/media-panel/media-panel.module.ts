@@ -6,7 +6,8 @@ import { ShowMediaComponent } from './show-media/show-media.component';
 import { DemoMaterialModule } from '../../demo-material-module';
 import { FormsModule,ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { LocalDatePipe } from '../date-pipe/local-date.pipe'
+import { LocalDatePipe } from '../date-pipe/local-date.pipe';
+import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { LocalDatePipe } from '../date-pipe/local-date.pipe'
     FormsModule,
     HttpClientModule,
     DemoMaterialModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SharedModule
   ],
   exports:[
     MissionListComponent,

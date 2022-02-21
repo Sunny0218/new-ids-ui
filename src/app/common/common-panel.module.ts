@@ -15,6 +15,9 @@ import { VrViewComponent } from './vr-view/vr-view.component';
 import { ReconfirmDialogComponent } from './path-panel/reconfirm-dialog/reconfirm-dialog.component';
 import { MapPanelComponent } from './map-panel/map-panel.component';
 import { VrImageComponent } from './vr-image/vr-image.component';
+import { GoogleMapComponent } from './google-map/google-map.component';
+import { GoogleMapsModule } from '@angular/google-maps';
+import { SharedModule } from '../shared/shared.module';
 
 const CommonPanelroutes:Routes = [
   {
@@ -44,6 +47,10 @@ const CommonPanelroutes:Routes = [
   {
     path:'map',
     component:MapPanelComponent
+  },
+  {
+    path:'gmap',
+    component:GoogleMapComponent
   }
 ] 
 
@@ -58,6 +65,7 @@ const CommonPanelroutes:Routes = [
     ReconfirmDialogComponent,
     MapPanelComponent,
     VrImageComponent,
+    GoogleMapComponent,
   ],
   imports: [
     CommonModule,
@@ -67,7 +75,9 @@ const CommonPanelroutes:Routes = [
     HttpClientModule,
     MediaPanelModule,
     FlexLayoutModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    GoogleMapsModule,
+    SharedModule
   ]
 })
 export class CommonPanelModule { }

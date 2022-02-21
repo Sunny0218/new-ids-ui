@@ -1,0 +1,115 @@
+{
+    "Lang": "English",
+    "Language": {
+        "en":"English",
+        "zh-CN":"中文简体",
+        "zh-MO":"中文繁體"
+    },
+    "Menu": {
+        "Mission": "Mission",
+        "Fligth Path": "Fligth Path",
+        "Drones": "Drones",
+        "Airport": "Airport",
+        "360 View": "360 View",
+        "360 Image": "360 Image",
+        "Map": "Map"
+    },
+    "Header": {
+        "Landing": "E.LANDING",
+        "Hovering": "E.HOVERING"
+    },
+    "Mission": {
+        "MissionList": "Mission List",
+        "Filter": "Filter",
+        "DateFrom": "Date From",
+        "DateTo": "Date To",
+        "Submit": "Submit",
+        "MediaOnly": "Media Only",
+        "PathName": "Path Name",
+        "CreateAt": "Create At",
+        "CompleteAt": "Complete At",
+        "State": "State",
+        "MediaList": "Media List",
+        "MissionId": "Mission ID",
+        "MediaName": "Media Name",
+        "URL": "Url",
+        "Select": "Select",
+        "Media": "Media",
+        "MediaUrl": "Media Url"
+    },
+    "FligthPath": {
+        "PathPlanning": "Path Planning",
+        "Paths": "Paths",
+        "MissionPath": "Mission Path",
+        "DroneSteps": {
+            "Step": "Drone Steps",
+            "TakeOff": "Take Off",
+            "Landing": "Landing",
+            "PreciseLanding": "Precise Landing",
+            "Altitude": "Altitude",
+            "HorizontalAlign": "H.Align",
+            "VerticalAlign": "Vertical Align",
+            "Tag": "Tag",
+            "Direction": "Direction",
+            "Gimbal": "Gimbal",
+            "StartRecording": "Start Recording",
+            "StopRecording": "Stop Recording",
+            "RobotShootPhoto": "Robot Shoot Photo",
+            "Panorama": "Panorama",
+            "DownloadMedia": "DownloadMedia",
+            "Offset": "Offset"
+
+        },
+        "AirportSteps": {
+            "Step": "Airport Steps",
+            "AirportReleaseHolder": "Airport Release Holder",
+            "AirportLockHolder": "Airport Lock Holder",
+            "AirportTurnRCOn": "Airport Turn RC On",
+            "AirportTurnRCOff": "Airport Turn RC Off",
+            "AirportTurnChargerOn": "Airport Turn Charger On",
+            "AirportTurnChargerOff": "Airport Turn Charger Off",
+            "AirportTurnDroneOn": "Airport Turn Drone On",
+            "AirportTurnDroneOff": "Airport Turn Drone Off"
+            
+        },
+        "PathName": "Path Name",
+        "PathType": "Path Type",
+        "Save": "Save",
+        "Clear": "Clear",
+        "Drone": "Drone",
+        "Airport": "Airport",
+        "ID": "ID",
+        "Type": "Type",
+        "Args": "Args"
+    },
+    "Drones":{
+        "Drone": "Drone"
+    },
+    "Airport":{
+        "CCTV": "CCTV",
+        "AirportStatus": "Airport Status",
+        "DroneStatus": "Drone Status",
+        "Holder": "Holder",
+        "RC": "RC",
+        "Charger": "Charger",
+        "Battery": "Battery",
+        "DroneSwitch": "ON/OFF",
+        "Downloading": "Downloading",
+        "Flying": "Flying"
+    },
+    "360View": "360 View",
+    "360Image": "360 Image",
+    "AMap": {
+        "Map": "Map",
+        "GroundStation": "GroundStation",
+        "FlyingRange": "FlyingRange",
+        "PerformanceArea": "Performance Area",
+        "ElectronicFence": "Electronic Fence",
+        "ViewingArea": "Viewing Area",
+        "TakeoffAndLandingArea": "Take-off And Landing Area",
+        "AlternateArea": "Alternate Area",
+        "ClearAll": "Clear All",
+        "CloseDraw": "Close Draw",
+        "ToWithdraw": "ToWithdraw"
+    }
+}

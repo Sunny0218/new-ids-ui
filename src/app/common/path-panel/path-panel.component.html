@@ -4,12 +4,12 @@
         <div fxFlex.gt-lg="33" fxFlex.gt-md="33" fxFlex.gt-xs="100" fxFlex="100" >
             <mat-card>
                 <mat-card-content>
-                    <mat-card-title>Path Planning</mat-card-title>
+                    <mat-card-title>{{ 'FligthPath.PathPlanning' | translate }}</mat-card-title>
                     <mat-divider></mat-divider>
 
                     <!-- Drone Steps -->
                     <mat-list class="drone-steps">
-                        <mat-card-subtitle>Drone Steps</mat-card-subtitle>
+                        <mat-card-subtitle>{{ 'FligthPath.DroneSteps.Step' | translate }}</mat-card-subtitle>
 
                         <!-- 起飞 降落 精准降落 -->
                         <mat-list-item>
@@ -18,21 +18,21 @@
                             data-tag="TAKEOFF"
                             (click)="commandButtonClicked($event)"
                             >
-                            Take Off
+                            {{ 'FligthPath.DroneSteps.TakeOff' | translate }}
                             </button>
                             <button
                             mat-raised-button
                             data-tag="LANDING"
                             (click)="commandButtonClicked($event)"
                             >
-                            Landing
+                            {{ 'FligthPath.DroneSteps.Landing' | translate }}
                             </button>
                             <button
                             mat-raised-button
                             data-tag="PRECISE_LANDING"
                             (click)="commandButtonClicked($event)"
                             >
-                            Precise Landing
+                            {{ 'FligthPath.DroneSteps.PreciseLanding' | translate }}
                             </button>
                         </mat-list-item>
 
@@ -43,7 +43,7 @@
                             data-tag="ALTITUDE"
                             (click)="commandButtonClicked($event)"
                           >
-                            Altitude
+                          {{ 'FligthPath.DroneSteps.Altitude' | translate }}
                           </button>
                           <mat-form-field>
                             <input 
@@ -62,13 +62,13 @@
                               data-tag="HORIZONTAL_ALIGN"
                               (click)="commandButtonClicked($event)"
                             >
-                              H.Align
+                            {{ 'FligthPath.DroneSteps.HorizontalAlign' | translate }}
                             </button>
                             <mat-form-field>
                               <input
                                 matInput
                                 type="text"
-                                placeholder="Tag"
+                                placeholder="{{ 'FligthPath.DroneSteps.Tag' | translate }}"
                                 [(ngModel)]="horizontalTag"
                               />
                             </mat-form-field>
@@ -84,7 +84,7 @@
                               <input
                                 matInput
                                 type="text"
-                                placeholder="Offset"
+                                placeholder="{{ 'FligthPath.DroneSteps.Offset' | translate }}"
                                 [(ngModel)]="horizontalOffsetZ"
                               />
                             </mat-form-field>
@@ -97,13 +97,13 @@
                               data-tag="VERTICAL_ALIGN"
                               (click)="commandButtonClicked($event)"
                             >
-                              Vertical Align
+                            {{ 'FligthPath.DroneSteps.VerticalAlign' | translate }}
                             </button>
                             <mat-form-field>
                               <input
                                 matInput
                                 type="text"
-                                placeholder="Tag"
+                                placeholder="{{ 'FligthPath.DroneSteps.Tag' | translate }}"
                                 [(ngModel)]="verticalTag"
                               />
                             </mat-form-field>
@@ -111,7 +111,7 @@
                               <input
                                 matInput
                                 type="text"
-                                placeholder="Direction"
+                                placeholder="{{ 'FligthPath.DroneSteps.Direction' | translate }}"
                                 [(ngModel)]="verticalDirection"
                               />
                             </mat-form-field>
@@ -124,7 +124,7 @@
                               data-tag="GIMBAL"
                               (click)="commandButtonClicked($event)"
                             >
-                              Gimbal
+                            {{ 'FligthPath.DroneSteps.Gimbal' | translate }}
                             </button>
                             <mat-form-field>
                               <input
@@ -159,14 +159,14 @@
                               data-tag="START_RECORDING"
                               (click)="commandButtonClicked($event)"
                             >
-                              Start Recording
+                            {{ 'FligthPath.DroneSteps.StartRecording' | translate }}
                             </button>
                             <button
                               mat-raised-button
                               (click)="commandButtonClicked($event)"
                               data-tag="STOP_RECORDING"
                             >
-                              Stop Recording
+                            {{ 'FligthPath.DroneSteps.StopRecording' | translate }}
                             </button>
                         </mat-list-item>
 
@@ -177,13 +177,13 @@
                             data-tag="ROBOT_SHOOT_PHOTO"
                             (click)="commandButtonClicked($event)"
                             >
-                            Robot Shoot Photo
+                            {{ 'FligthPath.DroneSteps.RobotShootPhoto' | translate }}
                           </button>
                             <mat-checkbox 
                               class="example-margin" 
                               [(ngModel)]="isPanorama"
                             >
-                              isPanorama
+                            {{ 'FligthPath.DroneSteps.Panorama' | translate }}
                             </mat-checkbox>
                         </mat-list-item>
 
@@ -194,7 +194,7 @@
                             data-tag="DOWNLOAD_MEDIA"
                             (click)="commandButtonClicked($event)"
                             >
-                            Download Media
+                            {{ 'FligthPath.DroneSteps.DownloadMedia' | translate }}
                           </button>
                         </mat-list-item>
 
@@ -203,7 +203,7 @@
 
                     <!-- Airport Steps -->
                     <mat-list class="airport-steps">
-                        <mat-card-subtitle>Airport Steps</mat-card-subtitle>
+                        <mat-card-subtitle>{{ 'FligthPath.AirportSteps.Step' | translate }}</mat-card-subtitle>
 
                         <!-- 机场 闭合装置开关 -->
                         <mat-list-item class="airport-button">
@@ -212,14 +212,14 @@
                               data-tag="AIRPORT_RELEASE_HOLDER"
                               (click)="commandButtonClicked($event)"
                             >
-                              Airport Release Holder
+                            {{ 'FligthPath.AirportSteps.AirportReleaseHolder' | translate }}
                             </button>
                             <button
                               mat-raised-button
                               data-tag="AIRPORT_LOCK_HOLDER"
                               (click)="commandButtonClicked($event)"
                             >
-                              Airport Lock Holder
+                            {{ 'FligthPath.AirportSteps.AirportLockHolder' | translate }}
                             </button>
                             
                         </mat-list-item>
@@ -231,14 +231,14 @@
                               data-tag="AIRPORT_RC_ON"
                               (click)="commandButtonClicked($event)"
                             >
-                              Airport Turn RC On
+                            {{ 'FligthPath.AirportSteps.AirportTurnRCOn' | translate }}
                             </button>
                             <button
                               mat-raised-button
                               data-tag="AIRPORT_RC_OFF"
                               (click)="commandButtonClicked($event)"
                             >
-                              Airport Turn RC Off
+                            {{ 'FligthPath.AirportSteps.AirportTurnRCOff' | translate }}
                             </button>
                         </mat-list-item>
 
@@ -249,14 +249,14 @@
                               data-tag="AIRPORT_CHARGER_ON"
                               (click)="commandButtonClicked($event)"
                             >
-                              Airport Turn Charger On
+                            {{ 'FligthPath.AirportSteps.AirportTurnChargerOn' | translate }}
                             </button>
                             <button
                               mat-raised-button
                               data-tag="AIRPORT_CHARGER_OFF"
                               (click)="commandButtonClicked($event)"
                             >
-                              Airport Turn Charger Off
+                            {{ 'FligthPath.AirportSteps.AirportTurnChargerOff' | translate }}
                             </button>
                         </mat-list-item>
 
@@ -267,14 +267,14 @@
                               data-tag="AIRPORT_DRONE_ON"
                               (click)="commandButtonClicked($event)"
                             >
-                              Airport Turn Drone On
+                            {{ 'FligthPath.AirportSteps.AirportTurnDroneOn' | translate }}
                             </button>
                             <button
                               mat-raised-button
                               data-tag="AIRPORT_DRONE_OFF"
                               (click)="commandButtonClicked($event)"
                             >
-                              Airport Turn Drone Off
+                            {{ 'FligthPath.AirportSteps.AirportTurnDroneOff' | translate }}
                             </button>
                         </mat-list-item>
 
@@ -288,7 +288,7 @@
         <div fxFlex.gt-lg="33" fxFlex.gt-md="33" fxFlex.gt-xs="100" fxFlex="100">
             <mat-card>
                 <mat-card-content>
-                    <mat-card-title>Paths</mat-card-title>
+                    <mat-card-title>{{ 'FligthPath.Paths' | translate }}</mat-card-title>
                     <mat-divider></mat-divider>
 
                     <mat-list class="header">
@@ -298,7 +298,7 @@
                                 <input
                                   matInput
                                   type="text"
-                                  placeholder="Name"
+                                  placeholder="{{ 'FligthPath.PathName' | translate }}"
                                   [(ngModel)]="newPathName"
                                 />
                             </mat-form-field>
@@ -307,23 +307,23 @@
                             color="primary"
                             (click)="savePlanningMissions()"
                             >
-                            Save
+                            {{ 'FligthPath.Save' | translate }}
                             </button>
                             <button
                             mat-raised-button
                             color="warn"
                             (click)="clearPlanningMission()"
                             >
-                            Clear
+                            {{ 'FligthPath.Clear' | translate }}
                             </button>
                         </mat-list-item>
 
                         <!-- 计划路径类别 -->
                         <mat-list-item>
-                            <label>Path Type: </label>
+                            <label>{{ 'FligthPath.PathType' | translate }}: </label>
                             <mat-radio-group [(ngModel)]="newPathType">
-                              <mat-radio-button value="DRONE">Drone</mat-radio-button>
-                              <mat-radio-button value="AIRPORT">Airport</mat-radio-button>
+                              <mat-radio-button value="DRONE">{{ 'FligthPath.Drone' | translate }}</mat-radio-button>
+                              <mat-radio-button value="AIRPORT">{{ 'FligthPath.Airport' | translate }}</mat-radio-button>
                             </mat-radio-group>
                         </mat-list-item>
 
@@ -331,8 +331,8 @@
                         <table class="path-table" cdkDropList (cdkDropListDropped)="dropMissionList($event)">
                             <tr>
                                 <th>ID</th>
-                                <th>Type</th>
-                                <th>Args</th>
+                                <th>{{ 'FligthPath.Type' | translate }}</th>
+                                <th>{{ 'FligthPath.Args' | translate }}</th>
                                 <th></th>
                             </tr>
                             <tr *ngFor="let mission of planningMissions" cdkDrag cdkDragBoundary=".path-table">

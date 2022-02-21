@@ -1,6 +1,6 @@
 <mat-card>
         <mat-card-content>
-            <mat-card-title>Mission List</mat-card-title>
+            <mat-card-title>{{ 'Mission.MissionList' | translate }}</mat-card-title>
 
                 <div class="data-filter">
 
@@ -13,13 +13,13 @@
                         id="missionFilter"
                         #missionFilter
                         (keyup)="doFilter(missionFilter.value)"
-                        placeholder="Filter"
+                        placeholder="{{ 'Mission.Filter' | translate }}"
                       />
                     </mat-form-field>
                     <mat-form-field>
                       <input
                         matInput
-                        placeholder="Date From"
+                        placeholder="{{ 'Mission.DateFrom' | translate }}"
                         [matDatepicker]="picker1"
                         [formControl]="fromDate"
                         required
@@ -33,7 +33,7 @@
                     <mat-form-field>
                       <input
                         matInput
-                        placeholder="To Date"
+                        placeholder="{{ 'Mission.DateTo' | translate }}"
                         [matDatepicker]="picker2"
                         [formControl]="toDate"
                         required
@@ -50,7 +50,7 @@
                       color="primary"
                       (click)="filterMission()"
                     >
-                      Submit
+                    {{ 'Mission.Submit' | translate }}
                     </button>
 
                     <!-- 是否有媒体数据过滤开关 -->
@@ -60,7 +60,7 @@
                       [(ngModel)]="isChecked"
                       (change)="sliderChanged()"
                       >
-                      <h4>Media Only</h4>
+                      <h4>{{ 'Mission.MediaOnly' | translate }}</h4>
                     </mat-slide-toggle>
                   </div>
                 </div>
@@ -69,13 +69,13 @@
                 <table mat-table [dataSource]="dataSource" matSort class="table-hover">
                   <!-- Id Column -->
                   <ng-container matColumnDef="path_name">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Path Name</th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'Mission.PathName' | translate }}</th>
                     <td mat-cell *matCellDef="let row">{{ row.path_name | localDate:'pathName' }}</td>
                   </ng-container>
             
                   <!-- Create Time Column -->
                   <ng-container matColumnDef="create_at">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Create Time</th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'Mission.CreateAt' | translate }}</th>
                     <td mat-cell *matCellDef="let row">
                       {{ row.create_at | localDate:'createAt' }}
                     </td>
@@ -83,7 +83,7 @@
             
                   <!-- Complete Time Column -->
                   <ng-container matColumnDef="complete_at">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Complete Time</th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'Mission.CompleteAt' | translate }}</th>
                     <td mat-cell *matCellDef="let row">
                       {{ row.complete_at | localDate:'completeAt' }}
                     </td>
@@ -91,7 +91,7 @@
             
                   <!-- State Column -->
                   <ng-container matColumnDef="state">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>State</th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'Mission.State' | translate }}</th>
                     <td mat-cell *matCellDef="let row">{{ row.state }}</td>
                   </ng-container>
             
@@ -104,7 +104,7 @@
                         color="primary"
                         (click)="missionSelected(row)"
                       >
-                        Select
+                      {{ 'Mission.Select' | translate }}
                       </button>
                     </td>
                   </ng-container>

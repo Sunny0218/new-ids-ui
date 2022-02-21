@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class ShowMediaComponent implements OnInit {
 
 
-  mediaName:string = 'Media Name'
+  mediaName:string = ''
   isVideo:boolean = false;
   mediaUrl = 'assets/images/background/ids_place_holder.jpg';
 

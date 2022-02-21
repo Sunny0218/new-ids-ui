@@ -15,12 +15,19 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DemoMaterialModule } from './demo-material-module';
 import { NgEventBus } from 'ng-event-bus';
 import { MqttModule, IMqttServiceOptions, MqttService } from "ngx-mqtt";
+import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 
 import { SharedModule } from './shared/shared.module';
 import { SpinnerComponent } from './shared/spinner.component';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { AuthModule } from './auth/auth.module';
 import { AuthGuard } from './auth/auth.guard';
+
+
+export function HttpLoaderFactory(httpClient: HttpClient) {
+  return new TranslateHttpLoader(httpClient, './assets/i18n/', '.json');
+}
 
 export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
   hostname: 'ids.hdcircles.tech',
@@ -92,7 +99,14 @@ const AppRoutes: Routes = [
     SharedModule,
     RouterModule.forRoot(AppRoutes),
     MqttModule.forRoot(MQTT_SERVICE_OPTIONS),
-    AuthModule
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    }),
+    AuthModule,
   ],
   providers: [
     {

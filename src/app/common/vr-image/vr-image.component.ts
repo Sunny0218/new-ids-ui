@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
+// import { TranslateService } from '@ngx-translate/core';
 declare var pannellum: any;
 
 @Component({
@@ -8,7 +9,9 @@ declare var pannellum: any;
 })
 export class VrImageComponent implements OnInit {
 
-  constructor() { }
+  constructor() { 
+    // translate.addLangs(['en', 'zh']);
+  }
 
   ngOnInit(): void {
     this.loadPannellum();
