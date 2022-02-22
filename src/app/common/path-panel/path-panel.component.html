@@ -18,21 +18,21 @@
                             data-tag="TAKEOFF"
                             (click)="commandButtonClicked($event)"
                             >
-                            {{ 'FligthPath.DroneSteps.TakeOff' | translate }}
+                            {{ 'FligthPath.DroneSteps.TAKEOFF' | translate }}
                             </button>
                             <button
                             mat-raised-button
                             data-tag="LANDING"
                             (click)="commandButtonClicked($event)"
                             >
-                            {{ 'FligthPath.DroneSteps.Landing' | translate }}
+                            {{ 'FligthPath.DroneSteps.LANDING' | translate }}
                             </button>
                             <button
                             mat-raised-button
                             data-tag="PRECISE_LANDING"
                             (click)="commandButtonClicked($event)"
                             >
-                            {{ 'FligthPath.DroneSteps.PreciseLanding' | translate }}
+                            {{ 'FligthPath.DroneSteps.PRECISE_LANDING' | translate }}
                             </button>
                         </mat-list-item>
 
@@ -43,7 +43,7 @@
                             data-tag="ALTITUDE"
                             (click)="commandButtonClicked($event)"
                           >
-                          {{ 'FligthPath.DroneSteps.Altitude' | translate }}
+                          {{ 'FligthPath.DroneSteps.ALTITUDE' | translate }}
                           </button>
                           <mat-form-field>
                             <input 
@@ -62,7 +62,7 @@
                               data-tag="HORIZONTAL_ALIGN"
                               (click)="commandButtonClicked($event)"
                             >
-                            {{ 'FligthPath.DroneSteps.HorizontalAlign' | translate }}
+                            {{ 'FligthPath.DroneSteps.HORIZONTAL_ALIGN' | translate }}
                             </button>
                             <mat-form-field>
                               <input
@@ -97,7 +97,7 @@
                               data-tag="VERTICAL_ALIGN"
                               (click)="commandButtonClicked($event)"
                             >
-                            {{ 'FligthPath.DroneSteps.VerticalAlign' | translate }}
+                            {{ 'FligthPath.DroneSteps.VERTICAL_ALIGN' | translate }}
                             </button>
                             <mat-form-field>
                               <input
@@ -124,7 +124,7 @@
                               data-tag="GIMBAL"
                               (click)="commandButtonClicked($event)"
                             >
-                            {{ 'FligthPath.DroneSteps.Gimbal' | translate }}
+                            {{ 'FligthPath.DroneSteps.GIMBAL' | translate }}
                             </button>
                             <mat-form-field>
                               <input
@@ -159,14 +159,14 @@
                               data-tag="START_RECORDING"
                               (click)="commandButtonClicked($event)"
                             >
-                            {{ 'FligthPath.DroneSteps.StartRecording' | translate }}
+                            {{ 'FligthPath.DroneSteps.START_RECORDING' | translate }}
                             </button>
                             <button
                               mat-raised-button
                               (click)="commandButtonClicked($event)"
                               data-tag="STOP_RECORDING"
                             >
-                            {{ 'FligthPath.DroneSteps.StopRecording' | translate }}
+                            {{ 'FligthPath.DroneSteps.STOP_RECORDING' | translate }}
                             </button>
                         </mat-list-item>
 
@@ -177,7 +177,7 @@
                             data-tag="ROBOT_SHOOT_PHOTO"
                             (click)="commandButtonClicked($event)"
                             >
-                            {{ 'FligthPath.DroneSteps.RobotShootPhoto' | translate }}
+                            {{ 'FligthPath.DroneSteps.ROBOT_SHOOT_PHOTO' | translate }}
                           </button>
                             <mat-checkbox 
                               class="example-margin" 
@@ -194,7 +194,7 @@
                             data-tag="DOWNLOAD_MEDIA"
                             (click)="commandButtonClicked($event)"
                             >
-                            {{ 'FligthPath.DroneSteps.DownloadMedia' | translate }}
+                            {{ 'FligthPath.DroneSteps.DOWNLOAD_MEDIA' | translate }}
                           </button>
                         </mat-list-item>
 
@@ -337,7 +337,7 @@
                             </tr>
                             <tr *ngFor="let mission of planningMissions" cdkDrag cdkDragBoundary=".path-table">
                                 <td>{{mission.id}}</td>
-                                <td>{{mission.type}}</td>
+                                <td>{{'FligthPath.DroneSteps.' + mission.type | translate}}</td>
                                 <td>          
                                     <span>{{mission.args.set_point ? "set-point:" + mission.args.set_point : "" }}</span>   
                                     <span>{{mission.args.action ? "action:" + mission.args.action : "" }}</span>         

@@ -21,12 +21,14 @@ export class AppHeaderComponent implements OnInit{
   appHeartBeat = 0;
   setHeartBeat = 0;
 
+  langs = ['zh-CN', 'zh-MO', 'en'];
+
   constructor(
     private robotSvc: RobotService,
     private mqttSvc: MqttService,
     public translate: TranslateService
   ) { 
-    translate.addLangs(['zh-CN','zh-MO', 'en']);
+    translate.addLangs(['zh-CN', 'zh-MO', 'en']);
     translate.setDefaultLang('zh-CN');
     
     // const browserLang = translate.getBrowserLang();

@@ -85,14 +85,14 @@
                   <ng-container matColumnDef="complete_at">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'Mission.CompleteAt' | translate }}</th>
                     <td mat-cell *matCellDef="let row">
-                      {{ row.complete_at | localDate:'completeAt' }}
+                      {{ row.complete_at | localDate:'completeAt'}}
                     </td>
                   </ng-container>
             
                   <!-- State Column -->
                   <ng-container matColumnDef="state">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'Mission.State' | translate }}</th>
-                    <td mat-cell *matCellDef="let row">{{ row.state }}</td>
+                    <td mat-cell *matCellDef="let row">{{ 'TableState.' + row.state | translate}}</td>
                   </ng-container>
             
                   <!-- Get Details -->

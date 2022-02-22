@@ -25,11 +25,11 @@
                                     {{ 'Airport.Holder' | translate }}
                                 </td>
                                 <td align="center">
-                                    {{ holderState }}
+                                    {{ 'Airport.' + holderState | translate}}
                                 </td>
                                 <td align="left">
                                     <button mat-stroked-button color="accent" [disabled]="holderBtnBusy" (click)="holderBtn($event)">
-                                    {{ holderBtnLabel }}
+                                    {{ 'Airport.' + holderBtnLabel | translate}}
                                     </button>
                                 </td>
                                 <!-- RC Switch State -->
@@ -37,11 +37,11 @@
                                     {{ 'Airport.RC' | translate }}
                                 </td>
                                 <td align="center">
-                                    {{ rcSwitchState }}
+                                    {{ 'Airport.' + rcSwitchState | translate}}
                                 </td>
                                 <td align="center">
                                     <button mat-stroked-button color="accent" [disabled]="rcSwitchBtnBusy" (click)="rcSwitchBtn($event)">
-                                    {{ rcSwitchBtnLabel }}
+                                    {{ 'Airport.' + rcSwitchBtnLabel | translate}}
                                     </button>
                                 </td>
                                 <td align="center" style="width: 30px;">
@@ -61,11 +61,11 @@
                                     {{ 'Airport.DroneSwitch' | translate }}
                                 </td>
                                 <td align="center">
-                                    {{ droneSwitchState }}
+                                    {{ 'Airport.' + droneSwitchState | translate}}
                                 </td>
                                 <td align="center">
                                     <button mat-stroked-button color="accent" [disabled]="droneSwitchBtnBusy" (click)="droneSwitchBtn($event)">
-                                    {{ droneSwitchBtnLabel }}
+                                    {{ 'Airport.' + droneSwitchBtnLabel | translate}}
                                     </button>
                                 </td>
                             </tr>
@@ -78,11 +78,11 @@
                                     {{ 'Airport.Charger' | translate }}
                                 </td>
                                 <td align="center">
-                                    {{ chargerState }}
+                                    {{ 'Airport.' + chargerState | translate}}
                                 </td>
                                 <td align="left">
                                     <button mat-stroked-button color="accent" [disabled]="chargerBtnBusy" (click)="chargerBtn($event)">
-                                    {{ chargerBtnLabel }}   
+                                    {{ 'Airport.' + chargerBtnLabel | translate}}   
                                     </button>
                                 </td>
                                 <td colspan=4>
@@ -95,14 +95,14 @@
                                     {{ 'Airport.Downloading' | translate }}
                                 </td>
                                 <td align="center">
-                                    {{ droneDownloadingState }}
+                                    {{ 'Airport.' + droneDownloadingState | translate}}
                                 </td>
                                 <!-- Drone Flying State -->
                                 <td align="center" style="color: rgb(30, 136, 229);">
                                     {{ 'Airport.Flying' | translate }}
                                 </td>
                                 <td align="center">
-                                    {{ droneFlyingState }}
+                                    {{ 'Airport.' + droneFlyingState | translate}}
                                 </td>
                             </tr>
                         </table>

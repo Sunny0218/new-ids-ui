@@ -14,7 +14,7 @@ export class LocalDatePipe implements PipeTransform {
 
     } else if (type === 'completeAt') {
         if (value == '') {
-          return 'Not Complete'
+          return 'UNFINISHED'
         } else {
           let repString = value.replace(' ','T');
           let newCompleteAt = new Date(Date.parse(repString + "+00:00"));

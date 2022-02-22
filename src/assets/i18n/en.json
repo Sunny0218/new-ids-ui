@@ -37,27 +37,39 @@
         "Media": "Media",
         "MediaUrl": "Media Url"
     },
+    "TableState": {
+        "FAILURE": "FAILURE",
+        "COMPLETED": "COMPLETED",
+        "STOPPED": "STOPPED",
+        "EXPIRED": "EXPIRED",
+        "UNFINISHED": "UNFINISHED",
+        "CANCEL": "CANCEL"
+    },
     "FligthPath": {
         "PathPlanning": "Path Planning",
         "Paths": "Paths",
         "MissionPath": "Mission Path",
         "DroneSteps": {
             "Step": "Drone Steps",
-            "TakeOff": "Take Off",
-            "Landing": "Landing",
-            "PreciseLanding": "Precise Landing",
-            "Altitude": "Altitude",
-            "HorizontalAlign": "H.Align",
-            "VerticalAlign": "Vertical Align",
+            "TAKEOFF": "Take Off",
+            "LANDING": "Landing",
+            "PRECISE_LANDING": "Precise Landing",
+            "ALTITUDE": "Altitude",
+            "HORIZONTAL_ALIGN": "H.Align",
+            "VERTICAL_ALIGN": "Vertical Align",
             "Tag": "Tag",
             "Direction": "Direction",
-            "Gimbal": "Gimbal",
-            "StartRecording": "Start Recording",
-            "StopRecording": "Stop Recording",
-            "RobotShootPhoto": "Robot Shoot Photo",
+            "GIMBAL": "Gimbal",
+            "START_RECORDING": "Start Recording",
+            "STOP_RECORDING": "Stop Recording",
+            "ROBOT_SHOOT_PHOTO": "Robot Shoot Photo",
             "Panorama": "Panorama",
-            "DownloadMedia": "DownloadMedia",
-            "Offset": "Offset"
+            "DOWNLOAD_MEDIA": "DownloadMedia",
+            "Offset": "Offset",
+            "AIRPORT_HOLDER": "Airport Holder",
+            "AIRPORT_RC": "Airport RC",
+            "AIRPORT_CHARGER": "Airport Charger",
+            "AIRPORT_DRONE": "Airport Drone"
 
         },
         "AirportSteps": {
@@ -83,7 +95,9 @@
         "Args": "Args"
     },
     "Drones":{
-        "Drone": "Drone"
+        "Drone": "Drone",
+        "true": "FLYING",
+        "false": "NOT FLYING"
     },
     "Airport":{
         "CCTV": "CCTV",
@@ -95,7 +109,20 @@
         "Battery": "Battery",
         "DroneSwitch": "ON/OFF",
         "Downloading": "Downloading",
-        "Flying": "Flying"
+        "Flying": "Flying",
+        "RELEASE": "RELEASE",
+        "LOCKED": "LOCKED",
+        "LOCK": "LOCK",
+        "UNKNOWN": "UNKNOWN",
+        "OFF": "OFF",
+        "ON": "ON",
+        "UNCHARGED": "UNCHARGED",
+        "CHARGING": "CHARGING",
+        "NOT DOWNLOADING": "NOT DOWNLOADING",
+        "START CHARGE": "START CHARGE",
+        "STOP CHARGE": "STOP CHARGE",
+        "NOT FLYING": "NOT FLYING",
+        "FLYING": "FLYING"
     },
     "360View": "360 View",
     "360Image": "360 Image",

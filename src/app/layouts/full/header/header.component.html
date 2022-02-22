@@ -25,7 +25,7 @@
 </mat-menu> -->
 <button [matMenuTriggerFor]="profile" mat-button><mat-icon>language</mat-icon>{{ 'Lang' | translate}}</button>
 <mat-menu #profile="matMenu" class="mymegamenu">
-    <button mat-menu-item *ngFor="let lang of translate.getLangs()" (click)="switchLanguage(lang)" >
+    <button mat-menu-item *ngFor="let lang of langs" (click)="switchLanguage(lang)" >
         {{ 'Language.' + lang | translate }}
     </button>
 </mat-menu>

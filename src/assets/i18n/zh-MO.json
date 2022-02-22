@@ -9,7 +9,7 @@
         "Mission": "歷史任務查詢",
         "Fligth Path": "飛行路徑和任務",
         "Drones": "無人機實時影像",
-        "Airport": "機場影像",
+        "Airport": "機場實時影像",
         "360 View": "全景實時影像",
         "360 Image": "360相片",
         "Map": "繪製圖形地圖"
@@ -37,27 +37,39 @@
         "Media": "媒體顯示",
         "MediaUrl": "媒體鏈結"
     },
+    "TableState": {
+        "FAILURE": "失敗",
+        "COMPLETED": "完成",
+        "STOPPED": "停止",
+        "EXPIRED": "失效",
+        "UNFINISHED": "未完成",
+        "CANCEL": "取消"
+    },
     "FligthPath": {
         "PathPlanning": "任務路徑規劃",
         "Paths": "保存並創建任務",
         "MissionPath": "所有任務路徑",
         "DroneSteps": {
             "Step": "無人機步驟",
-            "TakeOff": "起飛",
-            "Landing": "降落",
-            "PreciseLanding": "精準降落",
-            "Altitude": "起飛高度",
-            "HorizontalAlign": "水平標簽",
-            "VerticalAlign": "垂直標簽",
+            "TAKEOFF": "起飛",
+            "LANDING": "降落",
+            "PRECISE_LANDING": "精準降落",
+            "ALTITUDE": "起飛高度",
+            "HORIZONTAL_ALIGN": "水平標簽",
+            "VERTICAL_ALIGN": "垂直標簽",
             "Tag": "標簽",
             "Direction": "方向",
-            "Gimbal": "雲台",
-            "StartRecording": "開始錄製",
-            "StopRecording": "停止錄製",
-            "RobotShootPhoto": "影相",
+            "GIMBAL": "雲台",
+            "START_RECORDING": "開始錄製",
+            "STOP_RECORDING": "停止錄製",
+            "ROBOT_SHOOT_PHOTO": "影相",
             "Panorama": "全景",
-            "DownloadMedia": "下載媒體",
-            "Offset": "偏移量"
+            "DOWNLOAD_MEDIA": "下載媒體",
+            "Offset": "偏移量",
+            "AIRPORT_HOLDER": "機場固定裝置",
+            "AIRPORT_RC": "機場操作遙控",
+            "AIRPORT_CHARGER": "機場操作充電",
+            "AIRPORT_DRONE": "機場操作無人機開關"
         },
         "AirportSteps": {
             "Step": "機場步驟",
@@ -65,8 +77,8 @@
             "AirportLockHolder": "機場固定裝置（合上）",
             "AirportTurnRCOn": "機場打開遙控",
             "AirportTurnRCOff": "機場關閉遙控",
-            "AirportTurnChargerOn": "操作經常充電（打開）",
-            "AirportTurnChargerOff": "操作經常充電（關閉）",
+            "AirportTurnChargerOn": "機場操作充電（打開）",
+            "AirportTurnChargerOff": "機場操作充電（關閉）",
             "AirportTurnDroneOn": "打開無人機",
             "AirportTurnDroneOff": "關閉無人機"
         },
@@ -81,7 +93,9 @@
         "Args": "參數"
     },
     "Drones":{
-        "Drone": "無人機實時影像"
+        "Drone": "無人機實時影像",
+        "true": "正在飛行",
+        "false": "未飛行"
     },
     "Airport":{
         "CCTV": "機場實時影像",
@@ -93,7 +107,20 @@
         "Battery": "飛機電腦",
         "DroneSwitch": "飛機開關",
         "Downloading": "下載狀態",
-        "Flying": "是否飛行"
+        "Flying": "是否飛行",
+        "RELEASE": "釋放",
+        "LOCKED": "已合上",
+        "LOCK": "合上",
+        "UNKNOWN": "未知",
+        "OFF": "關閉",
+        "ON": "打開",
+        "UNCHARGED": "未充電",
+        "CHARGING": "充電中",
+        "NOT DOWNLOADING": "無下載",
+        "START CHARGE": "開始充電",
+        "STOP CHARGE": "停止充電",
+        "NOT FLYING": "未飛行",
+        "FLYING": "飛行中"
     },
     "360View": "全景實時影像",
     "360Image": "360相片",

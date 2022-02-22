@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 
 import { MenuItems } from './menu-items/menu-items';
 import { AccordionAnchorDirective, AccordionLinkDirective, AccordionDirective } from './accordion';
-import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
+import {TranslateModule} from '@ngx-translate/core';
 
 
 @NgModule({
@@ -13,7 +13,7 @@ import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
   ],
   imports:[TranslateModule.forChild({
     extend:true
-})],
+  })],
   exports: [
     AccordionAnchorDirective,
     AccordionLinkDirective,

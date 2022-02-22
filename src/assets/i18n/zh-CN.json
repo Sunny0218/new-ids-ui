@@ -37,27 +37,39 @@
         "Media": "媒体显示",
         "MediaUrl": "媒体链接"
     },
+    "TableState": {
+        "FAILURE": "失败",
+        "COMPLETED": "完成",
+        "STOPPED": "停止",
+        "EXPIRED": "失效",
+        "UNFINISHED": "未完成",
+        "CANCEL": "取消"
+    },
     "FligthPath": {
         "PathPlanning": "任务路径规划",
         "Paths": "保存并创建任务",
         "MissionPath": "所有任务路径",
         "DroneSteps": {
             "Step": "无人机步骤",
-            "TakeOff": "起飞",
-            "Landing": "降落",
-            "PreciseLanding": "精准降落",
-            "Altitude": "起飞高度",
-            "HorizontalAlign": "水平标签",
-            "VerticalAlign": "垂直标签",
+            "TAKEOFF": "起飞",
+            "LANDING": "降落",
+            "PRECISE_LANDING": "精准降落",
+            "ALTITUDE": "起飞高度",
+            "HORIZONTAL_ALIGN": "水平标签",
+            "VERTICAL_ALIGN": "垂直标签",
             "Tag": "标签",
             "Direction": "方向",
-            "Gimbal": "云台",
-            "StartRecording": "开始录制",
-            "StopRecording": "停止录制",
-            "RobotShootPhoto": "拍摄照片",
+            "GIMBAL": "云台",
+            "START_RECORDING": "开始录制",
+            "STOP_RECORDING": "停止录制",
+            "ROBOT_SHOOT_PHOTO": "拍摄照片",
             "Panorama": "全景",
-            "DownloadMedia": "下载媒体",
-            "Offset": "偏移量"
+            "DOWNLOAD_MEDIA": "下载媒体",
+            "Offset": "偏移量",
+            "AIRPORT_HOLDER": "机场固定装置",
+            "AIRPORT_RC": "机场操作遥控",
+            "AIRPORT_CHARGER": "机场操作充电",
+            "AIRPORT_DRONE": "机场操作无人机开关"
         },
         "AirportSteps": {
             "Step": "机场步骤",
@@ -65,8 +77,8 @@
             "AirportLockHolder": "机场固定装置（合上）",
             "AirportTurnRCOn": "机场打开遥控",
             "AirportTurnRCOff": "机场关闭遥控",
-            "AirportTurnChargerOn": "操作机场充电（打开）",
-            "AirportTurnChargerOff": "操作机场充电（关闭）",
+            "AirportTurnChargerOn": "机场操作充电（打开）",
+            "AirportTurnChargerOff": "机场操作充电（关闭）",
             "AirportTurnDroneOn": "打开无人机",
             "AirportTurnDroneOff": "关闭无人机"
         },
@@ -81,7 +93,9 @@
         "Args": "参数"
     },
     "Drones":{
-        "Drone": "无人机实时影像"
+        "Drone": "无人机实时影像",
+        "true": "正在飞行",
+        "false": "未飞行"
     },
     "Airport":{
         "CCTV": "机场实时影像",
@@ -93,7 +107,20 @@
         "Battery": "飞机电量",
         "DroneSwitch": "飞机开关",
         "Downloading": "下载状态",
-        "Flying": "是否飞行"
+        "Flying": "是否飞行",
+        "RELEASE": "释放",
+        "LOCKED": "已合上",
+        "LOCK": "合上",
+        "UNKNOWN": "未知",
+        "OFF": "关闭",
+        "ON": "打开",
+        "UNCHARGED": "未充电",
+        "CHARGING": "充电中",
+        "NOT DOWNLOADING": "无下载",
+        "START CHARGE": "开始充电",
+        "STOP CHARGE": "停止充电",
+        "NOT FLYING": "未飞行",
+        "FLYING": "飞行中"
     },
     "360View": "全景实时影像",
     "360Image": "360相片",
