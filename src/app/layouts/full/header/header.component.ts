@@ -21,18 +21,18 @@ export class AppHeaderComponent implements OnInit{
   appHeartBeat = 0;
   setHeartBeat = 0;
 
-  langs = ['zh-CN', 'zh-MO', 'en'];
+  langs = ['zh', 'zh-MO', 'en'];
 
   constructor(
     private robotSvc: RobotService,
     private mqttSvc: MqttService,
     public translate: TranslateService
   ) { 
-    translate.addLangs(['zh-CN', 'zh-MO', 'en']);
-    translate.setDefaultLang('zh-CN');
+    translate.addLangs(['zh', 'zh-MO', 'en']);
+    translate.setDefaultLang('zh');
     
-    // const browserLang = translate.getBrowserLang();
-    // translate.use(browserLang.match(/en|zh/) ? browserLang : 'zh');
+    const browserLang = translate.getBrowserLang();
+    translate.use(browserLang.match(/en|zh/) ? browserLang : 'en');
   }
 
   

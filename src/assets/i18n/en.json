@@ -2,7 +2,7 @@
     "Lang": "English",
     "Language": {
         "en":"English",
-        "zh-CN":"中文简体",
+        "zh":"中文简体",
         "zh-MO":"中文繁體"
     },
     "Menu": {
@@ -127,7 +127,7 @@
     "360View": "360 View",
     "360Image": "360 Image",
     "AMap": {
-        "Map": "Map",
+        "Map": "AMap",
         "GroundStation": "GroundStation",
         "FlyingRange": "FlyingRange",
         "PerformanceArea": "Performance Area",
@@ -137,6 +137,10 @@
         "AlternateArea": "Alternate Area",
         "ClearAll": "Clear All",
         "CloseDraw": "Close Draw",
-        "ToWithdraw": "ToWithdraw"
+        "ToWithdraw": "ToWithdraw",
+        "SwitchMap": "Switch Map"
+    },
+    "GoogleMap": {
+        "Map": "Google Map"
     }
 }

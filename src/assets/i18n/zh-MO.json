@@ -2,7 +2,7 @@
     "Lang": "中文繁體",
     "Language": {
         "en":"English",
-        "zh-CN":"中文简体",
+        "zh":"中文简体",
         "zh-MO":"中文繁體"
     },
     "Menu": {
@@ -125,7 +125,7 @@
     "360View": "全景實時影像",
     "360Image": "360相片",
     "AMap": {
-        "Map": "繪製圖形地圖",
+        "Map": "高德地圖",
         "GroundStation": "地面站",
         "FlyingRange": "放飛範圍",
         "PerformanceArea": "表演區域",
@@ -135,6 +135,10 @@
         "AlternateArea": "備降區域",
         "ClearAll": "清除所有",
         "CloseDraw": "關閉繪製",
-        "ToWithdraw": "撤回"
+        "ToWithdraw": "撤回",
+        "SwitchMap": "切換地圖"
+    },
+    "GoogleMap": {
+        "Map": "Google地圖"
     }
 }

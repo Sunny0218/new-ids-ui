@@ -27,7 +27,8 @@ export class VrViewComponent implements OnInit {
       autoplay: true,
       fluid: true,
       loop: false,
-      techOrder: ['html5']
+      poster:'../../../assets/images/background//ids_place_holder.jpg',
+      techOrder: ['html5'],
     };
     
     
@@ -262,6 +263,11 @@ export class VrViewComponent implements OnInit {
     this.player = videojs('vrScream',this.config, () => {
       console.log('Using video.js ' + videojs.VERSION);
       this.player.vr({projection: '360', sphereDetail: 48});
+    //   this.player.vr().on('initialized', () => {
+    //     this.player.vr().camera.position.x = 0;
+    //     this.player.vr().camera.position.y = 360;
+    // });
+      this.player.vr().cameraVector;
     })
   }
   

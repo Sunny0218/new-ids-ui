@@ -18,6 +18,7 @@ import { VrImageComponent } from './vr-image/vr-image.component';
 import { GoogleMapComponent } from './google-map/google-map.component';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { SharedModule } from '../shared/shared.module';
+import { AMapComponent } from './a-map/a-map.component';
 
 const CommonPanelroutes:Routes = [
   {
@@ -47,10 +48,6 @@ const CommonPanelroutes:Routes = [
   {
     path:'map',
     component:MapPanelComponent
-  },
-  {
-    path:'gmap',
-    component:GoogleMapComponent
   }
 ] 
 
@@ -66,6 +63,7 @@ const CommonPanelroutes:Routes = [
     MapPanelComponent,
     VrImageComponent,
     GoogleMapComponent,
+    AMapComponent,
   ],
   imports: [
     CommonModule,

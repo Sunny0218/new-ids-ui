@@ -1,0 +1,76 @@
+.draw-func {
+    position: absolute;
+    right: 10%;
+    bottom: 15px;
+}
+
+@media screen and (max-width:560px) {
+  .draw-func {
+      right: 0;
+  }
+}
+
+
+.draw-func .input-item {
+    display: flex;
+    justify-items: flex-start;
+    /* justify-content: space-between; */
+    align-items: center;
+}
+
+
+
+
+.show-area {
+    height: 460px;
+    width: 5rem;
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%); 
+}
+
+.show-area div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    margin: 10px auto ;
+}
+
+span {
+  font-size: 12px;
+}
+
+.input-item{
+    height: 2.2rem;
+  }
+
+.btn{
+  width: 5rem;
+  margin: 0 0.5rem 0 0.5rem;
+  border: 1px solid #25A5F7;
+  background-color: transparent;
+  color: #25A5F7;
+  border-radius: 1rem;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.5rem;
+}
+
+.btn:hover {
+  color: white;
+  background-color: #25A5F7;
+}
+
+.btn:disabled {
+  border: 1px solid #ccc;
+  background-color: rgba(255, 255, 255, .2);
+  color: rgba(0, 0, 0, 0.26);;
+}
+
+.input-text{
+  width: 4rem;
+  margin-right:1rem;
+}
+

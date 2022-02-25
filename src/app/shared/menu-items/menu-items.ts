@@ -58,14 +58,14 @@ export interface Menu {
 
 
 const MENUITEMS = [ 
+  // { state: 'dashboard', name: 'Dashboard', type: 'link', icon: 'av_timer' },
+  { state: 'map', type: 'link', name: 'Map', icon: 'map' },
   { state: 'media', type: 'link', name: 'Mission', icon: 'list' },
   { state: 'path', type: 'link', name: 'Fligth Path', icon: 'flight_takeoff' },
   { state: 'fpv', type: 'link', name: 'Drones', icon: 'airplanemode_active' },
   { state: 'airport', type: 'link', name: 'Airport', icon: 'border_outer' }, 
   { state: '360view', type: 'link', name: '360 View', icon: 'control_camera' },
-  { state: '360image', type: 'link', name: '360 Image', icon: 'panorama' }, 
-  { state: 'map', type: 'link', name: 'Map', icon: 'map' },
-  // { state: 'gmap', type: 'link', name: 'Google Map', icon: 'map' },  
+  { state: '360image', type: 'link', name: '360 Image', icon: 'panorama' }
 ];
 
 @Injectable()

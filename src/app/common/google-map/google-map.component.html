@@ -1,24 +1,43 @@
-<div fxLayout="row">
-    <div fxFlex.gt-lg="100" fxFlex.gt-md="100" fxFlex.gt-xs="100" fxFlex="100">
-        <mat-card>
-            <mat-card-content>
-                <mat-card-title>Google Map</mat-card-title>
-                <div class="my-google-map" id="map">
-                    <!-- <google-map 
-                      width="100%" 
-                      height="680px" 
-                      [center]="center" 
-                      [options]="mapOptions"
-                      (mapClick)="addMarker($event)"
-                    >
-                      <map-marker
-                        *ngFor="let position of markersPositons"
-                        [position]="position"
-                      >
-                      </map-marker>
-                    </google-map> -->
-                </div>
-            </mat-card-content>
-        </mat-card>
-    </div>
+<mat-card-title>{{ 'GoogleMap.Map' | translate }}</mat-card-title>
+<div class="gmnoprint">
+  <div class="btn">
+    <button (click)="drawMaker()">{{ 'AMap.GroundStation' | translate }}</button>
+  </div>
+  <div class="btn">
+    <button (click)="drawPolyline()">{{ 'AMap.FlyingRange' | translate }}</button>
+  </div>
+  <div class="btn">
+    <button (click)="drawPolygon('#1791fc')">{{ 'AMap.PerformanceArea' | translate }}</button>
+  </div>
+  <div class="btn">
+    <button (click)="drawPolygon('gray')">{{ 'AMap.ElectronicFence' | translate }}</button>
+  </div>
+  <div class="btn">
+    <button (click)="drawPolygon('#58bf58')">{{ 'AMap.ViewingArea' | translate }}</button>
+  </div>
+  <div class="btn">
+    <button (click)="drawPolygon('#ff0000')">{{ 'AMap.TakeoffAndLandingArea' | translate }}</button>
+  </div>
+  <div class="btn">
+    <button (click)="drawPolygon('#f0e336')">{{ 'AMap.AlternateArea' | translate }}</button
+  ></div>
+  <div class="btn">
+    <button (click)="stopDraw()">{{ 'AMap.CloseDraw' | translate }}</button>
+  </div>
 </div>
+
+<div class="my-google-map" id="map">
+    <!-- <google-map 
+      width="100%" 
+      height="680px" 
+      [center]="center" 
+      [options]="mapOptions"
+      (mapClick)="addMarker($event)"
+    >
+      <map-marker
+        *ngFor="let position of markersPositons"
+        [position]="position"
+      >
+      </map-marker>
+    </google-map> -->
+  </div>

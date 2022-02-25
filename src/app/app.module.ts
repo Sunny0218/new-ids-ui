@@ -50,7 +50,7 @@ const AppRoutes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: '/media',
+        redirectTo: '/map',
         pathMatch: 'full',
       },
       {
@@ -63,7 +63,7 @@ const AppRoutes: Routes = [
       },
       { 
         path: '**', 
-        redirectTo: '/media'
+        redirectTo: '/map'
       },
       // {
       //   path: '',
