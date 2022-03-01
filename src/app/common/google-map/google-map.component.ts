@@ -1,5 +1,5 @@
 import { Component, OnInit,ViewChild} from '@angular/core';
-import { GoogleMap, MapInfoWindow,MapMarker,} from '@angular/google-maps';
+import { GoogleMap, GoogleMapsModule, MapInfoWindow,MapMarker,} from '@angular/google-maps';
 
 
 @Component({
@@ -24,6 +24,11 @@ export class GoogleMapComponent implements OnInit {
 
   shape = null
 
+  labels = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  labelIndex = 1;
+  poly:google.maps.Polyline;
+  marker:google.maps.Marker;
+
 
   // @ViewChild(GoogleMap, { static: false }) map: GoogleMap;
   // @ViewChild(MapInfoWindow, { static: false }) info: MapInfoWindow
@@ -34,11 +39,9 @@ export class GoogleMapComponent implements OnInit {
     this.initMap()
   }
 
-
+//初始化google地图
   initMap() {
-
     this.map = new google.maps.Map(
-      
       document.getElementById("map") as HTMLElement,
       {
         // center: { lat: 22.1917195, lng: 113.5476421 },
@@ -46,12 +49,46 @@ export class GoogleMapComponent implements OnInit {
       }
     );
 
+    //初始化后定位设备所在位置
     navigator.geolocation.getCurrentPosition((position) => {
       this.center = {
         lat: position.coords.latitude,
         lng: position.coords.longitude,
       }
       this.map.setCenter(this.center);
+    })
+
+    //构造线段
+    this.poly = new google.maps.Polyline({
+      strokeColor: "#ffff00",
+      strokeOpacity: 1.0,
+      strokeWeight: 3,
+    });
+    this.poly.setMap(this.map);
+
+    //绑定google地图点击事件
+    google.maps.event.addListener(this.map, 'click', (event) => {
+      this.addMarker(event.latLng, this.map);
+    })
+  }
+
+  //google地图点击事件，触发此函数；此函数添加带有线段连接的标记
+  addMarker(location:google.maps.LatLngLiteral, map:google.maps.Map) {
+    const path = this.poly.getPath();
+    path.push(location);
+
+    this.marker = new google.maps.Marker({
+      position: location,
+      label: (this.labelIndex++).toString(),
+      map: map,
+      draggable: true,
+    });
+      this.map.panTo(location)
+
+    //绑定标记点击事件
+    this.marker.addListener('click', (event) => {
+      console.log('Lat:'+ event.latLng.lat(),'Lng:'+ event.latLng.lng());
+      
     })
   }
 
