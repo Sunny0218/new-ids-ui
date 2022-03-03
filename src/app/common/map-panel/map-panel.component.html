@@ -4,8 +4,8 @@
         <mat-card>
             <mat-card-content>
                 <div class="btn-item">
-                    <input type="button" class="btn" value="{{ 'AMap.Map' | translate}}"  (click)="switchMap('amap')"/>
-                    <input type="button" class="btn" value="{{ 'GoogleMap.Map' | translate}}"  (click)="switchMap('google')"/>
+                    <input type="button" class="btn" value="{{ 'AMap.Map' | translate}}" (click)="switchMap('amap')" />
+                    <input type="button" class="btn" value="{{ 'GoogleMap.Map' | translate}}" (click)="switchMap('google')" />
                 </div>
                 <app-a-map *ngIf="changeMap"></app-a-map>
                 <app-google-map *ngIf="!changeMap"></app-google-map>
@@ -13,5 +13,3 @@
         </mat-card>
     </div>
 </div>
-
-

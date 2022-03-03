@@ -26,10 +26,15 @@ export class GoogleMapComponent implements OnInit {
 
   labels = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   labelIndex = 1;
-  poly:google.maps.Polyline;
+  flightPath:google.maps.Polyline;
+  flightPaths:any = [];
   marker:google.maps.Marker;
+  markers: google.maps.Marker[] = [];
+  closewp:boolean = false;
+  wayPoint:number = null;
 
-
+  latitude:number = null;
+  longitiude:number = null;
   // @ViewChild(GoogleMap, { static: false }) map: GoogleMap;
   // @ViewChild(MapInfoWindow, { static: false }) info: MapInfoWindow
 
@@ -59,12 +64,13 @@ export class GoogleMapComponent implements OnInit {
     })
 
     //构造线段
-    this.poly = new google.maps.Polyline({
+    this.flightPath = new google.maps.Polyline({
       strokeColor: "#ffff00",
       strokeOpacity: 1.0,
       strokeWeight: 3,
+      editable: true
     });
-    this.poly.setMap(this.map);
+    this.flightPath.setMap(this.map);
 
     //绑定google地图点击事件
     google.maps.event.addListener(this.map, 'click', (event) => {
@@ -73,23 +79,59 @@ export class GoogleMapComponent implements OnInit {
   }
 
   //google地图点击事件，触发此函数；此函数添加带有线段连接的标记
-  addMarker(location:google.maps.LatLngLiteral, map:google.maps.Map) {
-    const path = this.poly.getPath();
-    path.push(location);
-
+  addMarker(location, map:google.maps.Map) {
+    this.closewp = true;
+    this.flightPaths = this.flightPath.getPath();
+    this.flightPaths.push(location);
+    
     this.marker = new google.maps.Marker({
       position: location,
-      label: (this.labelIndex++).toString(),
+      label: (this.markers.length + 1).toString(),
       map: map,
       draggable: true,
     });
-      this.map.panTo(location)
+      // this.map.panTo(location)
+      this.markers.push(this.marker);
+      this.wayPoint = this.marker['label'];
+      this.latitude = location.lat();
+      this.longitiude = location.lng();
 
+      
     //绑定标记点击事件
     this.marker.addListener('click', (event) => {
-      console.log('Lat:'+ event.latLng.lat(),'Lng:'+ event.latLng.lng());
+      console.log(this.markers);
+      this.latitude = event.latLng.lat();
+      this.longitiude = event.latLng.lng();
+
+      for(let i = 0; i < this.markers.length; i++) {
+        if ( this.latitude == this.markers[i]['position'].lat() && this.longitiude == this.markers[i]['position'].lng() ) {
+          this.wayPoint = this.markers[i]['label']
+        }
+      }
       
+
     })
+
+    //绑定标记拖拽事件
+    this.marker.addListener('drag', (event) => {
+      this.latitude = event.latLng.lat();
+      this.longitiude = event.latLng.lng();
+    })
+  }
+
+  deleteMarkers() {
+    this.setMapOnAll(null);
+    this.markers = [];
+  }
+
+  setMapOnAll(map: google.maps.Map | null) {
+    for (let i = 0; i < this.markers.length; i++) {
+      this.markers[i].setMap(null)
+    }
+  }
+
+  closeWp() {
+    this.closewp = false;
   }
 
   drawMaker() {

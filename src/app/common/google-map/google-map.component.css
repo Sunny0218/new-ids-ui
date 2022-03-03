@@ -40,3 +40,60 @@
 .gmnoprint .btn button:hover {
     background-color: rgb(235, 235, 235);
 }
+
+#wpsettings {
+    z-index: 5;
+    position: absolute;
+    right: 25px;
+    top: 120px;
+}
+
+.panel-default {
+    border-color: #ddd;
+}
+
+.panel {
+    margin-bottom: 20px;
+    background-color: #fff;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 1px 1px rgb(0 0 0 / 5%);
+    box-shadow: 0 1px 1px rgb(0 0 0 / 5%);
+}
+
+.panel-default>.panel-heading {
+    color: #333;
+    background-color: #f5f5f5;
+    border-color: #ddd
+}
+
+.panel-heading {
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 15px;
+    border-bottom: 1px solid transparent;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+
+.panel-body {
+    padding: 10px;
+}
+
+.panel-footer {
+    padding: 10px 15px;
+    background-color: #f5f5f5;
+    border-top: 1px solid #ddd;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+
+.body-wpsetting>.lat-lng {
+    display: flex;
+    justify-content: space-between;
+}
+
+.lat-width,
+.lng-width {
+    width: 50%;
+}

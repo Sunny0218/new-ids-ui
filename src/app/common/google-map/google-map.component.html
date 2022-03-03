@@ -25,18 +25,31 @@
     <button (click)="stopDraw()">{{ 'AMap.CloseDraw' | translate }}</button>
   </div>
 </div> -->
-<div class="my-google-map" id="map">
-    <!-- <google-map 
-      width="100%" 
-      height="680px" 
-      [center]="center" 
-      [options]="mapOptions"
-      (mapClick)="addMarker($event)"
-    >
-      <map-marker
-        *ngFor="let position of markersPositons"
-        [position]="position"
-      >
-      </map-marker>
-    </google-map> -->
-  </div>
+<div id="wpsettings" *ngIf="closewp">
+    <div id="wpsettings-content" class="panel panel-default wpsetting">
+        <div class="panel-heading">
+            <button>Delete</button>
+            <p>WAYPOINT {{ wayPoint }} SETTINGS</p>
+            <button (click)="closeWp()">×</button>
+        </div>
+        <div class="panel-body" style="width: 400px;">
+            <div class="body-wpsetting">
+                <form class="lat-lng">
+                    <div class="lat-width">
+                        <span matPrefix>Latitude&nbsp;</span>
+                        <input type="lat" name="lat" matInput [(ngModel)]="latitude">
+                    </div>
+                    <div class="lng-width">
+                        <span matPrefix>Longitude&nbsp;</span>
+                        <input type="lng" name="lng" matInput [(ngModel)]="longitiude">
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="panel-footer">
+            <button><</button>
+            <button>></button>
+        </div>
+    </div>
+</div>
+<div class="my-google-map" id="map"></div>

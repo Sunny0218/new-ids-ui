@@ -73,7 +73,6 @@ export class AppHeaderComponent implements OnInit{
     setInterval ( () => {
       this.setHeartBeat = new Date().getTime();
       let timeDiff = Math.abs(this.setHeartBeat - this.appHeartBeat);
-    
       if ( timeDiff > 2000) {
         this.isConnected = false;
       } else {
