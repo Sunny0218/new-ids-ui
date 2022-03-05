@@ -97,3 +97,7 @@
 .lng-width {
     width: 50%;
 }
+
+.lat-lng input {
+    border: 1px solid #ccc;
+}

@@ -1,3 +1,4 @@
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit,ViewChild} from '@angular/core';
 import { GoogleMap, GoogleMapsModule, MapInfoWindow,MapMarker,} from '@angular/google-maps';
 
@@ -24,9 +25,9 @@ export class GoogleMapComponent implements OnInit {
 
   shape = null
 
-  labels = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  labelIndex = 1;
-  flightPath:google.maps.Polyline;
+  markerId = 1;
+  poly:google.maps.Polyline;
+  polys:any = [];
   flightPaths:any = [];
   marker:google.maps.Marker;
   markers: google.maps.Marker[] = [];
@@ -35,6 +36,10 @@ export class GoogleMapComponent implements OnInit {
 
   latitude:number = null;
   longitiude:number = null;
+
+  currentId:string = null;
+
+  altitude:number = 30
   // @ViewChild(GoogleMap, { static: false }) map: GoogleMap;
   // @ViewChild(MapInfoWindow, { static: false }) info: MapInfoWindow
 
@@ -64,13 +69,13 @@ export class GoogleMapComponent implements OnInit {
     })
 
     //构造线段
-    this.flightPath = new google.maps.Polyline({
+    this.poly = new google.maps.Polyline({
       strokeColor: "#ffff00",
       strokeOpacity: 1.0,
       strokeWeight: 3,
       editable: true
     });
-    this.flightPath.setMap(this.map);
+    this.poly.setMap(this.map);
 
     //绑定google地图点击事件
     google.maps.event.addListener(this.map, 'click', (event) => {
@@ -81,35 +86,33 @@ export class GoogleMapComponent implements OnInit {
   //google地图点击事件，触发此函数；此函数添加带有线段连接的标记
   addMarker(location, map:google.maps.Map) {
     this.closewp = true;
-    this.flightPaths = this.flightPath.getPath();
-    this.flightPaths.push(location);
+    this.polys = this.poly.getPath();
+    this.polys.push(location);
     
+    var markerLabel = (this.markerId ++).toString()
     this.marker = new google.maps.Marker({
       position: location,
-      label: (this.markers.length + 1).toString(),
+      label: markerLabel,
       map: map,
-      draggable: true,
+      // draggable: true,
     });
-      // this.map.panTo(location)
-      this.markers.push(this.marker);
-      this.wayPoint = this.marker['label'];
-      this.latitude = location.lat();
-      this.longitiude = location.lng();
+    // number of point 
 
-      
+    // id 
+
+    // this.map.panTo(location)
+    this.addFlightPath(this.marker)
+    this.wayPoint = this.marker['label'];
+    this.latitude = location.lat();
+    this.longitiude = location.lng();
+   
+
     //绑定标记点击事件
     this.marker.addListener('click', (event) => {
-      console.log(this.markers);
-      this.latitude = event.latLng.lat();
-      this.longitiude = event.latLng.lng();
 
-      for(let i = 0; i < this.markers.length; i++) {
-        if ( this.latitude == this.markers[i]['position'].lat() && this.longitiude == this.markers[i]['position'].lng() ) {
-          this.wayPoint = this.markers[i]['label']
-        }
-      }
-      
-
+      // current point ID
+      this.currentId = markerLabel;
+      this.showMarkerSetting();
     })
 
     //绑定标记拖拽事件
@@ -117,6 +120,56 @@ export class GoogleMapComponent implements OnInit {
       this.latitude = event.latLng.lat();
       this.longitiude = event.latLng.lng();
     })
+
+  }
+
+  //添加飞行路径
+  addFlightPath(markerInfo) {
+    this.altitude = 30
+    this.markers.push(markerInfo);
+
+    var location = markerInfo.position
+
+    var marker = {
+      id: markerInfo.label,
+      lat: location.lat(),
+      lng: location.lng(),
+      altitude: this.altitude
+    }
+
+    this.flightPaths.push(marker)
+    // console.log('flightPaths', this.flightPaths);
+    // console.log('markers', this.markers);
+  }
+
+
+
+  //显示标记的配置属性
+  showMarkerSetting() {
+    this.closewp = true;
+    for(let i = 0; i < this.flightPaths.length; i++) {
+      if (this.currentId == this.flightPaths[i]['id']) {
+        console.log(this.flightPaths[i]);
+        this.wayPoint = this.flightPaths[i]['id'];
+        this.latitude = this.flightPaths[i]['lat'];
+        this.longitiude = this.flightPaths[i]['lng'];
+        this.altitude = this.flightPaths[i]['altitude'];
+      }
+    }
+  }
+
+  //修改飞行路径（标记）的配置属性
+  editFlightPath() {
+    for(let i = 0; i < this.flightPaths.length; i++) {
+      if (this.currentId == this.flightPaths[i]['id']) {
+        this.flightPaths[i]['altitude'] = this.altitude;
+      }
+    }
+  }
+
+  deleteMarker() {
+    this.flightPaths.pop();
+    this.markers.pop().setMap(null);
   }
 
   deleteMarkers() {
