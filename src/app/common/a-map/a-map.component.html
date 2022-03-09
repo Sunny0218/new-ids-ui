@@ -1,6 +1,49 @@
 <mat-card-title>{{ 'AMap.Map' | translate }}</mat-card-title>
 <div id='container' style='width:100%; height:720px;'></div>
-<mat-card class="draw-func">
+<div id="wpsettings" *ngIf="closewp">
+    <div id="wpsettings-content" class="panel panel-default wpsetting">
+        <div class="panel-heading">
+            <button class="btn btn-danger" (click)="deleteMarker()">Delete</button>
+            <p>WAYPOINT {{ wayPoint }} SETTINGS</p>
+            <button mat-icon-button class="close" (click)="closeWp()">
+                <mat-icon>cancel</mat-icon>
+            </button>
+        </div>
+        <div class="panel-body" style="width: 400px;">
+            <div class="body-wpsetting">
+                <div class="lat-lng">
+                    <div class="lat-width">
+                        <span matPrefix>Latitude&nbsp;</span>
+                        <input type="lat" name="lat" [(ngModel)]="latitude" disabled="true">
+                    </div>
+                    <div class="lng-width">
+                        <span matPrefix>Longitude&nbsp;</span>
+                        <input type="lng" name="lng" [(ngModel)]="longitiude" disabled="true">
+                    </div>
+                </div>
+                <div class="Altitude">
+                  <span matPrefix>Altitude&nbsp;</span>
+                  <input type="altitude" name="altitude" [(ngModel)]="altitude"> 
+                  <mat-slider
+                  [max]="100"
+                  [min]="-20"
+                  [step]="1"
+                  thumbLabel
+                  [vertical]="vertical"
+                  [(ngModel)]="altitude"
+                  aria-labelledby="example-name-label"
+                  (change)="editFlightPath()">
+                  </mat-slider>
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer">
+            <button (click)="tryToEditPolyline()" class="btn-bottom" style="margin-right: 10px;"><</button>
+            <button class="btn-bottom">></button>
+        </div>
+    </div>
+</div>
+<!-- <mat-card class="draw-func">
     <div>
         <div class="input-item">
             <input type="radio" name='func' value='marker' (change)="draw('location')"><span class="input-text">{{ 'AMap.GroundStation' | translate }}</span>
@@ -18,14 +61,14 @@
             <input id="close" type="button" class="btn" value="{{ 'AMap.CloseDraw' | translate }}" (click)="closeDraw()" />
             <input id="laststep" type="button" class="btn" value="{{ 'AMap.ToWithdraw' | translate }}" [disabled]="lastStepDisanled" (click)="lastStep()" />
         </div>
-        <!-- <div class="input-item">
+        <div class="input-item">
             <input id="clear" type="button" class="btn" value="新建"  (click)="createPolygon()"/>
             <input id="clear" type="button" class="btn" value="开始编辑"  (click)="startEditor()"/>
             <input id="close" type="button" class="btn" value="关闭编辑" (click)="closeEditor()" />
-        </div> -->
+        </div>
     </div>
-</mat-card>
-<mat-card class="input-card show-area">
+</mat-card> -->
+<!-- <mat-card class="input-card show-area">
     <div class="location">
         <span>{{ 'AMap.GroundStation' | translate }}</span>
         <img src="https://webapi.amap.com/theme/v1.3/markers/n/mark_bs.png" style="width: 16px;">
@@ -54,4 +97,4 @@
         <span>{{ 'AMap.AlternateArea' | translate }}</span>
         <img src="../../../assets/images//amap-icon/reserve.png" style="width: 30px;">
     </div>
-</mat-card>
+</mat-card> -->

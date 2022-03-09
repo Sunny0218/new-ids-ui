@@ -7,7 +7,7 @@ import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 })
 export class MapPanelComponent implements OnInit,AfterViewInit,OnDestroy {
 
-  changeMap:boolean = false
+  changeMap:boolean = true
 
   constructor() { }
 
