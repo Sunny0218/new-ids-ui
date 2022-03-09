@@ -330,14 +330,15 @@ export class AMapComponent implements OnInit {
   //在模态框显示标记点的配置属性
   showMarkerSetting() {
     this.closewp = true;
-    for(let i = 0; i < this.flightPaths.length; i++) {
-      if (this.currentId == this.flightPaths[i]['id']) {
-        this.wayPoint = this.flightPaths[i]['id'];
-        this.latitude = this.flightPaths[i]['lat'];
-        this.longitiude = this.flightPaths[i]['lng'];
-        this.altitude = this.flightPaths[i]['altitude'];
+    this.flightPaths.forEach(element => {
+      if ( element['id'] == this.currentId ) {
+        this.wayPoint = element['id'];
+        this.latitude = element['lat'];
+        this.longitiude = element['lng'];
+        this.altitude = element['altitude'];
       }
-    }
+    });
+
   }
 
   //修改飞行路径（标记点）的配置属性
@@ -358,14 +359,14 @@ export class AMapComponent implements OnInit {
     this.latitude = lat;
     this.longitiude = lng;
 
-    for(let i = 0; i < this.flightPaths.length; i++) {
-      if (this.currentId == this.flightPaths[i]['id']) {
-        this.wayPoint = this.flightPaths[i]['id'];
-        this.flightPaths[i]['lat'] = lat;
-        this.flightPaths[i]['lng'] = lng;
-        this.altitude = this.flightPaths[i]['altitude'];
+    this.flightPaths.forEach(element => {
+      if ( element['id'] == this.currentId ) {
+        this.wayPoint = element['id'];
+        element['lat'] = lat;
+        element['lng'] = lng;
+        this.altitude = element['altitude'];
       }
-    }
+    });
   }
 
   //过滤需要拖拽的折线
