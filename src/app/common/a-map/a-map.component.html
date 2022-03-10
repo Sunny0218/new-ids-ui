@@ -22,23 +22,27 @@
                     </div>
                 </div>
                 <div class="Altitude">
-                  <span matPrefix>Altitude&nbsp;</span>
-                  <input type="altitude" name="altitude" [(ngModel)]="altitude"> 
-                  <mat-slider
-                  [max]="100"
-                  [min]="-20"
-                  [step]="1"
-                  thumbLabel
-                  [vertical]="vertical"
-                  [(ngModel)]="altitude"
-                  aria-labelledby="example-name-label"
-                  (change)="editFlightPath()">
-                  </mat-slider>
+                    <span matPrefix>Altitude&nbsp;</span>
+                    <input name="altitude" [(ngModel)]="altitude">
+                    <mat-slider [max]="100" [min]="-20" [step]="1" thumbLabel [vertical]="vertical" [(ngModel)]="altitude" (change)="editFlightPath()">
+                    </mat-slider>
+                </div>
+                <div class="Speed">
+                    <span matPrefix>Speed&nbsp;</span>
+                    <input name="Speed" [(ngModel)]="speed">
+                    <mat-slider [max]="100" [min]="-20" [step]="1" thumbLabel [vertical]="vertical" [(ngModel)]="speed">
+                    </mat-slider>
+                </div>
+                <div class="Heading">
+                    <span matPrefix>Heading&nbsp;</span>
+                    <input name="Speed">
+                    <mat-slider [max]="100" [min]="-20" [step]="1" thumbLabel [vertical]="vertical">
+                    </mat-slider>
                 </div>
             </div>
         </div>
         <div class="panel-footer">
-            <button (click)="tryToEditPolyline()" class="btn-bottom" style="margin-right: 10px;"><</button>
+            <button class="btn-bottom" style="margin-right: 10px;"><</button>
             <button class="btn-bottom">></button>
         </div>
     </div>

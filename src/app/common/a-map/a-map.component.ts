@@ -1,6 +1,4 @@
-import { E } from '@angular/cdk/keycodes';
 import { Component, OnInit } from '@angular/core';
-import { threadId } from 'worker_threads';
 declare var AMap: any;
 
 @Component({
@@ -17,6 +15,7 @@ export class AMapComponent implements OnInit {
   initOverlays:Array<any>;
   lastStepDisanled:boolean = true;
   marker:any; //标记点
+  disText:any;//地图两点距离文本
   markers:Array<any> = []; //放入所有标记点
   polylines:Array<any> = [] //放入所有折线
   flightPath:any; //飞行路径线段
@@ -28,6 +27,7 @@ export class AMapComponent implements OnInit {
   longitiude:number = null; //全局标记点经度
   latitude:number = null; //全局标记点纬度
   wayPoint:number = null; //全局标记点号码
+  speed:number = 30; //飞机航速
 
   constructor() { }
 
@@ -35,7 +35,6 @@ export class AMapComponent implements OnInit {
     this.getlocaltion();
     // this.loadMouseTool();
   }
-
 
   //加载地图时绘制固定位置覆盖物
   InitArea() {
@@ -256,25 +255,35 @@ export class AMapComponent implements OnInit {
       position: lnglat,
       extData: id
     });
-
-    this.markers.push(this.marker);
     this.overlays.push(this.marker);
-    ////创建飞行路径线段
+
     if ( this.overlays.length > 1) {
       var p1 = this.overlays[this.overlays.length - 2].getPosition();
       var p2 = this.marker.getPosition();
-      var path =[p1,p2]
- 
+      var path =[p1,p2];
+      var textPos = p1.divideBy(2).add(p2.divideBy(2));
+      var distance = Math.round(p1.distance(p2));
+      //创建飞行路径线段
       this.flightPath = new AMap.Polyline({
         map: this.map,
         strokeColor:'#80d8ff',
         isOutline:true,
         outlineColor:'white',
         extData: id - 1
-      });  
+      });
       this.flightPath.setPath(path);
       this.polylines.push(this.flightPath);
-      // console.log('add',this.map.getAllOverlays('polyline'));
+      //创建距离文本
+      this.disText = new AMap.Text({
+        map: this.map,
+        text:'',
+        style:{'background-color':'#29b6f6',
+        'border-color':'#e1f5fe',
+        'font-size':'12px'},
+        extData: id - 1
+      });
+      this.disText.setText(distance+'m');
+      this.disText.setPosition(textPos);
     }
 
     this.addFlightPath(this.marker);
@@ -282,13 +291,13 @@ export class AMapComponent implements OnInit {
     //每个标记点绑定点击事件
     this.marker.on('click', (e) => {
       this.currentId = id;
-      this.showMarkerSetting();
+      this.showMarkerSetting(e);
     })
 
     //每个标记点绑定拖拽事件(拖拽会实时改变overlays里的标记点数据)
     this.marker.on('dragging', (e) => {
       this.currentId = id;
-      this.computeDis(e);
+      this.showMarkerSetting(e);
       this.filterPolyline(e);
     })
   }
@@ -328,43 +337,39 @@ export class AMapComponent implements OnInit {
   }
 
   //在模态框显示标记点的配置属性
-  showMarkerSetting() {
+  showMarkerSetting(e) {
     this.closewp = true;
-    this.flightPaths.forEach(element => {
-      if ( element['id'] == this.currentId ) {
-        this.wayPoint = element['id'];
-        this.latitude = element['lat'];
-        this.longitiude = element['lng'];
-        this.altitude = element['altitude'];
-      }
-    });
-
+    var eventType = e.type;
+    if(eventType == 'click') {
+      this.flightPaths.forEach(element => {
+        if ( element['id'] == this.currentId ) {
+          this.wayPoint = element['id'];
+          this.latitude = element['lat'];
+          this.longitiude = element['lng'];
+          this.altitude = element['altitude'];
+        }
+      });
+    } else if (eventType == 'dragging'){
+      let lat = e.target.getPosition().lat;
+      let lng = e.target.getPosition().lng;
+      this.latitude = lat;
+      this.longitiude = lng;
+      this.flightPaths.forEach(element => {
+        if ( element['id'] == this.currentId ) {
+          this.wayPoint = element['id'];
+          element['lat'] = lat;
+          element['lng'] = lng;
+          this.altitude = element['altitude'];
+        }
+      });
+    }
   }
 
   //修改飞行路径（标记点）的配置属性
   editFlightPath() {
-    for(let i = 0; i < this.flightPaths.length; i++) {
-      if (this.currentId == this.flightPaths[i]['id']) {
-        this.flightPaths[i]['altitude'] = this.altitude;
-      }
-    }
-  }
-
-  //标记点拖拽时，计算两标记点之间的直线距离
-  computeDis(e) {
-    this.closewp = true;
-    let lat = e.target.getPosition().lat;
-    let lng = e.target.getPosition().lng;
-    // console.log('ComDis','Lat:',lat+' , '+'Lng:'+lng);
-    this.latitude = lat;
-    this.longitiude = lng;
-
     this.flightPaths.forEach(element => {
-      if ( element['id'] == this.currentId ) {
-        this.wayPoint = element['id'];
-        element['lat'] = lat;
-        element['lng'] = lng;
-        this.altitude = element['altitude'];
+      if(this.currentId == element['id']) {
+        element['altitude'] = this.altitude;
       }
     });
   }
@@ -374,27 +379,30 @@ export class AMapComponent implements OnInit {
     var id = e.target.getExtData();
     var polylineOverlays = this.map.getAllOverlays('polyline');
     var markerOverlays = this.map.getAllOverlays('marker');
+    var textOverlays = this.map.getAllOverlays('text');
 
     //只有一个标记点
     if(id == 1) {
       //第一个标记点和第一条折线
       if (polylineOverlays.length) {
-        this.dragPolyline(e,id,polylineOverlays,'next')
+        this.dragPolyline(e,id,polylineOverlays,textOverlays,'next')
       }
     //最后一个标记点和折线
     } else if(id == markerOverlays.length && polylineOverlays.length) {
-      this.dragPolyline(e,id-1,polylineOverlays,'pre')
+      this.dragPolyline(e,id-1,polylineOverlays,textOverlays,'pre')
     //中间标记点和折线
     } else {
-      this.dragPolyline(e,id-1,polylineOverlays,'pre')
-      this.dragPolyline(e,id,polylineOverlays,'next')
+      this.dragPolyline(e,id-1,polylineOverlays,textOverlays,'pre')
+      this.dragPolyline(e,id,polylineOverlays,textOverlays,'next')
     }
   }
 
-  //折线端点随着标记点拖拽而动
-  dragPolyline(event,indexId,polylineOverlays,type) {
+  //折线和距离文本端点随着标记点拖拽而动
+  dragPolyline(event,indexId,polylineOverlays,textOverlays,type) {
     let matchPolyline:any;
+    let matchText:any;
     [matchPolyline] = polylineOverlays.filter(element => element.getExtData() == indexId);
+    [matchText] = textOverlays.filter(element => element.getExtData() == indexId);
     if(type == 'pre') { 
       var p1 = matchPolyline.getPath()[0];
       var p2 = event.target.getPosition();
@@ -404,6 +412,11 @@ export class AMapComponent implements OnInit {
     }
     let path = [p1,p2];
     matchPolyline.setPath(path);
+
+    let textPos = p1.divideBy(2).add(p2.divideBy(2));
+    let distance = Math.round(p1.distance(p2));
+    matchText.setText(distance+'m');
+    matchText.setPosition(textPos);
   }
 
   // 地图要放到函数里。
