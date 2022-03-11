@@ -4,7 +4,7 @@
     <div id="wpsettings-content" class="panel panel-default wpsetting">
         <div class="panel-heading">
             <button class="btn btn-danger" (click)="deleteMarker()">Delete</button>
-            <p>WAYPOINT {{ wayPoint }} SETTINGS</p>
+            <h3>WAYPOINT {{ wayPointId }} SETTINGS</h3>
             <button mat-icon-button class="close" (click)="closeWp()">
                 <mat-icon>cancel</mat-icon>
             </button>
@@ -23,21 +23,34 @@
                 </div>
                 <div class="Altitude">
                     <span matPrefix>Altitude&nbsp;</span>
-                    <input name="altitude" [(ngModel)]="altitude">
+                    <input name="altitude" [(ngModel)]="altitude" (change)="editFlightPath()">
                     <mat-slider [max]="100" [min]="-20" [step]="1" thumbLabel [vertical]="vertical" [(ngModel)]="altitude" (change)="editFlightPath()">
                     </mat-slider>
                 </div>
                 <div class="Speed">
-                    <span matPrefix>Speed&nbsp;</span>
-                    <input name="Speed" [(ngModel)]="speed">
-                    <mat-slider [max]="100" [min]="-20" [step]="1" thumbLabel [vertical]="vertical" [(ngModel)]="speed">
+                    <span matPrefix>Speed&nbsp;&nbsp;&nbsp;</span>
+                    <input name="Speed" [(ngModel)]="speed" (change)="editFlightPath()">
+                    <mat-slider [max]="100" [min]="0" [step]="1" thumbLabel [vertical]="vertical" [(ngModel)]="speed" (change)="editFlightPath()">
                     </mat-slider>
                 </div>
                 <div class="Heading">
-                    <span matPrefix>Heading&nbsp;</span>
-                    <input name="Speed">
-                    <mat-slider [max]="100" [min]="-20" [step]="1" thumbLabel [vertical]="vertical">
-                    </mat-slider>
+                    <label for="heading">Heading</label>
+                    <select id="heading" [(ngModel)]="heading" (change)="editFlightPath()">
+                        <option value="AUTO">Auto</option>
+                        <option value="CONTROL_BY_REMOTE_CONTROLLER">RC Control</option>
+                        <option value="TOWARD_POINT_OF_INTEREST">Interest</option>
+                        <option value="USING_INITIAL_DIRECTION">Initial</option>
+                        <option value="USING_WAYPOINT_HEADING">Use Waypoint</option>
+                    </select>
+                </div>
+                <div class="ActionAfterFinished">
+                    <label for="actionAfterFinished">Action After Finished</label>
+                    <select id="actionAfterFinished" [(ngModel)]="actionAfterFinished" (change)="editFlightPath()">
+                        <option value="AUTO">Auto</option>
+                        <option value="CONTROL_BY_REMOTE_CONTROLLER">RC Control</option>
+                        <option value="USING_INITIAL_DIRECTION">Initial</option>
+                        <option value="USING_WAYPOINT_HEADING">Use Waypoint</option>
+                    </select>
                 </div>
             </div>
         </div>

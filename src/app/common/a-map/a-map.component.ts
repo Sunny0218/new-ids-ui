@@ -16,8 +16,9 @@ export class AMapComponent implements OnInit {
   lastStepDisanled:boolean = true;
   marker:any; //标记点
   disText:any;//地图两点距离文本
+  texts:Array<any> = []; //放下所有距离文本
   markers:Array<any> = []; //放入所有标记点
-  polylines:Array<any> = [] //放入所有折线
+  polylines:Array<any> = []; //放入所有折线
   flightPath:any; //飞行路径线段
   flightPaths:any = []; //所有飞行路径
   currentId:any; //标记点当前ID
@@ -26,9 +27,10 @@ export class AMapComponent implements OnInit {
   altitude:number = 30 //全局标记点高度
   longitiude:number = null; //全局标记点经度
   latitude:number = null; //全局标记点纬度
-  wayPoint:number = null; //全局标记点号码
+  wayPointId:number = null; //全局标记点号码
   speed:number = 30; //飞机航速
-
+  heading:string = 'AUTO'; //飞机朝向模式
+  actionAfterFinished:string = 'AUTO'; //完成飞行后的动作
   constructor() { }
 
   ngOnInit(): void {
@@ -255,14 +257,15 @@ export class AMapComponent implements OnInit {
       position: lnglat,
       extData: id
     });
-    this.overlays.push(this.marker);
+    this.markers = this.map.getAllOverlays('marker');
 
-    if ( this.overlays.length > 1) {
-      var p1 = this.overlays[this.overlays.length - 2].getPosition();
+    if ( this.markers.length > 1) {
+      var p1 = this.markers[this.markers.length - 2].getPosition();
       var p2 = this.marker.getPosition();
       var path =[p1,p2];
       var textPos = p1.divideBy(2).add(p2.divideBy(2));
       var distance = Math.round(p1.distance(p2));
+      
       //创建飞行路径线段
       this.flightPath = new AMap.Polyline({
         map: this.map,
@@ -272,7 +275,8 @@ export class AMapComponent implements OnInit {
         extData: id - 1
       });
       this.flightPath.setPath(path);
-      this.polylines.push(this.flightPath);
+      this.polylines = this.map.getAllOverlays('polyline');
+
       //创建距离文本
       this.disText = new AMap.Text({
         map: this.map,
@@ -284,6 +288,7 @@ export class AMapComponent implements OnInit {
       });
       this.disText.setText(distance+'m');
       this.disText.setPosition(textPos);
+      this.texts = this.map.getAllOverlays('text');
     }
 
     this.addFlightPath(this.marker);
@@ -302,28 +307,29 @@ export class AMapComponent implements OnInit {
     })
   }
 
-  tryToEditPolyline() {
-    this.map.remove(this.map.getAllOverlays('polyline'));
-    console.log('AllOverlays', this.map.getAllOverlays('polyline').length);
-  }
-
   //添加将要post的飞行路径
   addFlightPath(markerInfo) {
     var location = markerInfo.getPosition();
 
-    this.wayPoint = markerInfo.getExtData();
+    this.wayPointId = markerInfo.getExtData();
     this.latitude = location.getLat();
     this.longitiude = location.getLng();
-    this.altitude = 30;
+    this.altitude = 30; //初始化标记点高度
+    this.speed = 30; //初始化飞机航速
+    this.heading = 'AUTO'; //初始化飞机朝向模式
+    this.actionAfterFinished = 'AUTO'; //初始化完成飞行后的动作
     
-    var marker = {
+    var wayPoint = {
       id: markerInfo.getExtData(),
       lat: location.getLat(),
       lng: location.getLng(),
-      altitude: this.altitude
+      altitude: this.altitude,
+      speed: this.speed,
+      heading: this.heading,
+      actionAfterFinished: this.actionAfterFinished
     }
 
-    this.flightPaths.push(marker)
+    this.flightPaths.push(wayPoint)
   }
 
   //删除某个标记点
@@ -340,36 +346,40 @@ export class AMapComponent implements OnInit {
   showMarkerSetting(e) {
     this.closewp = true;
     var eventType = e.type;
-    if(eventType == 'click') {
-      this.flightPaths.forEach(element => {
-        if ( element['id'] == this.currentId ) {
-          this.wayPoint = element['id'];
+
+    this.flightPaths.forEach(element => {
+      if(element['id'] == this.currentId) {
+        this.wayPointId = element['id'];
+        this.altitude = element['altitude'];
+        this.speed = element['speed'];
+        this.heading = element['heading'];
+        this.actionAfterFinished = element['actionAfterFinished'];
+        if(eventType == 'click') {
           this.latitude = element['lat'];
           this.longitiude = element['lng'];
-          this.altitude = element['altitude'];
-        }
-      });
-    } else if (eventType == 'dragging'){
-      let lat = e.target.getPosition().lat;
-      let lng = e.target.getPosition().lng;
-      this.latitude = lat;
-      this.longitiude = lng;
-      this.flightPaths.forEach(element => {
-        if ( element['id'] == this.currentId ) {
-          this.wayPoint = element['id'];
+          console.log('ID:' + element['id'],element);
+        } else if(eventType == 'dragging') {
+          let lat = e.target.getPosition().lat;
+          let lng = e.target.getPosition().lng;
+          this.latitude = lat;
+          this.longitiude = lng;
           element['lat'] = lat;
           element['lng'] = lng;
-          this.altitude = element['altitude'];
         }
-      });
-    }
+      }
+    });
   }
 
   //修改飞行路径（标记点）的配置属性
   editFlightPath() {
+    (this.altitude < -20 || this.altitude > 120) ? this.altitude = 30 : this.altitude;
+    this.speed > 100 ? this.speed = 30 : this.speed;
     this.flightPaths.forEach(element => {
       if(this.currentId == element['id']) {
         element['altitude'] = this.altitude;
+        element['speed'] = this.speed;
+        element['heading'] = this.heading;
+        element['actionAfterFinished'] = this.actionAfterFinished;
       }
     });
   }

@@ -121,7 +121,7 @@ span {
 
 .body-wpsetting>.lat-lng {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     margin-bottom: 20px;
 }
 
@@ -172,3 +172,32 @@ span {
     background-color: transparent;
     cursor: pointer;
 }
+
+.Heading,
+.ActionAfterFinished {
+    padding: 12px 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.body-wpsetting > .Altitude,
+.body-wpsetting > .Speed {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.body-wpsetting > .Altitude input,
+.body-wpsetting > .Speed input{
+    width: 25%;
+}
+
+.body-wpsetting > .Altitude > mat-slider,
+.body-wpsetting > .Speed > mat-slider{
+    width: 60%;
+}
+
+.body-wpsetting select {
+    width: 50%;
+}
+
