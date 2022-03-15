@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { element } from 'protractor';
 declare var AMap: any;
 
 @Component({
@@ -16,9 +17,9 @@ export class AMapComponent implements OnInit {
   lastStepDisanled:boolean = true;
   marker:any; //标记点
   disText:any;//地图两点距离文本
-  texts:Array<any> = []; //放下所有距离文本
-  markers:Array<any> = []; //放入所有标记点
-  polylines:Array<any> = []; //放入所有折线
+  textOverlays:Array<any> = []; //放下所有距离文本
+  markerOverlays:Array<any> = []; //放入所有标记点
+  polylineOverlays:Array<any> = []; //放入所有折线
   flightPath:any; //飞行路径线段
   flightPaths:any = []; //所有飞行路径
   currentId:any; //标记点当前ID
@@ -32,10 +33,147 @@ export class AMapComponent implements OnInit {
   heading:string = 'AUTO'; //飞机朝向模式
   actionAfterFinished:string = 'AUTO'; //完成飞行后的动作
   constructor() { }
-
+  
   ngOnInit(): void {
     this.getlocaltion();
     // this.loadMouseTool();
+  }
+  
+   //获取自己的定位
+  getlocaltion() {
+ 
+     // //   实例化一个地图
+     this.map = new AMap.Map('container', {
+         resizeEnable: true,
+     });
+ 
+     this.InitArea();
+ 
+     //  添加地图插件：地图工具条
+     this.map.plugin(['AMap.ToolBar'], () => {
+         // 设置地位标记为自定义标
+         let toolBar = new AMap.ToolBar({
+             // locationMarker: customMarker
+             position:'LT'
+         });
+         //  添加插件
+         this.map.addControl(toolBar);
+     });
+
+     //添加折线、多边形编辑插件
+     // this.map.plugin(['AMap.PolyEditor'], () => {
+
+     // })
+ 
+     // 添加工具条方向盘
+   //   this.map.plugin(["AMap.ControlBar"], () => {
+   //     var controlBar = new AMap.ControlBar({
+ 
+   //     })
+   //     this.map.addControl(controlBar)
+   // });
+ 
+     //  添加比例尺插件
+     this.map.plugin(['AMap.Scale'], () => {
+         //   初始化插件
+         let scale = new AMap.Scale();
+         //   加载插件
+         this.map.addControl(scale);
+     });
+ 
+     //  加载地图实景
+     this.map.plugin(["AMap.MapType"], () => {
+         let type = new AMap.MapType();
+         this.map.addControl(type);
+     });
+ 
+     // //  加载鹰眼 1.x版本：OverView  2.0版本：HawkEye
+     this.map.plugin(["AMap.OverView"], () => {
+         let view = new AMap.OverView({
+             // 鹰眼是否展示
+             visible: true,
+             // 鹰眼是否展开
+             isOpen: true,
+             // width:'120px',
+             // height:'120px'
+         });
+         this.map.addControl(view);
+         // 调用方法 显示鹰眼窗口
+         view.show();
+     });
+ 
+ 
+     // 添加定位
+     this.map.plugin('AMap.Geolocation', () => {
+         let geolocation = new AMap.Geolocation({
+             enableHighAccuracy: true, // 是否使用高精度定位，默认:true
+             timeout: 10000,          // 超过10秒后停止定位，默认：无穷大
+             maximumAge: 0,           // 定位结果缓存0毫秒，默认：0
+             convert: true,           // 自动偏移坐标，偏移后的坐标为高德坐标，默认：true
+             showButton: false,        // 显示定位按钮，默认：true
+             buttonPosition: 'LB',    // 定位按钮停靠位置，默认：'LB'，左下角
+             buttonOffset: new AMap.Pixel(10, 20), // 定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
+             showMarker: true,         //    定位成功后在定位到的位置显示点标记，默认：true
+             showCircle: false,        // 定位成功后用圆圈表示定位精度范围，默认：true
+             panToLocation: true,     // 定位成功后将定位到的位置作为地图中心点，默认：true
+             zoomToAccuracy: true,      // 定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
+ 
+         });
+         // 加载插件
+         this.map.addControl(geolocation);
+         // 调用方法 获取用户当前的精确位置信息
+         geolocation.getCurrentPosition();
+         //  定时刷新位置
+         // geolocation.watchPosition(
+         //     2
+         // );
+ 
+         geolocation.on('complete', (data: any) => {
+             // var marker = new AMap.Marker({
+             //     icon: '//vdata.amap.com/icons/b18/1/2.png',
+             //     position: data.position,   // 经纬度对象，也可以是经纬度构成的一维数组[116.39, 39.9]
+             //     title: data.formattedAddress,
+             // });
+ 
+             // // 将创建的点标记添加到已有的地图实例：
+             // this.map.add(marker);
+ 
+             console.log("定位成功",data);
+         }); //  返回定位信息
+         geolocation.on('error', (error: any) => {
+             console.log("定位失败",error);
+         });      // 返回定位出错信息
+     });
+ 
+     // //   获取输入类的
+     // let autoOptions = {
+     //     input: 'tipinput'
+     // };
+ 
+     // //  加载输入类插件
+     // this.map.plugin('AMap.Autocomplete', () => {
+     //     //  实例化
+     //     let auto = new AMap.Autocomplete(autoOptions);
+     //     // 加载插件
+     //     this.map.addControl(auto);
+     // });
+ 
+ 
+     // // 加载收索类插件
+     // this.map.plugin('AMap.PlaceSearch', () => {
+     //     //   实例化
+     //     let placeSearch = new AMap.PlaceSearch({
+     //         map: this.map
+     //     });  // 构造地点查询类
+     //     //   加载插件
+     //     this.map.addControl(placeSearch);
+     //     //  注册监听事件，当选中某条记录的时候就会触发
+     //     AMap.event.addListener(new AMap.Autocomplete(autoOptions), "select", (e: { poi: { adcode: any; name: any; }; }) => {
+     //         placeSearch.setCity(e.poi.adcode);
+     //         placeSearch.search(e.poi.name);  //关键字查询查询
+     //     });
+ 
+     // });
   }
 
   //加载地图时绘制固定位置覆盖物
@@ -257,25 +395,26 @@ export class AMapComponent implements OnInit {
       position: lnglat,
       extData: id
     });
-    this.markers = this.map.getAllOverlays('marker');
+    this.markerOverlays = this.map.getAllOverlays('marker');
 
-    if ( this.markers.length > 1) {
-      var p1 = this.markers[this.markers.length - 2].getPosition();
+    if ( this.markerOverlays.length > 1) {
+      var p1 = this.markerOverlays[this.markerOverlays.length - 2].getPosition();
       var p2 = this.marker.getPosition();
       var path =[p1,p2];
       var textPos = p1.divideBy(2).add(p2.divideBy(2));
       var distance = Math.round(p1.distance(p2));
-      
+
       //创建飞行路径线段
       this.flightPath = new AMap.Polyline({
         map: this.map,
+        showDir:true,
         strokeColor:'#80d8ff',
         isOutline:true,
         outlineColor:'white',
         extData: id - 1
       });
       this.flightPath.setPath(path);
-      this.polylines = this.map.getAllOverlays('polyline');
+      this.polylineOverlays = this.map.getAllOverlays('polyline');
 
       //创建距离文本
       this.disText = new AMap.Text({
@@ -288,20 +427,18 @@ export class AMapComponent implements OnInit {
       });
       this.disText.setText(distance+'m');
       this.disText.setPosition(textPos);
-      this.texts = this.map.getAllOverlays('text');
+      this.textOverlays = this.map.getAllOverlays('text');
     }
 
     this.addFlightPath(this.marker);
 
     //每个标记点绑定点击事件
     this.marker.on('click', (e) => {
-      this.currentId = id;
       this.showMarkerSetting(e);
     })
 
     //每个标记点绑定拖拽事件(拖拽会实时改变overlays里的标记点数据)
     this.marker.on('dragging', (e) => {
-      this.currentId = id;
       this.showMarkerSetting(e);
       this.filterPolyline(e);
     })
@@ -310,7 +447,7 @@ export class AMapComponent implements OnInit {
   //添加将要post的飞行路径
   addFlightPath(markerInfo) {
     var location = markerInfo.getPosition();
-
+    this.currentId = markerInfo.getExtData();
     this.wayPointId = markerInfo.getExtData();
     this.latitude = location.getLat();
     this.longitiude = location.getLng();
@@ -332,22 +469,93 @@ export class AMapComponent implements OnInit {
     this.flightPaths.push(wayPoint)
   }
 
-  //删除某个标记点
+  //删除某个标记点功能
   deleteMarker() {
+    //删除飞行路径中的某个标记点
+    const at = this.flightPaths.findIndex(x => x.id === this.currentId);
+    if(at > -1) {
+      this.flightPaths.splice(at, 1);
+      console.log(this.flightPaths);
+    }
 
-  }
+    //特殊情况：有且只有一个标记点
+    if(this.currentId == 1 && !this.polylineOverlays.length) {
+      
+      this.map.remove(this.markerOverlays.filter( x => x.getExtData() == this.currentId));
+      this.markerOverlays = this.map.getAllOverlays('marker');
+      this.markerId = 0;
+      this.closewp = false;
   
-  //关闭飞行路径标记点配置属性模态框
-  closeWp() {
-    this.closewp = false;
+    //第一种情况：从第一个开始删除
+    } else if(this.currentId == 1 && this.polylineOverlays.length) {
+        this.markerCase(this.currentId,'first')
+
+    //第二种情况：从最后一个开始删除
+    } else if(this.currentId == this.markerOverlays.length && this.polylineOverlays.length) {
+      this.markerCase(this.currentId-1)
+
+    //第二种情况：从中间的开始删除
+    } else {
+      this.markerCase(this.currentId,'mid')
+    }
+  }
+
+  //不同情况的标记点
+  markerCase(id,type?) {
+    this.map.remove(this.markerOverlays.filter( x => x.getExtData() == this.currentId));
+    this.markerOverlays = this.map.getAllOverlays('marker');
+
+    this.map.remove(this.polylineOverlays.filter( x => x.getExtData() == id));
+    this.polylineOverlays = this.map.getAllOverlays('polyline');
+
+    this.map.remove(this.textOverlays.filter( x => x.getExtData() == id));
+    this.textOverlays = this.map.getAllOverlays('text');
+
+    if(type == 'first' || type == 'mid') {
+      //飞行路径标记点的ID重新排序;标记点图层id和内容重新排序
+      if( type == 'mid') {
+        this.polylineReconnect();
+      }
+      for(let i = 0; i < this.flightPaths.length; i++) {
+        this.flightPaths[i]['id'] = i + 1;
+        this.markerOverlays[i].setExtData(i+1);
+        this.markerOverlays[i].setContent('<div class="marker" style="width:22px;height:36px;background-image:url(https://webapi.amap.com/theme/v1.3/markers/n/mark_b.png);background-size: 22px 36px;text-align: center;line-height: 24px;color: #fff ">'+ (i+1) +'</div>')
+      }
+      //折线和距离文本图层id重新排序
+      for(let i = 0; i < this.polylineOverlays.length; i++) {
+        this.polylineOverlays[i].setExtData(i+1);
+        this.textOverlays[i].setExtData(i+1);
+      }
+    } 
+    this.markerId = this.flightPaths.length;
+  }
+
+  //删除标记点后，折线重新连接
+  polylineReconnect() {
+    let [matchPolyline] = this.polylineOverlays.filter(element => element.getExtData() == (this.currentId-1));
+    let [matchText] = this.textOverlays.filter(element => element.getExtData() == this.currentId-1);
+    let [matchPreMaker] = this.markerOverlays.filter(element => element.getExtData() == this.currentId-1);
+    let [matchNextMaker] = this.markerOverlays.filter(element => element.getExtData() == this.currentId+1);
+
+    var p1 = matchPreMaker.getPosition();
+    var p2 = matchNextMaker.getPosition();
+
+    let path = [p1,p2];
+    matchPolyline.setPath(path);
+
+    let textPos = p1.divideBy(2).add(p2.divideBy(2));
+    let distance = Math.round(p1.distance(p2));
+    matchText.setText(distance+'m');
+    matchText.setPosition(textPos);
   }
 
   //在模态框显示标记点的配置属性
   showMarkerSetting(e) {
+    this.currentId = e.target.getExtData();
     this.closewp = true;
     var eventType = e.type;
 
-    this.flightPaths.forEach(element => {
+    this.flightPaths.some(element => {
       if(element['id'] == this.currentId) {
         this.wayPointId = element['id'];
         this.altitude = element['altitude'];
@@ -358,6 +566,7 @@ export class AMapComponent implements OnInit {
           this.latitude = element['lat'];
           this.longitiude = element['lng'];
           console.log('ID:' + element['id'],element);
+          return
         } else if(eventType == 'dragging') {
           let lat = e.target.getPosition().lat;
           let lng = e.target.getPosition().lng;
@@ -365,6 +574,7 @@ export class AMapComponent implements OnInit {
           this.longitiude = lng;
           element['lat'] = lat;
           element['lng'] = lng;
+          return
         }
       }
     });
@@ -374,12 +584,13 @@ export class AMapComponent implements OnInit {
   editFlightPath() {
     (this.altitude < -20 || this.altitude > 120) ? this.altitude = 30 : this.altitude;
     this.speed > 100 ? this.speed = 30 : this.speed;
-    this.flightPaths.forEach(element => {
+    this.flightPaths.some(element => {
       if(this.currentId == element['id']) {
         element['altitude'] = this.altitude;
         element['speed'] = this.speed;
         element['heading'] = this.heading;
         element['actionAfterFinished'] = this.actionAfterFinished;
+        return
       }
     });
   }
@@ -387,32 +598,28 @@ export class AMapComponent implements OnInit {
   //过滤需要拖拽的折线
   filterPolyline(e) {
     var id = e.target.getExtData();
-    var polylineOverlays = this.map.getAllOverlays('polyline');
-    var markerOverlays = this.map.getAllOverlays('marker');
-    var textOverlays = this.map.getAllOverlays('text');
 
     //只有一个标记点
     if(id == 1) {
       //第一个标记点和第一条折线
-      if (polylineOverlays.length) {
-        this.dragPolyline(e,id,polylineOverlays,textOverlays,'next')
+      if (this.polylineOverlays.length) {
+        this.dragPolyline(e,id,'next')
       }
     //最后一个标记点和折线
-    } else if(id == markerOverlays.length && polylineOverlays.length) {
-      this.dragPolyline(e,id-1,polylineOverlays,textOverlays,'pre')
+    } else if(id == this.markerOverlays.length && this.polylineOverlays.length) {
+      this.dragPolyline(e,id-1,'pre')
     //中间标记点和折线
     } else {
-      this.dragPolyline(e,id-1,polylineOverlays,textOverlays,'pre')
-      this.dragPolyline(e,id,polylineOverlays,textOverlays,'next')
+      this.dragPolyline(e,id-1,'pre')
+      this.dragPolyline(e,id,'next')
     }
   }
 
   //折线和距离文本端点随着标记点拖拽而动
-  dragPolyline(event,indexId,polylineOverlays,textOverlays,type) {
-    let matchPolyline:any;
-    let matchText:any;
-    [matchPolyline] = polylineOverlays.filter(element => element.getExtData() == indexId);
-    [matchText] = textOverlays.filter(element => element.getExtData() == indexId);
+  dragPolyline(event,indexId,type) {
+    let [matchPolyline] = this.polylineOverlays.filter(element => element.getExtData() == indexId);
+    let [matchText] = this.textOverlays.filter(element => element.getExtData() == indexId);
+
     if(type == 'pre') { 
       var p1 = matchPolyline.getPath()[0];
       var p2 = event.target.getPosition();
@@ -441,138 +648,6 @@ export class AMapComponent implements OnInit {
         this.map.addControl(new AMap.Scale());
         this.map.addControl(new AMap.OverView({isOpen:true}));
       })
-  }
-
-   //获取自己的定位
-  getlocaltion() {
-  
-      // //   实例化一个地图
-      this.map = new AMap.Map('container', {
-          resizeEnable: true,
-      });
-  
-      this.InitArea();
-  
-      //  添加地图插件：地图工具条
-      this.map.plugin(['AMap.ToolBar'], () => {
-          // 设置地位标记为自定义标
-          let toolBar = new AMap.ToolBar({
-              // locationMarker: customMarker
-              position:'LT'
-          });
-          //  添加插件
-          this.map.addControl(toolBar);
-      });
-  
-      // 添加工具条方向盘
-    //   this.map.plugin(["AMap.ControlBar"], () => {
-    //     var controlBar = new AMap.ControlBar({
-  
-    //     })
-    //     this.map.addControl(controlBar)
-    // });
-  
-      //  添加比例尺插件
-      this.map.plugin(['AMap.Scale'], () => {
-          //   初始化插件
-          let scale = new AMap.Scale();
-          //   加载插件
-          this.map.addControl(scale);
-      });
-  
-      //  加载地图实景
-      this.map.plugin(["AMap.MapType"], () => {
-          let type = new AMap.MapType();
-          this.map.addControl(type);
-      });
-  
-      // //  加载鹰眼 1.x版本：OverView  2.0版本：HawkEye
-      this.map.plugin(["AMap.OverView"], () => {
-          let view = new AMap.OverView({
-              // 鹰眼是否展示
-              visible: true,
-              // 鹰眼是否展开
-              isOpen: true,
-              // width:'120px',
-              // height:'120px'
-          });
-          this.map.addControl(view);
-          // 调用方法 显示鹰眼窗口
-          view.show();
-      });
-  
-  
-      // 添加定位
-      this.map.plugin('AMap.Geolocation', () => {
-          let geolocation = new AMap.Geolocation({
-              enableHighAccuracy: true, // 是否使用高精度定位，默认:true
-              timeout: 10000,          // 超过10秒后停止定位，默认：无穷大
-              maximumAge: 0,           // 定位结果缓存0毫秒，默认：0
-              convert: true,           // 自动偏移坐标，偏移后的坐标为高德坐标，默认：true
-              showButton: false,        // 显示定位按钮，默认：true
-              buttonPosition: 'LB',    // 定位按钮停靠位置，默认：'LB'，左下角
-              buttonOffset: new AMap.Pixel(10, 20), // 定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
-              showMarker: true,         //    定位成功后在定位到的位置显示点标记，默认：true
-              showCircle: false,        // 定位成功后用圆圈表示定位精度范围，默认：true
-              panToLocation: true,     // 定位成功后将定位到的位置作为地图中心点，默认：true
-              zoomToAccuracy: true,      // 定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
-  
-          });
-          // 加载插件
-          this.map.addControl(geolocation);
-          // 调用方法 获取用户当前的精确位置信息
-          geolocation.getCurrentPosition();
-          //  定时刷新位置
-          // geolocation.watchPosition(
-          //     2
-          // );
-  
-          geolocation.on('complete', (data: any) => {
-              // var marker = new AMap.Marker({
-              //     icon: '//vdata.amap.com/icons/b18/1/2.png',
-              //     position: data.position,   // 经纬度对象，也可以是经纬度构成的一维数组[116.39, 39.9]
-              //     title: data.formattedAddress,
-              // });
-  
-              // // 将创建的点标记添加到已有的地图实例：
-              // this.map.add(marker);
-  
-              console.log("定位成功",data);
-          }); //  返回定位信息
-          geolocation.on('error', (error: any) => {
-              console.log("定位失败",error);
-          });      // 返回定位出错信息
-      });
-  
-      // //   获取输入类的
-      // let autoOptions = {
-      //     input: 'tipinput'
-      // };
-  
-      // //  加载输入类插件
-      // this.map.plugin('AMap.Autocomplete', () => {
-      //     //  实例化
-      //     let auto = new AMap.Autocomplete(autoOptions);
-      //     // 加载插件
-      //     this.map.addControl(auto);
-      // });
-  
-  
-      // // 加载收索类插件
-      // this.map.plugin('AMap.PlaceSearch', () => {
-      //     //   实例化
-      //     let placeSearch = new AMap.PlaceSearch({
-      //         map: this.map
-      //     });  // 构造地点查询类
-      //     //   加载插件
-      //     this.map.addControl(placeSearch);
-      //     //  注册监听事件，当选中某条记录的时候就会触发
-      //     AMap.event.addListener(new AMap.Autocomplete(autoOptions), "select", (e: { poi: { adcode: any; name: any; }; }) => {
-      //         placeSearch.setCity(e.poi.adcode);
-      //         placeSearch.search(e.poi.name);  //关键字查询查询
-      //     });
-  
-      // });
   }
 
   //加载鼠标绘制工具
@@ -681,23 +756,6 @@ export class AMapComponent implements OnInit {
       }
   }
 
-  //创建并编辑多边形 To Do
-  createPolygon() {
-      this.polygonEditor.close();
-      this.polygonEditor.setTarget();
-      this.polygonEditor.open();
-  }
-
-  //开始编辑 To Do
-  startEditor() {
-    this.polygonEditor.open();
-  }
-
-  //结束编辑 To Do
-  closeEditor() {
-    this.polygonEditor.close()
-  }
-
   //撤回最新绘制的覆盖物
   lastStep() {
       // this.polygonEditor.close();
@@ -712,3 +770,4 @@ export class AMapComponent implements OnInit {
       }   
   }
 }
+ 
