@@ -55,8 +55,8 @@
             </div>
         </div>
         <div class="panel-footer">
-            <button class="btn-bottom" style="margin-right: 10px;"><</button>
-            <button class="btn-bottom">></button>
+            <button class="btn-bottom" style="margin-right: 10px;" (click)="preWaypoint()" [disabled]="preBtnDisabled"><</button>
+            <button class="btn-bottom" (click)="nextWaypoint()" [disabled]="nextBtnDisabled">></button>
         </div>
     </div>
 </div>
