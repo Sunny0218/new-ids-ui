@@ -3,7 +3,8 @@
 <div id="wpsettings" *ngIf="closewp">
     <div id="wpsettings-content" class="panel panel-default wpsetting">
         <div class="panel-heading">
-            <button class="btn btn-danger" (click)="deleteMarker()">Delete</button>
+            <button class="btn btn-danger" (click)="deleteWaypoint()">Delete</button>
+            <button class="btn btn-success" (click)="insertWaypoint()" *ngIf="insertBtnVisible">Insert</button>
             <h3>WAYPOINT {{ wayPointId }} SETTINGS</h3>
             <button mat-icon-button class="close" (click)="closewp = false">
                 <mat-icon>cancel</mat-icon>
@@ -23,14 +24,14 @@
                 </div>
                 <div class="Altitude">
                     <span matPrefix>Altitude&nbsp;</span>
-                    <input name="altitude" [(ngModel)]="altitude" (change)="editFlightPath()">
-                    <mat-slider [max]="100" [min]="-20" [step]="1" thumbLabel [vertical]="vertical" [(ngModel)]="altitude" (change)="editFlightPath()">
+                    <input name="altitude" type="number" [(ngModel)]="altitude" (change)="editFlightPath()">
+                    <mat-slider [max]="300" [min]="5" [step]="1" thumbLabel [vertical]="vertical" [(ngModel)]="altitude" (change)="editFlightPath()">
                     </mat-slider>
                 </div>
                 <div class="Speed">
                     <span matPrefix>Speed&nbsp;&nbsp;&nbsp;</span>
-                    <input name="Speed" [(ngModel)]="speed" (change)="editFlightPath()">
-                    <mat-slider [max]="100" [min]="0" [step]="1" thumbLabel [vertical]="vertical" [(ngModel)]="speed" (change)="editFlightPath()">
+                    <input name="Speed" type="number" [(ngModel)]="speed" (change)="editFlightPath()">
+                    <mat-slider [max]="15" [min]="2" [step]="1" thumbLabel [vertical]="vertical" [(ngModel)]="speed" (change)="editFlightPath()">
                     </mat-slider>
                 </div>
                 <div class="Heading">
@@ -55,8 +56,13 @@
             </div>
         </div>
         <div class="panel-footer">
-            <button class="btn-bottom" style="margin-right: 10px;" (click)="preWaypoint()" [disabled]="preBtnDisabled"><</button>
-            <button class="btn-bottom" (click)="nextWaypoint()" [disabled]="nextBtnDisabled">></button>
+            <div class="left">
+                <button class="btn-bottom" style="margin-right: 10px;" (click)="preWaypoint()" [disabled]="preBtnDisabled"><</button>
+                <button class="btn-bottom" (click)="nextWaypoint()" [disabled]="nextBtnDisabled">></button>
+            </div>
+            <div class="right">
+                <button class="btn-bottom" (click)="waypointMissionCmd()" >Upload</button>
+            </div>
         </div>
     </div>
 </div>

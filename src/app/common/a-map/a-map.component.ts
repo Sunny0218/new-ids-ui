@@ -1,6 +1,7 @@
-import { C, F } from '@angular/cdk/keycodes';
 import { Component, OnInit } from '@angular/core';
-import { element } from 'protractor';
+import { IMqttMessage, MqttService } from 'ngx-mqtt';
+import { Subscription } from 'rxjs';
+import { threadId } from 'worker_threads';
 declare var AMap: any;
 
 @Component({
@@ -26,20 +27,31 @@ export class AMapComponent implements OnInit {
   currentId:any; //标记点当前ID
   markerId:number = 0; //标记点ID,按顺序+1递增
   closewp:boolean = false //是否展示标记点配置属性模态框
-  altitude:number = 30 //全局标记点高度
+  altitude:number = 10 //全局标记点高度
   longitiude:number = null; //全局标记点经度
   latitude:number = null; //全局标记点纬度
   wayPointId:number = null; //全局标记点号码
-  speed:number = 30; //飞机航速
+  speed:number = 3; //飞机航速
   heading:string = 'AUTO'; //飞机朝向模式
   actionAfterFinished:string = 'AUTO'; //完成飞行后的动作
   preBtnDisabled:boolean = false;
   nextBtnDisabled:boolean = false;
-  constructor() { }
+  insertBtnVisible:boolean = false;
+  pubTopic:string = 'UI/WaypointMissionCmd/'; //发布飞行路径主题
+  ackTopic:string = 'UI/WaypointMissionAck/'; //接收后台反馈数据主题
+  private ackSubscription = new Subscription();
+  constructor(
+    private mqttSvc: MqttService,
+  ) { }
   
   ngOnInit(): void {
     this.getlocaltion();
+    this.waypointMissionAck();
     // this.loadMouseTool();
+  }
+
+  ngOnDestroy(): void {
+    this.ackSubscription.unsubscribe();
   }
   
    //获取自己的定位
@@ -381,25 +393,25 @@ export class AMapComponent implements OnInit {
       
       //绑定地图点击事件，创建标记点
       AMap.event.addListener(this.map, 'click', (e) => {
-          this.addMarker(e);
+          this.addWaypoint(e);
       });
   }
 
   //高德地图点击事件触发此函数，此函数添加带有线段连接的标记点
-  addMarker(e) {
+  addWaypoint(e) {
     this.closewp = true;
     let id = ++this.markerId;
     var lnglat = e.lnglat;
     //创建标记点
     this.marker = new AMap.Marker({
-      content:'<div class="marker" style="width:22px;height:36px;background-image:url(https://webapi.amap.com/theme/v1.3/markers/n/mark_b.png);background-size: 22px 36px;text-align: center;line-height: 24px;color: #fff ">'+ id +'</div>',
+      content:'<div class="marker" style="width:22px;height:36px;background-image:url(../../../assets/images/active-marker1.png);background-size: 22px 36px;text-align: center;line-height: 24px;color: #fff ">'+ id +'</div>',
       map: this.map,
       draggable:true,
       position: lnglat,
       extData: id
     });
     this.markerOverlays = this.map.getAllOverlays('marker');
-
+  
     if ( this.markerOverlays.length > 1) {
       var p1 = this.markerOverlays[this.markerOverlays.length - 2].getPosition();
       var p2 = this.marker.getPosition();
@@ -411,22 +423,25 @@ export class AMapComponent implements OnInit {
       this.flightPath = new AMap.Polyline({
         map: this.map,
         showDir:true,
-        strokeColor:'#80d8ff',
+        strokeColor:'#ffff00',
         isOutline:true,
-        outlineColor:'white',
+        outlineColor:'transparent',
         extData: id - 1
       });
       this.flightPath.setPath(path);
       this.polylineOverlays = this.map.getAllOverlays('polyline');
-
+      
       //创建距离文本
       this.disText = new AMap.Text({
         map: this.map,
         text:'',
         style:{'background-color':'#29b6f6',
+        'font-weight': '400',
         'border-color':'#e1f5fe',
-        'font-size':'14px',
-        'color': '#fff'},
+        'font-size':'10px',
+        'color': '#fff',
+        'padding-top': '0px',
+        'padding-bottom': '0px'},
         extData: id - 1
       });
       this.disText.setText(distance >= 1000 ? ((distance / 1000).toFixed(2) + 'km') : (distance + 'm'));
@@ -434,7 +449,7 @@ export class AMapComponent implements OnInit {
       this.textOverlays = this.map.getAllOverlays('text');
     }
 
-    this.addFlightPath(this.marker);
+    this.addWaypointList(this.marker);
 
     //每个标记点绑定点击事件
     this.marker.on('click', (e) => {
@@ -449,37 +464,59 @@ export class AMapComponent implements OnInit {
   }
 
   //添加将要post的飞行路径
-  addFlightPath(markerInfo) {
+  // addFlightPath(markerInfo) {
+  //   var location = markerInfo.getPosition();
+  //   this.wayPointId = markerInfo.getExtData();
+  //   this.currentId = markerInfo.getExtData();
+  //   this.latitude = location.getLat();
+  //   this.longitiude = location.getLng();
+  //   this.altitude = 30; //初始化标记点高度
+  //   this.speed = 30; //初始化飞机航速
+  //   this.heading = 'AUTO'; //初始化飞机朝向模式
+  //   this.actionAfterFinished = 'AUTO'; //初始化完成飞行后的动作
+    
+  //   var wayPoint = {
+  //     id: markerInfo.getExtData(),
+  //     lat: location.getLat(),
+  //     lng: location.getLng(),
+  //     altitude: this.altitude,
+  //     speed: this.speed,
+  //     heading: this.heading,
+  //     actionAfterFinished: this.actionAfterFinished
+  //   }
+
+  //   this.flightPaths.push(wayPoint);
+  //   this.showActiveMarker()
+  //   this.btnIsDisabled()
+  // }
+
+  addWaypointList(markerInfo) {
     var location = markerInfo.getPosition();
     this.wayPointId = markerInfo.getExtData();
+    this.currentId = markerInfo.getExtData();
     this.latitude = location.getLat();
     this.longitiude = location.getLng();
-    this.altitude = 30; //初始化标记点高度
-    this.speed = 30; //初始化飞机航速
-    this.heading = 'AUTO'; //初始化飞机朝向模式
-    this.actionAfterFinished = 'AUTO'; //初始化完成飞行后的动作
+    this.altitude = 10; //初始化标记点高度
     
     var wayPoint = {
       id: markerInfo.getExtData(),
       lat: location.getLat(),
       lng: location.getLng(),
-      altitude: this.altitude,
-      speed: this.speed,
-      heading: this.heading,
-      actionAfterFinished: this.actionAfterFinished
+      alt: this.altitude,
     }
 
     this.flightPaths.push(wayPoint);
-    this.showWaypointSetting(null,markerInfo.getExtData())
+    this.showActiveMarker()
+    this.btnIsDisabled()
   }
 
   //删除某个标记点功能
-  deleteMarker() {
+  deleteWaypoint() {
     //删除飞行路径中的某个标记点
     const at = this.flightPaths.findIndex(x => x.id === this.currentId);
     if(at > -1) {
       this.flightPaths.splice(at, 1);
-      console.log(this.flightPaths);
+      // console.log(this.flightPaths);
     }
 
     //特殊情况：有且只有一个标记点
@@ -523,7 +560,6 @@ export class AMapComponent implements OnInit {
       for(let i = 0; i < this.flightPaths.length; i++) {
         this.flightPaths[i]['id'] = i + 1;
         this.markerOverlays[i].setExtData(i+1);
-        this.markerOverlays[i].setContent('<div class="marker" style="width:22px;height:36px;background-image:url(https://webapi.amap.com/theme/v1.3/markers/n/mark_b.png);background-size: 22px 36px;text-align: center;line-height: 24px;color: #fff ">'+ (i+1) +'</div>')
       }
       //折线和距离文本图层id重新排序
       for(let i = 0; i < this.polylineOverlays.length; i++) {
@@ -568,18 +604,17 @@ export class AMapComponent implements OnInit {
       this.currentId = id;
       isDeleteState = true;
     }
-    //根据点击和拖拽事件获取标记点ID，与飞行路径中的标记点ID进行匹配；匹配到的进行显示
+    //根据点击和拖拽事件获取标记点ID，与飞行路径中的标记点ID进行匹配，然后在模态框中显示数据
     this.flightPaths.some(element => {
       if(element['id'] == this.currentId) {
         this.wayPointId = element['id'];
-        this.altitude = element['altitude'];
-        this.speed = element['speed'];
-        this.heading = element['heading'];
-        this.actionAfterFinished = element['actionAfterFinished'];
+        this.altitude = element['alt'];
+        // this.speed = element['speed'];
+        // this.heading = element['heading'];
+        // this.actionAfterFinished = element['actionAfterFinished'];
         if((eventType && eventType == 'click') || isDeleteState) {
           this.latitude = element['lat'];
           this.longitiude = element['lng'];
-          // console.log('ID:' + element['id'],element);
           return
         } else if(eventType && eventType == 'dragging') {
           let lat = e.target.getPosition().lat;
@@ -619,19 +654,19 @@ export class AMapComponent implements OnInit {
     for(let i = 0; i < this.markerOverlays.length; i++) {
       this.markerOverlays[i].setContent('<div class="marker" style="width:22px;height:36px;background-image:url(https://webapi.amap.com/theme/v1.3/markers/n/mark_b.png);background-size: 22px 36px;text-align: center;line-height: 24px;color: #fff ">'+ (i+1) +'</div>')
     }
-    matchMaker.setContent('<div class="marker" style="width:22px;height:36px;background-image:url(../../../assets/images/active-marker.png);background-size: 22px 36px;text-align: center;line-height: 24px;color: #fff ">'+ this.currentId +'</div>')
+    matchMaker.setContent('<div class="marker" style="width:22px;height:36px;background-image:url(../../../assets/images/active-marker1.png);background-size: 22px 36px;text-align: center;line-height: 24px;color: #fff ">'+ this.currentId +'</div>')
   }
 
   //修改飞行路径（标记点）的配置属性
   editFlightPath() {
-    (this.altitude < -20 || this.altitude > 120) ? this.altitude = 30 : this.altitude;
-    (this.speed < 0 || this.speed > 100) ? this.speed = 30 : this.speed;
+    (this.altitude < 5 || this.altitude > 300) ? this.altitude = 10 : this.altitude;
+    (this.speed < 0 || this.speed > 15) ? this.speed = 3 : this.speed;
     this.flightPaths.some(element => {
       if(this.currentId == element['id']) {
-        element['altitude'] = this.altitude;
-        element['speed'] = this.speed;
-        element['heading'] = this.heading;
-        element['actionAfterFinished'] = this.actionAfterFinished;
+        element['alt'] = this.altitude;
+        // element['speed'] = this.speed;
+        // element['heading'] = this.heading;
+        // element['actionAfterFinished'] = this.actionAfterFinished;
         return
       }
     });
@@ -694,6 +729,47 @@ export class AMapComponent implements OnInit {
       this.currentId += 1;
       this.showWaypointSetting(null,this.currentId);
     }
+  }
+
+  //从飞行路径中插入新的标记点
+  insertWaypoint() {
+    console.log('insert waypoint');
+                                                                                                                                                                                                     
+  }
+
+  //通过MQTT将规划的飞行路径发送给后台
+  waypointMissionCmd() {
+    //深拷贝飞行路径
+    let waypointList = JSON.parse(JSON.stringify(this.flightPaths));
+    //删除ID
+    waypointList.forEach(waypoint => {
+      delete waypoint['id']
+    });
+    var body = {
+      name: 'Test',
+      wapointList: waypointList,
+      maxSpeed: 15, 
+      baseSpeed: this.speed,
+      headingMode: this.heading,
+      finishedAction: this.actionAfterFinished
+    }
+    
+    // console.log(body);
+    var message = JSON.stringify(body);
+    this.mqttSvc.publish(this.pubTopic,message,{qos: 1, retain: false}).subscribe();
+    this.flightPaths = [];
+    this.currentId = null;
+    this.markerId = 0;
+    this.closewp = false;
+    this.map.remove(this.map.getAllOverlays());
+  }
+
+  //后台接收到飞行路径后的反馈数据
+  waypointMissionAck() {
+    this.ackSubscription = this.mqttSvc.observe(this.ackTopic).subscribe((message:IMqttMessage) => {
+      let item = JSON.parse(message.payload.toString());
+      console.log(item);
+    })
   }
 
   // 地图要放到函数里。

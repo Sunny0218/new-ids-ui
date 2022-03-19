@@ -154,6 +154,17 @@ span {
     opacity: 0.8;
 }
 
+.btn-success {
+    color: #fff;
+    background-color: #5cb85c;
+    border: 1px solid #4cae4c;
+}
+
+.btn-success:hover {
+    background-color: #5cb85c;
+    opacity: 0.8;
+}
+
 .btn-bottom {
     color: white;
     right: 15px;
@@ -183,6 +194,11 @@ span {
     border: none;
     background-color: transparent;
     cursor: pointer;
+}
+
+.panel-footer {
+    display: flex;
+    justify-content: space-between;
 }
 
 .Heading,
