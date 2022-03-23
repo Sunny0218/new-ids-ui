@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IMqttMessage, MqttService } from 'ngx-mqtt';
+import { element } from 'protractor';
 import { Subscription } from 'rxjs';
-import { threadId } from 'worker_threads';
 declare var AMap: any;
 
 @Component({
@@ -33,10 +33,10 @@ export class AMapComponent implements OnInit {
   wayPointId:number = null; //全局标记点号码
   speed:number = 3; //飞机航速
   heading:string = 'AUTO'; //飞机朝向模式
-  actionAfterFinished:string = 'AUTO'; //完成飞行后的动作
+  actionAfterFinished:string = 'AUTO_LAND'; //完成飞行后的动作
   preBtnDisabled:boolean = false;
   nextBtnDisabled:boolean = false;
-  insertBtnVisible:boolean = false;
+  insertBtnVisible:boolean = true;
   pubTopic:string = 'UI/WaypointMissionCmd/'; //发布飞行路径主题
   ackTopic:string = 'UI/WaypointMissionAck/'; //接收后台反馈数据主题
   private ackSubscription = new Subscription();
@@ -402,9 +402,12 @@ export class AMapComponent implements OnInit {
     this.closewp = true;
     let id = ++this.markerId;
     var lnglat = e.lnglat;
+    // console.log('waypoint',e.lnglat);
+    // console.log('all',e.lnglat.R);
+    
     //创建标记点
     this.marker = new AMap.Marker({
-      content:'<div class="marker" style="width:22px;height:36px;background-image:url(../../../assets/images/active-marker1.png);background-size: 22px 36px;text-align: center;line-height: 24px;color: #fff ">'+ id +'</div>',
+      content:'<div class="marker" style="width:22px;height:36px;background-image:url(https://webapi.amap.com/theme/v1.3/markers/n/mark_r.png);background-size: 22px 36px;text-align: center;line-height: 24px;color: #fff ">'+ id +'</div>',
       map: this.map,
       draggable:true,
       position: lnglat,
@@ -452,12 +455,26 @@ export class AMapComponent implements OnInit {
     this.addWaypointList(this.marker);
 
     //每个标记点绑定点击事件
-    this.marker.on('click', (e) => {
+    this.bindEvent(this.marker)
+    // this.marker.on('click', (e) => {
+    //   this.showWaypointSetting(e);
+    // })
+
+    //每个标记点绑定拖拽事件(拖拽会实时改变overlays里的标记点数据)
+
+    // this.marker.on('dragging', (e) => {
+    //   this.showWaypointSetting(e);
+    //   this.filterPolyline(e);
+    // })
+  }
+
+  //标记点绑定点击和拖拽事件
+  bindEvent(marker) {
+    marker.on('click', (e) => {
       this.showWaypointSetting(e);
     })
 
-    //每个标记点绑定拖拽事件(拖拽会实时改变overlays里的标记点数据)
-    this.marker.on('dragging', (e) => {
+    marker.on('dragging', (e) => {
       this.showWaypointSetting(e);
       this.filterPolyline(e);
     })
@@ -631,11 +648,13 @@ export class AMapComponent implements OnInit {
     this.showActiveMarker();
   }
 
-  //根据当前ID和飞行路径长度判断前一个和后一个按钮是否被禁用
+  //根据当前ID和飞行路径长度判断前一个、后一个、插入标记点 按钮是否被禁用
   btnIsDisabled() {
+    this.insertBtnVisible = false;
     if(this.currentId == 1 && this.flightPaths.length != 1) {
       this.preBtnDisabled = true;
       this.nextBtnDisabled = false;
+      this.insertBtnVisible = true;
     } else if(this.currentId == 1 && this.flightPaths.length == 1) {
       this.preBtnDisabled = true;
       this.nextBtnDisabled = true;
@@ -643,6 +662,7 @@ export class AMapComponent implements OnInit {
       this.preBtnDisabled = false;
       this.nextBtnDisabled = true;
     } else {
+      this.insertBtnVisible = true;
       this.preBtnDisabled = false;
       this.nextBtnDisabled = false;
     }
@@ -654,7 +674,7 @@ export class AMapComponent implements OnInit {
     for(let i = 0; i < this.markerOverlays.length; i++) {
       this.markerOverlays[i].setContent('<div class="marker" style="width:22px;height:36px;background-image:url(https://webapi.amap.com/theme/v1.3/markers/n/mark_b.png);background-size: 22px 36px;text-align: center;line-height: 24px;color: #fff ">'+ (i+1) +'</div>')
     }
-    matchMaker.setContent('<div class="marker" style="width:22px;height:36px;background-image:url(../../../assets/images/active-marker1.png);background-size: 22px 36px;text-align: center;line-height: 24px;color: #fff ">'+ this.currentId +'</div>')
+    matchMaker.setContent('<div class="marker" style="width:22px;height:36px;background-image:url(https://webapi.amap.com/theme/v1.3/markers/n/mark_r.png);background-size: 22px 36px;text-align: center;line-height: 24px;color: #fff ">'+ this.currentId +'</div>')
   }
 
   //修改飞行路径（标记点）的配置属性
@@ -733,8 +753,91 @@ export class AMapComponent implements OnInit {
 
   //从飞行路径中插入新的标记点
   insertWaypoint() {
-    console.log('insert waypoint');
-                                                                                                                                                                                                     
+    let index = this.markerOverlays.findIndex(element => element.getExtData() == this.currentId);
+    
+    let [matchText] = this.textOverlays.filter(element => element.getExtData() == this.currentId);
+    let [matchPolyline] = this.polylineOverlays.filter(element => element.getExtData() == this.currentId);
+    let [leftMarker] = this.markerOverlays.filter(element => element.getExtData() == this.currentId);
+    let [rightMarker] = this.markerOverlays.filter(element => element.getExtData() == this.currentId + 1);
+    
+    let midPosition = matchText.getPosition();
+    let leftPosition = leftMarker.getPosition();
+    let rightPosition = rightMarker.getPosition();
+
+    //对应ID的折线和距离文本更改位置
+    var p1 = leftPosition
+    var p2 = midPosition
+    let path = [p1,p2]
+    matchPolyline.setPath(path);
+    let textPos = p1.divideBy(2).add(p2.divideBy(2));
+    let distance = Math.round(p1.distance(p2));
+    matchText.setText(distance >= 1000 ? ((distance / 1000).toFixed(2) + 'km') : (distance + 'm'));
+    matchText.setPosition(textPos);
+
+    //插入新标记点
+    var marker = new AMap.Marker({
+      content:'<div class="marker" style="width:22px;height:36px;background-image:url(https://webapi.amap.com/theme/v1.3/markers/n/mark_r.png);background-size: 22px 36px;text-align: center;line-height: 24px;color: #fff ">'+ 'mid' +'</div>',
+      draggable:true,
+      position: midPosition,
+      extData: null
+    });
+    this.bindEvent(marker);
+
+    //插入新折线段
+    var polyline = new AMap.Polyline({
+      showDir:true,
+      strokeColor:'#ffff00',
+      isOutline:true,
+      outlineColor:'transparent',
+      path:[midPosition,rightPosition],
+      extData: null
+    })
+
+    //插入新距离文本
+    var newDis = Math.round(midPosition.distance(rightPosition));
+    var text = new AMap.Text({
+      text: newDis >= 1000 ? ((newDis / 1000).toFixed(2) + 'km') : (newDis + 'm'),
+      style:{'background-color':'#29b6f6',
+      'font-weight': '400',
+      'border-color':'#e1f5fe',
+      'font-size':'10px',
+      'color': '#fff',
+      'padding-top': '0px',
+      'padding-bottom': '0px'},
+      position: midPosition.divideBy(2).add(rightPosition.divideBy(2)),
+      extData: null
+    });
+
+    this.markerOverlays.splice(index + 1, 0, marker);
+    this.textOverlays.splice(index + 1, 0, text);
+    this.polylineOverlays.splice(index + 1, 0, polyline);
+
+    this.flightPaths.splice(index + 1, 0, {
+      id: null,
+      lat: midPosition.getLat(),
+      lng: midPosition.getLng(),
+      alt: 10
+    });
+
+    for(let i = 0; i < this.flightPaths.length; i++) {
+      this.flightPaths[i]['id'] = i + 1;
+      this.markerOverlays[i].setExtData(i+1);
+      this.markerOverlays[i].setContent('<div class="marker" style="width:22px;height:36px;background-image:url(https://webapi.amap.com/theme/v1.3/markers/n/mark_b.png);background-size: 22px 36px;text-align: center;line-height: 24px;color: #fff ">'+ (i+1) +'</div>')
+    }
+
+    for(let i = 0; i < this.polylineOverlays.length; i++) {
+      this.polylineOverlays[i].setExtData(i+1);
+      this.textOverlays[i].setExtData(i+1);
+    }
+
+    //清除原来地图上覆盖层后，马上添加新的覆盖层
+    this.map.clearMap();
+    this.map.add(this.markerOverlays)
+    this.map.add(this.polylineOverlays)
+    this.map.add(this.textOverlays)
+
+    this.showWaypointSetting(null,this.currentId += 1)
+    console.log(this.flightPaths);
   }
 
   //通过MQTT将规划的飞行路径发送给后台
@@ -747,7 +850,7 @@ export class AMapComponent implements OnInit {
     });
     var body = {
       name: 'Test',
-      wapointList: waypointList,
+      waypointList: waypointList,
       maxSpeed: 15, 
       baseSpeed: this.speed,
       headingMode: this.heading,
@@ -757,11 +860,11 @@ export class AMapComponent implements OnInit {
     // console.log(body);
     var message = JSON.stringify(body);
     this.mqttSvc.publish(this.pubTopic,message,{qos: 1, retain: false}).subscribe();
-    this.flightPaths = [];
-    this.currentId = null;
-    this.markerId = 0;
-    this.closewp = false;
-    this.map.remove(this.map.getAllOverlays());
+    // this.flightPaths = [];
+    // this.currentId = null;
+    // this.markerId = 0;
+    // this.closewp = false;
+    // this.map.remove(this.map.getAllOverlays());
   }
 
   //后台接收到飞行路径后的反馈数据
