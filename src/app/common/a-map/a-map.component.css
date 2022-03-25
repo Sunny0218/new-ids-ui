@@ -209,7 +209,8 @@ span {
 }
 
 .body-wpsetting > .Altitude,
-.body-wpsetting > .Speed {
+.body-wpsetting > .Speed,
+.body-wpsetting > .Actions {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -227,5 +228,20 @@ span {
 
 .body-wpsetting select {
     width: 50%;
+}
+
+.showAction {
+    height: 120px;
+    overflow-y: scroll;
+}
+
+.showAction .actionlist {
+    padding: 0;
+    margin: 0;
+}
+
+.showAction .actionlist select,
+.showAction .actionlist input {
+    height: 25px;
 }
 

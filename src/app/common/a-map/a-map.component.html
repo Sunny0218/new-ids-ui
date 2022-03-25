@@ -1,12 +1,26 @@
 <mat-card-title>{{ 'AMap.Map' | translate }}</mat-card-title>
 <div id='container' style='width:100%; height:720px;'></div>
+<!-- <div id="myPageTop">
+    <table>
+        <tr>
+            <td>
+                <label>请输入关键字：</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input id="tipinput"/>
+            </td>
+        </tr>
+    </table>
+</div> -->
 <div id="wpsettings" *ngIf="closewp">
     <div id="wpsettings-content" class="panel panel-default wpsetting">
         <div class="panel-heading">
             <button class="btn btn-danger" (click)="deleteWaypoint()">Delete</button>
             <button class="btn btn-success" (click)="insertWaypoint()" *ngIf="insertBtnVisible">Insert</button>
             <h3>WAYPOINT {{ wayPointId }} SETTINGS</h3>
-            <button mat-icon-button class="close" (click)="closewp = false">
+            <button mat-icon-button class="close" (click)="closewp = false" color='warn'>
                 <mat-icon>cancel</mat-icon>
             </button>
         </div>
@@ -23,14 +37,16 @@
                     </div>
                 </div>
                 <div class="Altitude">
-                    <span matPrefix>Altitude&nbsp;</span>
+                    <span matPrefix>Altitude(m)&nbsp;&nbsp;</span>
                     <input name="altitude" type="number" [(ngModel)]="altitude" (change)="editFlightPath()">
+                    <!-- <i slot="suffix" style="font-style: normal; margin-right: 10px">m</i> -->
                     <mat-slider [max]="300" [min]="5" [step]="1" thumbLabel [vertical]="vertical" [(ngModel)]="altitude" (change)="editFlightPath()">
                     </mat-slider>
                 </div>
                 <div class="Speed">
-                    <span matPrefix>Speed&nbsp;&nbsp;&nbsp;</span>
-                    <input name="Speed" type="number" [(ngModel)]="speed" (change)="editFlightPath()">
+                    <span matPrefix>Speed(m/s)&nbsp;</span>
+                    <input name="Speed" type="number" [(ngModel)]="speed" (change)="editFlightPath()"> 
+                    <!-- <i slot="suffix" style="font-style: normal; margin-right: 10px">m/s</i> -->
                     <mat-slider [max]="15" [min]="2" [step]="1" thumbLabel [vertical]="vertical" [(ngModel)]="speed" (change)="editFlightPath()">
                     </mat-slider>
                 </div>
@@ -52,6 +68,38 @@
                         <option value="USING_INITIAL_DIRECTION">Initial</option>
                         <option value="USING_WAYPOINT_HEADING">Use Waypoint</option>
                     </select>
+                </div>
+                <div class="Actions">
+                    <label>Actions</label>
+                    <button mat-icon-button color="primary" (click)="addAction()">
+                        <mat-icon>add_box</mat-icon>
+                    </button>
+                </div>
+                <div class="showAction">
+                    <ul class='actionlist' *ngFor="let action of actionList; let i = index">
+                        <div class="actionselect input-group">
+                            <select id="selectaction" [(ngModel)]="action.actionType">
+                                <option value="STAY">Stay</option>
+                                <option value="START_TAKE_PHOTO">Take a Photo</option>
+                                <option value="START_RECORD">Start Recording</option>
+                                <option value="STOP_RECORD">Stop Recording</option>
+                                <option value="GIMBAL_PITCH">Gimbal Pitch Rotation(°)</option>
+                                <option value="HOVER">Hover(s)</option>
+                                <option value="ROTATE_AIRCRAFT">Aircraft Rotate(°)</option>
+                            </select>
+                            <input 
+                                type="number" 
+                                style="width: 60px;" 
+                                [(ngModel)]="action.actionParam" 
+                                [disabled]='action.actionType == "START_TAKE_PHOTO" || action.actionType == "START_RECORD" || action.actionType == "STOP_RECORD"'
+                                (change)="editActionArg($event,action.actionType)"
+                            >
+                            <button mat-icon-button color="warn" (click)="removeAction(i)">
+                                <mat-icon>remove_circle_outline</mat-icon>
+                            </button>
+                            <!-- <span>{{ valueRange(action.actionType) }}</span> -->
+                        </div>
+                    </ul>
                 </div>
             </div>
         </div>
