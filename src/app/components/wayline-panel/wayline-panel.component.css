@@ -1,0 +1,25 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.mat-card .mat-card-content {
+    padding: 0px;
+}
+
+.mat-card .mat-card-subtitle {
+    margin-bottom: 0px;
+}
+
+.mat-card:hover {
+    cursor: pointer;
+    background-color: #ccc;
+}
+
+.mat-card-active {
+    border: 1px solid #1e88e5;
+}
+
+.mat-card-blur {
+    border: none;
+}

@@ -1,0 +1,83 @@
+<div class="device-status-containner">
+    <div class="device-status-body">
+        <div class="device-status-title">
+            <span>
+                <h5>M30</h5>
+            </span>
+            <button mat-icon-button color="primary" (click)="showVideo()">
+                <mat-icon>cancel</mat-icon>
+            </button>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="device-status-content">
+            <div class="device-status-image">
+                
+            </div>
+            <div class="device-status-detail">
+                <span style="color: green;">
+                    飞行模式
+                </span>
+                <table class="device-status-table">
+                    <tr>
+                        <td>
+                            <span>
+                                HD
+                                <mat-icon>signal_cellular_alt</mat-icon>
+                            </span>
+                        </td>
+                        <td>
+                            <span>
+                                <mat-icon> satellite</mat-icon>
+                                15
+                            </span>
+                        </td>
+                        <td>
+                            <span>
+                                <mat-icon>battery_full</mat-icon>
+                                75%
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span>
+                                ASL 76.5m
+                            </span>
+                        </td>
+                        <td>
+                            <span>
+                                AGL 29.5m
+                            </span>
+                        </td>
+                        <td>
+                            <span>
+                                H.S 0 m/s
+                            </span>
+                        </td>
+                        <td>
+                            <span>
+                                <mat-icon>loupe</mat-icon>
+                                0m
+                            </span>
+                        </td>
+                    </tr>
+                </table>
+                <div class="video-btn">
+                    <button>
+                        <mat-icon>video_call</mat-icon>
+                        FPV
+                    </button>
+                    <button>
+                        <mat-icon>video_call</mat-icon>
+                        M30 Camera
+                    </button>
+                </div>
+            </div>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="device-status-video" *ngIf="show">
+            <video width="100%" controls src="http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4" poster="../../../assets/images/background/ids_place_holder.jpg" autoplay ></video>
+        </div>
+    </div>
+    <div class="blank-space"></div>
+</div>

@@ -119,19 +119,19 @@ export class AMapComponent implements OnInit {
      });
  
      // //  加载鹰眼 1.x版本：OverView  2.0版本：HawkEye
-    //  this.map.plugin(["AMap.OverView"], () => {
-    //      let view = new AMap.OverView({
-    //          // 鹰眼是否展示
-    //          visible: true,
-    //          // 鹰眼是否展开
-    //          isOpen: true,
-    //          // width:'120px',
-    //          // height:'120px'
-    //      });
-    //      this.map.addControl(view);
-    //      // 调用方法 显示鹰眼窗口
-    //      view.show();
-    //  });
+     this.map.plugin(["AMap.OverView"], () => {
+         let view = new AMap.OverView({
+             // 鹰眼是否展示
+             visible: true,
+             // 鹰眼是否展开
+             isOpen: true,
+             // width:'120px',
+             // height:'120px'
+         });
+         this.map.addControl(view);
+         // 调用方法 显示鹰眼窗口
+         view.show();
+     });
  
      // 添加定位
      this.map.plugin('AMap.Geolocation', () => {
@@ -538,7 +538,7 @@ export class AMapComponent implements OnInit {
   //添加飞行动作
   addAction() {
     var action = {
-      actionType: "START_TAKE_PHOTO",
+      actionType: "STAY",
       actionParam: 0
     }
     this.flightPaths.some(element => {
@@ -728,54 +728,75 @@ export class AMapComponent implements OnInit {
     });
   }
 
-  //规定飞行动作类型参数的取值范围
-  editActionArg(e,type) {
+  //改变飞行动作类型时所触发的方法
+  changeActionType() {
+    
+  }
+
+  //飞行动作类型参数超出取值范围时，强制更改数值
+  editActionParam(e,type) {
+    //BUG To Fix:所有选项同类型动作的最大最小值都会跟着改变
+    this.actionList.forEach(action => {
+      if(action.actionType == "GIMBAL_PITCH") {
+        if(e.target.value > 0) {
+          e.target.value = 0
+          action.actionParam = 0
+        } else if(e.target.value < -90) {
+          e.target.value = -90
+          action.actionParam = -90
+        }
+      } else if (action.actionType == "STAY") {
+        if(e.target.value >= 32) {
+          e.target.value = 32
+          action.actionParam = 32
+        } else if(e.target.value < 0) {
+          e.target.value = 0
+          action.actionParam = 0
+        }
+      } else if(action.actionType == "ROTATE_AIRCRAFT") {
+        if(e.target.value >= 180) {
+          e.target.value = 180
+          action.actionParam = 180
+        } else if(e.target.value < -180) {
+          e.target.value = -180
+          action.actionParam = -180
+        }
+      }
+    })
+  }
+
+  //对应飞行参数范围文字显示
+  valueRange(type) {
     if(type === "GIMBAL_PITCH") {
-      e.target.min = -90;
-      e.target.max = 0;
-      if(e.target.value > 0) {
-        e.target.value = 0
-      } else if(e.target.value < -90) {
-        e.target.value = -90
-      }
-    } else if (type === "HOVER") {
-      e.target.min = 1;
-      e.target.max = 30;
-      if(e.target.value > 30) {
-        e.target.value = 30
-      } else if(e.target.value < 1) {
-        e.target.value = 1
-      }
-    } else if (type === "STAY") {
-      e.target.min = 0;
-      e.target.max = 32000;
-      if(e.target.value > 32000) {
-        e.target.value = 32000
-      } else if(e.target.value < 0) {
-        e.target.value = 0
-      }
-    } 
-    else if(type === "ROTATE_AIRCRAFT") {
-      e.target.min = -180;
-      e.target.max = 180;
-      if(e.target.value > 180) {
-        e.target.value = 180
-      } else if(e.target.value < -180) {
-        e.target.value = -180
-      }
+      return '(-90° ~ 0°)'
+    } else if(type === "ROTATE_AIRCRAFT") {
+      return '(-180° ~ 180°)'
+    } else if(type === "STAY") {
+      return '(0s ~ 32s)'
     }
   }
 
-  valueRange(type) {
+  //飞行动作参数最小值
+  actionParamMin(type) {
     if(type === "GIMBAL_PITCH") {
-      return '(-90° — 0°)'
-    } else if (type === "HOVER") {
-      return '(1° — 30°)'
+      return -90
+    } else if (type === "STAY") {
+      return '0'
     } else if(type === "ROTATE_AIRCRAFT") {
-      return '(-180° - 180°)'
+      return -180
     }
   }
-  
+
+  //飞行动作参数最大值
+  actionParamMax(type) {
+    if(type === "GIMBAL_PITCH") {
+      return '0'
+    } else if (type === "STAY") {
+      return 32
+    } else if(type === "ROTATE_AIRCRAFT") {
+      return 180
+    }
+  }
 
   //过滤需要拖拽的折线
   filterPolyline(e) {
@@ -922,6 +943,11 @@ export class AMapComponent implements OnInit {
     //删除ID
     waypointList.forEach(waypoint => {
       delete waypoint['id']
+      waypoint['actionList'].forEach(e => {
+        if(e['actionType'] == 'STAY') {
+          e['actionParam'] = e['actionParam']*1000;
+        }
+      });
     });
     var body = {
       name: 'Test',
@@ -932,9 +958,9 @@ export class AMapComponent implements OnInit {
       finishedAction: this.actionAfterFinished
     }
     
-    // console.log(body);
-    var message = JSON.stringify(body);
-    this.mqttSvc.publish(this.pubTopic,message,{qos: 1, retain: false}).subscribe();
+    console.log(body);
+    // var message = JSON.stringify(body);
+    // this.mqttSvc.publish(this.pubTopic,message,{qos: 1, retain: false}).subscribe();
     // this.flightPaths = [];
     // this.currentId = null;
     // this.markerId = 0;

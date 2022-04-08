@@ -1,0 +1,202 @@
+<div class="wayline-settings-containner">
+    <mat-tab-group mat-stretch-tabs mat-align-tabs="center"class="example-stretched-tabs mat-elevation-z4 " backgroundColor="primary">
+        <mat-tab label="航线设定">
+            <div id="wpsettings" style="position: relative;">
+                <div id="wpsettings-content" class="panel panel-default wpsetting">
+                    <div class="panel-heading">
+                        <button class="btn btn-danger">Delete</button>
+                        <button class="btn btn-success">Insert</button>
+                        <h3>WAYPOINT SETTINGS</h3>
+                        <button mat-icon-button class="close" color='warn'>
+                            <mat-icon>cancel</mat-icon>
+                        </button>
+                    </div>
+                    <div class="panel-body" style="width: 400px;">
+                        <div class="body-wpsetting">
+                            <div class="lat-lng">
+                                <div class="lat-width">
+                                    <span matPrefix>Latitude&nbsp;</span>
+                                    <input type="lat" name="lat" disabled="true">
+                                </div>
+                                <div class="lng-width">
+                                    <span matPrefix>Longitude&nbsp;</span>
+                                    <input type="lng" name="lng" disabled="true">
+                                </div>
+                            </div>
+                            <div class="Altitude">
+                                <span matPrefix>Altitude(m)&nbsp;&nbsp;</span>
+                                <input name="altitude" type="number">
+                                <!-- <i slot="suffix" style="font-style: normal; margin-right: 10px">m</i> -->
+                                <mat-slider max="300" min="5" step="1" thumbLabel >
+                                </mat-slider>
+                            </div>
+                            <div class="Speed">
+                                <span matPrefix>Speed(m/s)&nbsp;</span>
+                                <input name="Speed" type="number"> 
+                                <!-- <i slot="suffix" style="font-style: normal; margin-right: 10px">m/s</i> -->
+                                <mat-slider max="15" min="2" step="1" thumbLabel>
+                                </mat-slider>
+                            </div>
+                            <div class="Heading">
+                                <label for="heading">Heading</label>
+                                <select id="heading">
+                                    <option value="AUTO">Auto</option>
+                                    <option value="CONTROL_BY_REMOTE_CONTROLLER">RC Control</option>
+                                    <option value="TOWARD_POINT_OF_INTEREST">Interest</option>
+                                    <option value="USING_INITIAL_DIRECTION">Initial</option>
+                                    <option value="USING_WAYPOINT_HEADING">Use Waypoint</option>
+                                </select>
+                            </div>
+                            <div class="ActionAfterFinished">
+                                <label for="actionAfterFinished">Action After Finished</label>
+                                <select id="actionAfterFinished">
+                                    <option value="AUTO_LAND">Auto</option>
+                                    <option value="CONTROL_BY_REMOTE_CONTROLLER">RC Control</option>
+                                    <option value="USING_INITIAL_DIRECTION">Initial</option>
+                                    <option value="USING_WAYPOINT_HEADING">Use Waypoint</option>
+                                </select>
+                            </div>
+                            <div class="Actions">
+                                <label>Actions</label>
+                                <button mat-icon-button color="primary">
+                                    <mat-icon>add_box</mat-icon>
+                                </button>
+                            </div>
+                            <div class="showAction">
+                                <ul class='actionlist'>
+                                    <div class="actionselect input-group">
+                                        <select id="selectaction">
+                                            <option value="STAY">Stay(s)</option>
+                                            <option value="START_TAKE_PHOTO">Take a Photo</option>
+                                            <option value="START_RECORD">Start Recording</option>
+                                            <option value="STOP_RECORD">Stop Recording</option>
+                                            <option value="GIMBAL_PITCH">Gimbal Pitch(°)</option>
+                                            <!-- <option value="HOVER">Hover(s)</option> -->
+                                            <option value="ROTATE_AIRCRAFT">Aircraft Rotate(°)</option>
+                                        </select>
+                                        <input
+                                            type="number"
+                                            style="width: 60px;"
+                                        >
+                                        <button mat-icon-button color="warn">
+                                            <mat-icon>remove_circle_outline</mat-icon>
+                                        </button>
+                                        <span style="font-size: 12px;"></span>
+                                    </div>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <div class="left">
+                            <button class="btn-bottom" style="margin-right: 10px;"><</button>
+                            <button class="btn-bottom">></button>
+                        </div>
+                        <div class="right">
+                            <button class="btn-bottom">Upload</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </mat-tab>
+        <mat-tab label="航点设定">
+            <div id="wpsettings" style="position: relative;">
+                <div id="wpsettings-content" class="panel panel-default wpsetting">
+                    <div class="panel-heading">
+                        <button class="btn btn-danger">Delete</button>
+                        <button class="btn btn-success">Insert</button>
+                        <h3>WAYPOINT SETTINGS</h3>
+                        <button mat-icon-button class="close" color='warn'>
+                            <mat-icon>cancel</mat-icon>
+                        </button>
+                    </div>
+                    <div class="panel-body" style="width: 400px;">
+                        <div class="body-wpsetting">
+                            <div class="lat-lng">
+                                <div class="lat-width">
+                                    <span matPrefix>Latitude&nbsp;</span>
+                                    <input type="lat" name="lat" disabled="true">
+                                </div>
+                                <div class="lng-width">
+                                    <span matPrefix>Longitude&nbsp;</span>
+                                    <input type="lng" name="lng" disabled="true">
+                                </div>
+                            </div>
+                            <div class="Altitude">
+                                <span matPrefix>Altitude(m)&nbsp;&nbsp;</span>
+                                <input name="altitude" type="number">
+                                <!-- <i slot="suffix" style="font-style: normal; margin-right: 10px">m</i> -->
+                                <mat-slider max="300" min="5" step="1" thumbLabel >
+                                </mat-slider>
+                            </div>
+                            <div class="Speed">
+                                <span matPrefix>Speed(m/s)&nbsp;</span>
+                                <input name="Speed" type="number"> 
+                                <!-- <i slot="suffix" style="font-style: normal; margin-right: 10px">m/s</i> -->
+                                <mat-slider max="15" min="2" step="1" thumbLabel>
+                                </mat-slider>
+                            </div>
+                            <div class="Heading">
+                                <label for="heading">Heading</label>
+                                <select id="heading">
+                                    <option value="AUTO">Auto</option>
+                                    <option value="CONTROL_BY_REMOTE_CONTROLLER">RC Control</option>
+                                    <option value="TOWARD_POINT_OF_INTEREST">Interest</option>
+                                    <option value="USING_INITIAL_DIRECTION">Initial</option>
+                                    <option value="USING_WAYPOINT_HEADING">Use Waypoint</option>
+                                </select>
+                            </div>
+                            <div class="ActionAfterFinished">
+                                <label for="actionAfterFinished">Action After Finished</label>
+                                <select id="actionAfterFinished">
+                                    <option value="AUTO_LAND">Auto</option>
+                                    <option value="CONTROL_BY_REMOTE_CONTROLLER">RC Control</option>
+                                    <option value="USING_INITIAL_DIRECTION">Initial</option>
+                                    <option value="USING_WAYPOINT_HEADING">Use Waypoint</option>
+                                </select>
+                            </div>
+                            <div class="Actions">
+                                <label>Actions</label>
+                                <button mat-icon-button color="primary">
+                                    <mat-icon>add_box</mat-icon>
+                                </button>
+                            </div>
+                            <div class="showAction">
+                                <ul class='actionlist'>
+                                    <div class="actionselect input-group">
+                                        <select id="selectaction">
+                                            <option value="STAY">Stay(s)</option>
+                                            <option value="START_TAKE_PHOTO">Take a Photo</option>
+                                            <option value="START_RECORD">Start Recording</option>
+                                            <option value="STOP_RECORD">Stop Recording</option>
+                                            <option value="GIMBAL_PITCH">Gimbal Pitch(°)</option>
+                                            <!-- <option value="HOVER">Hover(s)</option> -->
+                                            <option value="ROTATE_AIRCRAFT">Aircraft Rotate(°)</option>
+                                        </select>
+                                        <input
+                                            type="number"
+                                            style="width: 60px;"
+                                        >
+                                        <button mat-icon-button color="warn">
+                                            <mat-icon>remove_circle_outline</mat-icon>
+                                        </button>
+                                        <span style="font-size: 12px;"></span>
+                                    </div>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <div class="left">
+                            <button class="btn-bottom" style="margin-right: 10px;"><</button>
+                            <button class="btn-bottom">></button>
+                        </div>
+                        <div class="right">
+                            <button class="btn-bottom">Upload</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+</div>

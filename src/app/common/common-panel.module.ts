@@ -8,7 +8,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { DemoMaterialModule } from '../demo-material-module';
 import { FormsModule,ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { MediaPanelModule } from './media-panel/media-panel.module';
+// import { MediaPanelModule } from './media-panel/media-panel.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { LoadPathsComponent } from './path-panel/load-paths/load-paths.component';
 import { VrViewComponent } from './vr-view/vr-view.component';
@@ -18,12 +18,12 @@ import { VrImageComponent } from './vr-image/vr-image.component';
 import { GoogleMapComponent } from './google-map/google-map.component';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { SharedModule } from '../shared/shared.module';
-import { AMapComponent } from './a-map/a-map.component';
+// import { AMapComponent } from './a-map/a-map.component';
 
 const CommonPanelroutes:Routes = [
   {
     path:'media',
-    component:MediaPanelComponent
+    component:GoogleMapComponent
   },
   {
     path:'path',
@@ -53,7 +53,7 @@ const CommonPanelroutes:Routes = [
 
 @NgModule({
   declarations: [
-    MediaPanelComponent,
+    // MediaPanelComponent,
     AirportPanelComponent,
     FpvPanelComponent,
     PathPanelComponent,
@@ -63,7 +63,7 @@ const CommonPanelroutes:Routes = [
     MapPanelComponent,
     VrImageComponent,
     GoogleMapComponent,
-    AMapComponent,
+    // AMapComponent,
   ],
   imports: [
     CommonModule,
@@ -71,7 +71,7 @@ const CommonPanelroutes:Routes = [
     DemoMaterialModule,
     FormsModule,
     HttpClientModule,
-    MediaPanelModule,
+    // MediaPanelModule,
     FlexLayoutModule,
     ReactiveFormsModule,
     GoogleMapsModule,

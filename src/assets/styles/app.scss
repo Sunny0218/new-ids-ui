@@ -724,12 +724,13 @@ Mat card
     box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.05) !important;
     -webkit-box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.05) !important;
     margin: 15px;
-    padding: 0px !important;
+    padding: 10px !important;
     border-radius: $radius;
     .mat-card-content {
         font-size: 1rem;
         line-height: 23px;
         padding: 24px;
+        margin: 0px;
     }
     .mat-card-image {
         width: calc(100% + 0px);

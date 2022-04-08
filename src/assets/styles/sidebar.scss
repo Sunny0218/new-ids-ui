@@ -9,11 +9,20 @@ File: scss
 Main sidebar
 ******************/
 
-mat-sidenav {
-  width: 240px;
-  padding-top: 0px;
+// mat-sidenav {
+//     padding-top: 0px;
+// }
+
+.sidenav {
+    width: 300px;
 }
-#snav{
+
+.sidebar {
+    padding-top: 0px;
+    width: 100px;
+}
+
+#sidebar{
     box-shadow: 1px 0px 20px rgba(0, 0, 0, 0.08);
     .mat-list-item {
         height: auto;
@@ -22,8 +31,8 @@ mat-sidenav {
         }
         
         .mat-list-item-content{
-            display: block;
-            padding: 0px 15px;
+            display: flex;
+            padding: 5px 15px;
             &:hover{
                 background: none;
                 > a{

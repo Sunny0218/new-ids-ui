@@ -1,3 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
 
 @import '~video.js/dist/video-js.min.css';
+
+html body .page-wrapper .page-content {
+    height: 100%;
+}
+
+body::-webkit-scrollbar {
+    display: none;
+}
+
+.mat-expansion-panel-body {
+    padding: 0px !important;
+}

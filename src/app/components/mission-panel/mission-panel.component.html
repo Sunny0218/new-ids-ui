@@ -1,0 +1,13 @@
+<mat-list>
+    <div mat-subheader>
+        <h4>Mission</h4>
+    </div>
+    <mat-divider></mat-divider>
+    <mat-list-item *ngFor="let folder of folders" class="mission-list">
+      <mat-icon mat-list-icon>folder</mat-icon>
+      <div mat-line>{{folder.name}}</div>
+      <div mat-line> {{folder.updated | date}} </div>
+    </mat-list-item>
+</mat-list>
+
+  

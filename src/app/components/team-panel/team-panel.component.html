@@ -1,0 +1,67 @@
+<mat-list>
+  <mat-accordion multi >
+    <div mat-subheader>
+        <h4>Team</h4>
+    </div>
+    <mat-divider></mat-divider>
+    <mat-list-item>
+        我的项目呼号：AKL
+    </mat-list-item>
+    <mat-divider></mat-divider>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+         在线设备
+        </mat-panel-title>
+        <mat-panel-description>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <mat-list>
+          <mat-card *ngFor="let folder of folders" class="mission-list" style="padding: 10px;" [ngClass]="{'mat-card-active': false}" (click)="selectWayline(folder.name)">
+            <mat-card-title>{{folder.name}}</mat-card-title>
+            <mat-card-subtitle>更新时间：{{folder.updated | date}}</mat-card-subtitle>
+            <mat-card-content>
+                M30
+            </mat-card-content>
+            <mat-divider inset></mat-divider>
+            <mat-card-actions align="end">
+              <button mat-button>EDIT</button>
+            </mat-card-actions>
+          </mat-card>
+      </mat-list>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+        机场设备
+        </mat-panel-title>
+        <mat-panel-description>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <p>所有机场设备</p>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+          无人机设备
+          </mat-panel-title>
+          <mat-panel-description>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <p>所有无人机设备</p>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+          独立人员
+          </mat-panel-title>
+          <mat-panel-description>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <p>所有独立人员</p>
+      </mat-expansion-panel>
+  </mat-accordion>
+</mat-list>

@@ -33,8 +33,13 @@ File: scss
 
 html .page-wrapper{
 		height:calc(100vh - 64px);
-		.page-content{
-				padding: 15px;
+		.media-panel-warpper{
+			position: absolute;
+			width: 100%;
+			top: 0;
+    		bottom: 0;
+    		z-index: 1000;
+			background: rgb(238, 245, 249);
 		}
 }
 
@@ -99,4 +104,14 @@ Chartistt chart css
 }
 .pr-5 {
 	padding-right: 5px;
+}
+
+
+/*******************/
+/*设备状态显示位置*/
+/*******************/
+.device-status-warpper {
+	position: absolute;
+	right: 80px;
+	top: 12px;
 }

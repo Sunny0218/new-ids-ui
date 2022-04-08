@@ -17,7 +17,6 @@ import { CctvStreamingService } from 'src/app/common/remote/cctv-streaming.servi
 })
 export class FpvPanelComponent implements OnInit {
 
-
   @HostListener('window:keydown',['$event']) spaceEvent(event:any) {
     // up,gimbal参数增加,即镜头向上
     if(event.keyCode === 38) {
@@ -66,6 +65,9 @@ export class FpvPanelComponent implements OnInit {
   droneVideoElement:any = null;
   cctvVideoElement:any = null;
 
+  //定频上报的属性Topic(osd)
+  osdTopic:string = 'thing/product/mavic2/osd';
+
   //订阅获取无人机、遥控状态主题
   subTopic:string;
   //发布转化摄像模式主题
@@ -109,8 +111,7 @@ export class FpvPanelComponent implements OnInit {
 
   private droneSubscription = new Subscription();
   private commandSubscription = new Subscription();
-
-  
+  private osdSubscription = new Subscription();
 
   constructor( 
     private commonSvc: CommonPanelService,
@@ -128,13 +129,13 @@ export class FpvPanelComponent implements OnInit {
     this.safeCctvUrl=this.sanitizer.bypassSecurityTrustResourceUrl(this.cctvStream);
     // this.getVideoElement();
     this.attachMediaStream();
-    
-
+    // this.getStatusByOsd();
   }
 
   ngOnDestroy(): void {
     this.droneSubscription.unsubscribe();
     this.commandSubscription.unsubscribe();
+    this.osdSubscription.unsubscribe();
     this.droneStreamingSrv.stopStream();
     this.cctvStreamingSrv.stopStream();
   }
@@ -164,11 +165,21 @@ export class FpvPanelComponent implements OnInit {
 
   //通过mqtt获取无人机和遥控状态
   mqttGetDroneStatus() {
-    this.droneSubscription = this.mqttSvc.observe(this.subTopic).subscribe( (message:IMqttMessage) => {
+    this.droneSubscription = this.mqttSvc.observe(this.subTopic).subscribe((message:IMqttMessage) => {
       let item = JSON.parse(message.payload.toString());
 
       this.batteryLevel = item['batteryLevel'];
       this.isFlying = item['isFlying'];
+    })
+  }
+
+  //订阅osd定频获得设备状态
+  getStatusByOsd() {
+    this.osdSubscription = this.mqttSvc.observe(this.osdTopic).subscribe((message:IMqttMessage) => {
+      let item = JSON.parse(message.payload.toString());
+      let { data } = item
+      console.log(data['battery']['capacity_percent']);
+      console.log(data['height']);
     })
   }
 
@@ -201,8 +212,7 @@ export class FpvPanelComponent implements OnInit {
     this.gimbalCommand['id'] = "ids-" + new Date().getTime();
     this.gimbalCommand['params']['Yaw'] = '10';
     var message = JSON.stringify(this.gimbalCommand)
-    this.mqttSvc.publish(this.pubTopic,message,{qos: 1, retain: false}).subscribe();
-    
+    this.mqttSvc.publish(this.pubTopic,message,{qos: 1, retain: false}).subscribe(); 
   }
 
   //获取回馈消息
@@ -441,7 +451,6 @@ export class FpvPanelComponent implements OnInit {
 
 //转换Video Scream 资源 
 switchVideoSrc() {
-
   if (!this.switchSrcFlat) {
     this.videoTitle = "DRONE";
     this.droneStreamingSrv.SwitchSrc(this.droneVideoElement);
@@ -454,7 +463,4 @@ switchVideoSrc() {
     this.switchSrcFlat = !this.switchSrcFlat;
    }
 }
-
-
-
 }

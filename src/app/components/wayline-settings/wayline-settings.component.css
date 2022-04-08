@@ -1,0 +1,186 @@
+.example-stretched-tabs {
+    width: 410px;
+    background-color: #f5f5f5;
+}
+
+.wayline-settings-containner {
+    z-index: 5;
+    position: absolute;
+    left: 50px;
+    top: 160px;
+}
+
+/* #wpsettings {
+    z-index: 5;
+    position: absolute;
+    left: 50px;
+    top: 160px;
+} */
+
+.panel-default {
+    border-color: #ddd;
+}
+
+.panel {
+    margin-bottom: 20px;
+    background-color: #fff;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 1px 1px rgb(0 0 0 / 5%);
+    box-shadow: 0 1px 1px rgb(0 0 0 / 5%);
+}
+
+.panel-default>.panel-heading {
+    color: #333;
+    background-color: #f5f5f5;
+    border-color: #ddd
+}
+
+.panel-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 50px;
+    padding: 10px 15px;
+    border-bottom: 1px solid transparent;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+
+.panel-body {
+    padding: 10px;
+}
+
+.panel-footer {
+    padding: 10px 15px;
+    background-color: #f5f5f5;
+    border-top: 1px solid #ddd;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+
+.body-wpsetting>.lat-lng {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.lat-width,
+.lng-width {
+    width: 50%;
+}
+
+.lat-lng input {
+    border: 1px solid #ccc;
+}
+
+.btn {
+    cursor: pointer;
+    height: 25px;
+    padding: 1px 5px;
+    font-size: 12px;
+    border-radius: 3px;
+    box-shadow: none;
+}
+
+.btn-danger {
+    color: #fff;
+    background-color: #d9534f;
+    border: 1px solid #d43f3a;
+}
+
+.btn-danger:hover {
+    background-color: #d9534f;
+    opacity: 0.8;
+}
+
+.btn-success {
+    color: #fff;
+    background-color: #5cb85c;
+    border: 1px solid #4cae4c;
+}
+
+.btn-success:hover {
+    background-color: #5cb85c;
+    opacity: 0.8;
+}
+
+.btn-bottom {
+    color: white;
+    right: 15px;
+    width: 5rem;
+    border: 1px solid #ccc;
+    background-color: rgb(30, 136, 229);
+    cursor: pointer;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.95rem;
+    font-weight: bold;
+    border-radius: 3px;
+}
+
+.btn-bottom:hover {
+    background-color: rgb(30, 136, 229);
+    opacity: 0.8;
+}
+
+.btn-bottom[disabled] {
+    background-color: rgba(255, 255, 255, .3);
+    color: rgba(0, 0, 0, 0.26);
+    cursor: default;
+}
+
+
+.close {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.panel-footer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.Heading,
+.ActionAfterFinished {
+    padding: 12px 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.body-wpsetting > .Altitude,
+.body-wpsetting > .Speed,
+.body-wpsetting > .Actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.body-wpsetting > .Altitude input,
+.body-wpsetting > .Speed input{
+    width: 25%;
+}
+
+.body-wpsetting > .Altitude > mat-slider,
+.body-wpsetting > .Speed > mat-slider{
+    width: 60%;
+}
+
+.body-wpsetting select {
+    width: 50%;
+}
+
+.showAction {
+    height: 120px;
+    overflow-y: scroll;
+}
+
+.showAction .actionlist {
+    padding: 0;
+    margin: 0;
+}
+
+.showAction .actionlist select,
+.showAction .actionlist input {
+    height: 25px;
+}

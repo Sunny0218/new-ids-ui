@@ -29,7 +29,7 @@ export class AppHeaderComponent implements OnInit{
     public translate: TranslateService
   ) { 
     translate.addLangs(['zh', 'zh-MO', 'en']);
-    translate.setDefaultLang('zh');
+    translate.setDefaultLang('en');
     
     const browserLang = translate.getBrowserLang();
     translate.use(browserLang.match(/en|zh/) ? browserLang : 'en');

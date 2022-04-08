@@ -23,7 +23,14 @@ import { SpinnerComponent } from './shared/spinner.component';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { AuthModule } from './auth/auth.module';
 import { AuthGuard } from './auth/auth.guard';
-
+import { AMapComponent } from './common/a-map/a-map.component';
+import { MediaPanelModule } from './common/media-panel/media-panel.module';
+import { MediaPanelComponent } from './common/media-panel/media-panel.component';
+import { TeamPanelComponent } from './components/team-panel/team-panel.component';
+import { MissionPanelComponent } from './components/mission-panel/mission-panel.component';
+import { WaylinePanelComponent } from './components/wayline-panel/wayline-panel.component';
+import { WaylineSettingsComponent } from './components/wayline-settings/wayline-settings.component';
+import { DeviceStatusComponent } from './components/device-status/device-status.component';
 
 export function HttpLoaderFactory(httpClient: HttpClient) {
   return new TranslateHttpLoader(httpClient, './assets/i18n/', '.json');
@@ -50,21 +57,34 @@ const AppRoutes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: '/map',
+        redirectTo: '/team',
         pathMatch: 'full',
       },
       {
-        path: '',
-        loadChildren: () => import('./common/common-panel.module').then(m => m.CommonPanelModule),
-
-        //** keycloak authGuard**
-        canActivate:[AuthGuard]  
-
+        path:'team',
+        component:TeamPanelComponent,
+        canActivate:[AuthGuard]
+      },
+      {
+        path:'mission',
+        component:MissionPanelComponent,
+        canActivate:[AuthGuard]
+      },
+      {
+        path:'wayline',
+        component:WaylinePanelComponent,
+        canActivate:[AuthGuard]
       },
       { 
         path: '**', 
-        redirectTo: '/map'
+        redirectTo: '/team'
       },
+      // {
+      //   path: '',
+      //   loadChildren: () => import('./common/common-panel.module').then(m => m.CommonPanelModule),
+      //   //** keycloak authGuard**
+      //   canActivate:[AuthGuard]  
+      // },
       // {
       //   path: '',
       //   loadChildren:
@@ -87,6 +107,13 @@ const AppRoutes: Routes = [
     SpinnerComponent,
     AppSidebarComponent,
     LoginPageComponent,
+    AMapComponent,
+    MediaPanelComponent,
+    TeamPanelComponent,
+    MissionPanelComponent,
+    WaylinePanelComponent,
+    WaylineSettingsComponent,
+    DeviceStatusComponent
   ],
   imports: [
     BrowserModule,
@@ -97,6 +124,7 @@ const AppRoutes: Routes = [
     FlexLayoutModule,
     HttpClientModule,
     SharedModule,
+    MediaPanelModule,
     RouterModule.forRoot(AppRoutes),
     MqttModule.forRoot(MQTT_SERVICE_OPTIONS),
     TranslateModule.forRoot({

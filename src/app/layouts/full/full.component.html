@@ -37,7 +37,6 @@
             <mat-icon>menu</mat-icon>
         </button>
         <span fxFlex></span>
-
         <!-- ============================================================== -->
         <!-- app header component - style you can find in header.scss / header.component.ts-->
         <!-- ============================================================== -->
@@ -46,36 +45,47 @@
     <!-- ============================================================== -->
     <!-- End Topbar - style you can find in pages.scss -->
     <!-- ============================================================== -->
-    <mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 0 : 0">
+    <mat-sidenav-container>
         <!-- ============================================================== -->
         <!-- Sidebar - style you can find in sidebar.scss -->
         <!-- ============================================================== -->
-        <mat-sidenav #snav id="snav" class="dark-sidebar pl-xs" [mode]="mobileQuery.matches ? 'side' : 'over'" fixedTopGap="0" [opened]="mobileQuery.matches" [disableClose]="mobileQuery.matches">
-
-            <app-sidebar></app-sidebar>
-
-
+        <mat-sidenav #sidenav class="sidebar" id="sidebar" mode="side" opened="true" position="start" role="navigation" class="sidenav-wv">
+            <app-sidebar (click)="snav.open()"></app-sidebar>
         </mat-sidenav>
-        <!-- ============================================================== -->
-        <!-- Sidebar - style you can find in sidebar.scss -->
-        <!-- ============================================================== -->
-
+        <mat-sidenav-content>
+            <mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 0 : 0">
+                <mat-sidenav #snav id="sidenav" class="sidenav pl-xs" [mode]="mobileQuery.matches ? 'side' : 'over'" fixedTopGap="0" [opened]="mobileQuery.matches" [disableClose]="mobileQuery.matches">
+                    <router-outlet>
+                        <app-spinner></app-spinner>
+                    </router-outlet>
+                </mat-sidenav>
         <!-- ============================================================== -->
         <!-- Page container - style you can find in pages.scss -->
         <!-- ============================================================== -->
-        <mat-sidenav-content class="page-wrapper">
-
-            <div class="page-content">
-
-                <router-outlet>
-                    <app-spinner></app-spinner>
-                </router-outlet>
+                <mat-sidenav-content class="page-wrapper">
                 
-            </div>
-            <a href="https://beian.miit.gov.cn/" target="_blank">粤ICP备2021061605号</a>
-        </mat-sidenav-content>
+                    <div class="page-content map-warpper">
+                        <app-a-map></app-a-map>
+                    </div>
+
+                    <div class="page-content media-panel-warpper" *ngIf="getMediaRoute()">
+                        <app-media-panel></app-media-panel>
+                    </div>
+
+                    <!-- <div class="wayline-setting-warpper">
+                        <app-wayline-settings></app-wayline-settings>
+                    </div> -->
+
+                    <div class="device-status-warpper">
+                        <app-device-status></app-device-status>
+                    </div>
+                  
+                    <!-- <a href="https://beian.miit.gov.cn/" target="_blank">粤ICP备2021061605号</a> -->
+                </mat-sidenav-content>
         <!-- ============================================================== -->
         <!-- Page container - style you can find in pages.scss -->
         <!-- ============================================================== -->
+            </mat-sidenav-container>
+        </mat-sidenav-content>
     </mat-sidenav-container>
 </div>
