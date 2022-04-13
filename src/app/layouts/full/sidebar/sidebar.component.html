@@ -26,12 +26,13 @@
 <!-- </div> -->
 <mat-nav-list appAccordion>
     <mat-list-item appAccordionLink *ngFor="let menuitem of menuItems.getMenuitem()" routerLinkActive="selected" group="{{menuitem.state}}">
-        <a class="" appAccordionToggle [routerLink]="['/', menuitem.state]" *ngIf="menuitem.type === 'link'" matTooltip="{{ 'Menu.' + menuitem.name | translate}}" matTooltipPosition="right">
+        <a class="" appAccordionToggle [routerLink]="['/project/'+ path + '/' + menuitem.state]" *ngIf="menuitem.type === 'link'" matTooltip="{{ 'Menu.' + menuitem.name | translate}}" matTooltipPosition="right">
             <mat-icon>{{ menuitem.icon }}</mat-icon>
             <!-- <span>{{ 'Menu.' + menuitem.name | translate}}</span> -->
             <span fxFlex></span>
             <!-- <span class="label label-{{ badge.type }}" *ngFor="let badge of menuitem.badge">{{ badge.value }}</span> -->
         </a>
     </mat-list-item>
+
 </mat-nav-list>
 

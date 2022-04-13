@@ -1,7 +1,10 @@
 <mat-list>
-  <mat-accordion multi >
-    <div mat-subheader>
+  <mat-accordion multi>
+    <div mat-subheader class="header">
         <h4>Team</h4>
+        <button mat-icon-button color="primary">
+          <mat-icon>add_box</mat-icon>
+        </button>
     </div>
     <mat-divider></mat-divider>
     <mat-list-item>
@@ -17,7 +20,7 @@
         </mat-panel-description>
       </mat-expansion-panel-header>
       <mat-list>
-          <mat-card *ngFor="let folder of folders" class="mission-list" style="padding: 10px;" [ngClass]="{'mat-card-active': false}" (click)="selectWayline(folder.name)">
+          <mat-card *ngFor="let folder of folders" class="mission-list" style="padding: 10px;" [ngClass]="{'mat-card-active': false}">
             <mat-card-title>{{folder.name}}</mat-card-title>
             <mat-card-subtitle>更新时间：{{folder.updated | date}}</mat-card-subtitle>
             <mat-card-content>
@@ -25,7 +28,7 @@
             </mat-card-content>
             <mat-divider inset></mat-divider>
             <mat-card-actions align="end">
-              <button mat-button>EDIT</button>
+              <button mat-button (click)="showDeviceStatus()">EDIT</button>
             </mat-card-actions>
           </mat-card>
       </mat-list>

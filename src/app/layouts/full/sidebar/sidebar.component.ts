@@ -10,7 +10,7 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class AppSidebarComponent implements OnDestroy {
   mobileQuery: MediaQueryList;
-
+  path:string
   private _mobileQueryListener: () => void;
 
   constructor(
@@ -22,6 +22,12 @@ export class AppSidebarComponent implements OnDestroy {
     this.mobileQuery = media.matchMedia('(min-width: 768px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
+  }
+
+  ngOnInit(): void {
+    this.path = localStorage.getItem('id');
+    console.log(this.path);
+    
   }
 
   ngOnDestroy(): void {

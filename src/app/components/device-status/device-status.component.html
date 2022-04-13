@@ -1,15 +1,16 @@
-<div class="device-status-containner">
-    <div class="device-status-body">
+<div class="device-status-container">
+    <div class="device-status-body" *ngIf="show">
         <div class="device-status-title">
             <span>
-                <h5>M30</h5>
+                <h5>M30-无人机1</h5>
             </span>
-            <button mat-icon-button color="primary" (click)="showVideo()">
+            <button mat-icon-button color="primary" (click)="close()">
                 <mat-icon>cancel</mat-icon>
             </button>
         </div>
         <mat-divider></mat-divider>
-        <div class="device-status-content">
+        <div class="device-status-main">
+            <div class="device-status-content">
             <div class="device-status-image">
                 
             </div>
@@ -73,10 +74,11 @@
                     </button>
                 </div>
             </div>
-        </div>
-        <mat-divider></mat-divider>
-        <div class="device-status-video" *ngIf="show">
+            </div>
+            <mat-divider></mat-divider>
+            <div class="device-status-video">
             <video width="100%" controls src="http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4" poster="../../../assets/images/background/ids_place_holder.jpg" autoplay ></video>
+            </div>
         </div>
     </div>
     <div class="blank-space"></div>

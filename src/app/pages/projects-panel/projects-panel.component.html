@@ -1,0 +1,25 @@
+<div class="projects-panel-container" >
+    <mat-sidenav-container class="example-container" autosize>
+        <mat-sidenav #drawer class="project-list-sidenav" mode="side" opened>
+            <div mat-subheader class="header">
+                <h4>项目列表</h4>
+                <button mat-icon-button color="primary">
+                  <mat-icon>add_box</mat-icon>
+                </button>
+            </div>
+            <mat-divider></mat-divider>
+            <mat-selection-list #shoes [multiple]="false">
+                <mat-list-option *ngFor="let shoe of typesOfShoes" [value]="shoe">
+                  <a [routerLink]="[ '/project', shoe ]">{{shoe}}</a>
+                </mat-list-option>
+            </mat-selection-list>
+        </mat-sidenav>
+      
+        <mat-sidenav-content class="projects-conent">
+            <!-- <app-a-map></app-a-map> -->
+            <router-outlet></router-outlet>
+        </mat-sidenav-content>
+
+    </mat-sidenav-container>
+</div>
+

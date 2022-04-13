@@ -1,0 +1,13 @@
+.project-list-sidenav {
+    width: 370px;
+}
+
+.projects-conent {
+    height:calc(100vh - 64px);
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 16px;
+}

@@ -3,11 +3,11 @@
     background-color: #f5f5f5;
 }
 
-.wayline-settings-containner {
+.wayline-settings-container {
     z-index: 5;
     position: absolute;
-    left: 50px;
-    top: 160px;
+    right: 40px;
+    top: 120px;
 }
 
 /* #wpsettings {

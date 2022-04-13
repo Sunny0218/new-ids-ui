@@ -1,5 +1,5 @@
-<div class="wayline-settings-containner">
-    <mat-tab-group mat-stretch-tabs mat-align-tabs="center"class="example-stretched-tabs mat-elevation-z4 " backgroundColor="primary">
+<div class="wayline-settings-container">
+    <mat-tab-group mat-stretch-tabs mat-align-tabs="center"class="example-stretched-tabs mat-elevation-z4 " backgroundColor="primary" *ngIf="show">
         <mat-tab label="航线设定">
             <div id="wpsettings" style="position: relative;">
                 <div id="wpsettings-content" class="panel panel-default wpsetting">
@@ -8,7 +8,7 @@
                         <button class="btn btn-success">Insert</button>
                         <h3>WAYPOINT SETTINGS</h3>
                         <button mat-icon-button class="close" color='warn'>
-                            <mat-icon>cancel</mat-icon>
+                            <mat-icon (click)="close()" >cancel</mat-icon>
                         </button>
                     </div>
                     <div class="panel-body" style="width: 400px;">

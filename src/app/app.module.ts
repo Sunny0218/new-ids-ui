@@ -31,6 +31,12 @@ import { MissionPanelComponent } from './components/mission-panel/mission-panel.
 import { WaylinePanelComponent } from './components/wayline-panel/wayline-panel.component';
 import { WaylineSettingsComponent } from './components/wayline-settings/wayline-settings.component';
 import { DeviceStatusComponent } from './components/device-status/device-status.component';
+import { DeviceStatusService } from './services/device-status.service';
+import { WaylineSettingsService } from './services/wayline-settings.service';
+import { ProjectsPanelComponent } from './pages/projects-panel/projects-panel.component';
+import { PersonnelManagementComponent } from './pages/personnel-management/personnel-management.component';
+import { DeviceManagementComponent } from './pages/device-management/device-management.component';
+import { ProjectComponent } from './components/project/project.component';
 
 export function HttpLoaderFactory(httpClient: HttpClient) {
   return new TranslateHttpLoader(httpClient, './assets/i18n/', '.json');
@@ -57,27 +63,54 @@ const AppRoutes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: '/team',
+        redirectTo: 'projects',
         pathMatch: 'full',
       },
       {
-        path:'team',
-        component:TeamPanelComponent,
+        path:'projects',
+        component:ProjectsPanelComponent,
         canActivate:[AuthGuard]
       },
       {
-        path:'mission',
-        component:MissionPanelComponent,
+        path:'personnel',
+        component:PersonnelManagementComponent,
         canActivate:[AuthGuard]
       },
       {
-        path:'wayline',
-        component:WaylinePanelComponent,
+        path:'device',
+        component:DeviceManagementComponent,
+        canActivate:[AuthGuard]
+      },
+      {
+        path:'project/:pid',
+        component:ProjectComponent,
+        children: [
+          {
+            path: '',
+            redirectTo: 'team',
+            pathMatch: 'full',
+          },
+          {
+            path:'team',
+            component:TeamPanelComponent,
+            canActivate:[AuthGuard]
+          },
+          {
+            path:'mission',
+            component:MissionPanelComponent,
+            canActivate:[AuthGuard]
+          },
+          {
+            path:'wayline',
+            component:WaylinePanelComponent,
+            canActivate:[AuthGuard]
+          }
+        ],
         canActivate:[AuthGuard]
       },
       { 
         path: '**', 
-        redirectTo: '/team'
+        redirectTo: '/projects'
       },
       // {
       //   path: '',
@@ -113,7 +146,11 @@ const AppRoutes: Routes = [
     MissionPanelComponent,
     WaylinePanelComponent,
     WaylineSettingsComponent,
-    DeviceStatusComponent
+    DeviceStatusComponent,
+    ProjectsPanelComponent,
+    PersonnelManagementComponent,
+    DeviceManagementComponent,
+    ProjectComponent
   ],
   imports: [
     BrowserModule,
@@ -142,7 +179,9 @@ const AppRoutes: Routes = [
       useClass: PathLocationStrategy
     },
     NgEventBus,
-    MqttService
+    MqttService,
+    DeviceStatusService,
+    WaylineSettingsService
   ],
   bootstrap: [AppComponent]
 })

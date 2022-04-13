@@ -70,8 +70,8 @@ export interface Menu {
 
 const MENUITEMS = [ 
   { state: 'team', type: 'link', name: 'Team', icon: 'people' },
-  { state: 'mission', type: 'link', name: 'Mission', icon: 'panorama' },
   { state: 'wayline', type: 'link', name: 'Wayline', icon: 'flight_takeoff' },
+  { state: 'mission', type: 'link', name: 'Mission', icon: 'panorama' },
 ];
 
 @Injectable()

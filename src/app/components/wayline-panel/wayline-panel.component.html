@@ -6,7 +6,7 @@
         </button>
     </div>
     <mat-divider></mat-divider>
-      <mat-card *ngFor="let folder of folders" class="mission-list" style="padding: 10px;" [ngClass]="{'mat-card-active': false}" (click)="selectWayline(folder.name)">
+      <mat-card *ngFor="let folder of folders" class="mission-list" style="padding: 10px;" [ngClass]="{'mat-card-active': false}">
         <mat-card-title>{{folder.name}}</mat-card-title>
         <mat-card-subtitle>更新时间：{{folder.updated | date}}</mat-card-subtitle>
         <mat-card-content>
@@ -14,7 +14,7 @@
         </mat-card-content>
         <mat-divider inset></mat-divider>
         <mat-card-actions align="end">
-          <button mat-button>EDIT</button>
+          <button mat-button (click)="showWaylineSettings()" >EDIT</button>
           <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
             <mat-icon>more_vert</mat-icon>
           </button>
